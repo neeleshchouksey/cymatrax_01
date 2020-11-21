@@ -25,4 +25,8 @@ Route::post('file/upload', 'HomeController@upload')->name('file.upload');
 Route::get('file/fetch', 'HomeController@fetch');
 
 
+//paypal account route
+Route::get('payment', 'PayPalController@payment')->name('payment');
+Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
+Route::get('payment/success', 'PayPalController@success')->name('payment.success');
 

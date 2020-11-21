@@ -36,7 +36,8 @@ Dropzone.options.dropzoneForm = {
 
   
     var submitButton = document.querySelector("#submit-all");
-    myDropzone = this;
+    // var cancelButton = document.querySelector("#cancel-all");
+     myDropzone = this;
 
     // console.log(myDropzone.files);
  
@@ -45,7 +46,7 @@ Dropzone.options.dropzoneForm = {
     submitButton.addEventListener('click', function(){
     myDropzone.processQueue();
     });
-
+   
   //for getting total mb fil size
   
   this.on("addedfile", function(file) {
