@@ -61,6 +61,24 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                        <label for="suser"  class="col-md-4 col-form-label text-md-right"> User Type</label>
+
+                        <div class="col-md-6" style="margin-left:34%;margin-top:-4%;">
+                       
+                          
+                            
+                            <input type="radio"  name="user" value="1" checked>
+                            Single User
+                         
+                            
+                            <input type="radio" name="user" value="2" style="margin-left: 22px;">
+                            Company User
+                            </div>
+                        </div>
+
+
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

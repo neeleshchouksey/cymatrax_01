@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -12,7 +13,7 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -65,8 +66,8 @@
                                 <br>
                                      @if (Route::has('register'))
                                <span style="display:inline-flex;">
-                                    {{ __('Dont have an account?') }}
-                                    <a class="nav-link" href="{{ route('register') }}" style="padding:0px;"> {{ __('Create One') }}</a>
+                                    {{ __("Don't have an account?") }}
+                                    <a class="nav-link" href="{{ route('register') }}" style="margin-left:7.2px;padding: 0rem 0rem !important"> {{ __('Create One') }}</a>
                                     </span>
                                             
                                 @endif

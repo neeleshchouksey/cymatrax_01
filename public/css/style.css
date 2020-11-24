@@ -2,3 +2,7 @@
 .card-style{
   background-color: #00AA9E;margin-bottom:0px;
 }
+.outer-box{
+outline: 2px solid lightgrey;
+padding: 5px;
+}

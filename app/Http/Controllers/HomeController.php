@@ -34,20 +34,20 @@ class HomeController extends Controller
     { 
   
         
-        
+        $count = count($request->file);
         foreach($request->file as $item){
          
+            
             $imageName = time().'_'.$item->getClientOriginalName();
             $item->move(public_path('images'), $imageName);
             $data = new Upload();
             $data->user_id = auth()->user()->id;   
             $data->file_name = $imageName;
-            // $data->audio_duration = ($item.duration);
             $data->save();
            
         }
       
-        return response()->json(['success' => $imageName]);
+        return response()->json(['success' => $imageName,'count'=>$count]);
     
 
     }
@@ -89,8 +89,17 @@ class HomeController extends Controller
           return view('displayprofile',compact('getData'));
     }
 
-   
+    public function filedetail($id)
+    {
+       // dd($id);
+        //$getData=DB::table('uploads')->where('user_id','=',auth()->user()->id)->orderBy('created_at','desc')->take(3);
+       $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
 
+
+    // dd($getData);
+        return view('filedetail',compact('getData'));
+    
+    }
 
 
 }

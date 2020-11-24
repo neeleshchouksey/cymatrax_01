@@ -23,6 +23,8 @@ Route::get('/home', 'HomeController@index');
 //Route::post('/upload-file', 'HomeController@upload_file')->name('upload-file');
 Route::post('file/upload', 'HomeController@upload')->name('file.upload');
 Route::get('file/fetch', 'HomeController@fetch');
+Route::get('/filedetail/{id}', 'HomeController@filedetail');
+
 
 
 //paypal account route

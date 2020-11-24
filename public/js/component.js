@@ -67,7 +67,11 @@ myDropzone.on("sending", function(file, xhr, data) {
 });
 
 
-  this.on("success", function(){
+  this.on("success", function(data){
+    var count= myDropzone.files.length;
+
+    console.log(count);
+
       Swal.fire({
         title: 'Thank You',
         text: 'File uploaded sucessfully...',
@@ -75,7 +79,10 @@ myDropzone.on("sending", function(file, xhr, data) {
         showCancelButton: false,
       })
       .then((result) => {
-           window.location = APP_URL+'/file/fetch';
+        console.log(result);
+        window.location = APP_URL+'/filedetail/'+count;
+          //  window.location = APP_URL+'/file/fetch';
+          
       })
 
     });

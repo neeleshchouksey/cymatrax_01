@@ -17,7 +17,7 @@ class CreateTableUploads extends Migration
             $table->id();
             $table->integer('user_id')->unsigned();
             $table->string('file_name');
-            $table->string('audio_duration');
+            $table->tinyInteger('cleaned')->default('0');
             $table->timestamps();
         });
     }

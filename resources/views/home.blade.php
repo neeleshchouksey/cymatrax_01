@@ -20,7 +20,6 @@
                     <br>
             <button type="button" class="btn btn-info" id="submit-all">Upload</button>
             
-            <button form="resource-creator" type="reset" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 
 
           </div>
