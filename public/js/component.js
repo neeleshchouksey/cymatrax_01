@@ -27,7 +27,7 @@ Dropzone.options.dropzoneForm = {
     console.log(message);
     Swal.fire({
       title: 'Error',
-      text: message,
+      text: 'Upto 500mb files are allowed at once',
       icon: 'error',
       showCancelButton: false,
     });
