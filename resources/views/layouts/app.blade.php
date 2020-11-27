@@ -10,9 +10,67 @@
     <title>{{ config('app.name', 'Cymatrax') }}</title>
 
     <!-- Scripts -->
+    
     <script>
-    var APP_URL = '{{URL::to("/")}}';
+    var APP_URL = '{{URL::to("/")}}';           
     </script>
+               
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+ $( document ).ready(function() {
+    var userSelection = document.getElementsByClassName('getdur');
+  
+    for(var i = 0; i < userSelection.length; i++) {
+        (userSelection[i]).click();
+    }
+    
+    var total_duration = 0 ;
+
+    setTimeout(() => {
+    var total = document.getElementsByClassName('durValue');
+    console.log(total[0].value);
+    for(var i = 0; i < total.length; i++) {
+        total_duration = total_duration + total[i].value;
+    }
+
+    console.log(total_duration);
+
+    // var minutes = Math.floor(total_duration);
+    // console.log(minutes);
+    // var seconds = total_duration.toString().split('.');
+    // console.log(seconds);
+    // seconds = parseInt(seconds[1]);
+    // console.log(seconds);
+    // if(seconds>=60){
+    //     var min = Math.floor(seconds/60);
+    //     console.log(min);
+
+    //     seconds = Math.floor(seconds%60);
+    //     console.log(seconds);
+    //     minutes = minutes+min;
+    //     console.log(minutes);
+
+    // }
+
+    var minutes = Math.floor(total_duration/60);
+    var seconds = Math.floor(total_duration%60);
+    
+    console.log(seconds);
+
+    console.log(minutes);
+
+    var per_sec_cost = 1/60;
+
+    total_cost = per_sec_cost*total_duration;
+
+
+    $("#total-duration").html(minutes+' min '+seconds+ ' sec')
+    $("#total-cost").html(total_cost+ '$')
+
+    }, 1000);
+
+ });
+</script>
 
     <script src="{{asset('assets/dropzone/dist/dropzone.js')}}"></script>
     <link rel="stylesheet" href="{{asset('assets/dropzone/dist/dropzone.css')}}"/>
@@ -38,6 +96,8 @@
 
 <!-- Include a polyfill for ES6 Promises (optional) for IE11 -->
 <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+
+
 
 <script src="sweetalert2/dist/sweetalert2.min.js"></script>
 <link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css">

@@ -162,7 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
-
+        ProtoneMedia\LaravelFFMpeg\Support\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -227,6 +227,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class,
+
 
     ],
 

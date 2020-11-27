@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Upload;
 use DB;
+use FFMpeg;
 
 class HomeController extends Controller
 {
@@ -37,6 +38,13 @@ class HomeController extends Controller
         $count = count($request->file);
         foreach($request->file as $item){
          
+            //duration
+        //     $media = FFMpeg::open($item->getClientOriginalName());
+
+        //    $durationInSeconds = $media->getDurationInSeconds(); // returns an int
+        //     console.log($durationInSeconds);
+        //     console.log("durationInSeconds");
+            //duration
             
             $imageName = time().'_'.$item->getClientOriginalName();
             $item->move(public_path('images'), $imageName);

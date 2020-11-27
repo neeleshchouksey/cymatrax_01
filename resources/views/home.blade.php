@@ -12,6 +12,7 @@
                 </div>
                     <form id="dropzoneForm" enctype="multipart/form-data" class="dropzone" action="{{ route('file.upload') }}" >
                     
+
                         @csrf
                        
                     </form>

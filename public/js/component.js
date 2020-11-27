@@ -67,7 +67,29 @@ myDropzone.on("sending", function(file, xhr, data) {
 });
 
 
+
+
   this.on("success", function(data){
+    //duration
+
+   var file = myDropzone.files[0];
+ // getDuration(file);
+  // var x = document.createElement("AUDIO");
+
+  
+  // x.setAttribute("src",file.name);
+  // x.setAttribute("width", "320");
+  // x.setAttribute("height", "240");
+  // x.setAttribute("controls", "controls");
+  // document.body.appendChild(x);
+ 
+    
+
+  
+
+
+    //duration
+
     var count= myDropzone.files.length;
 
     console.log(count);
@@ -93,4 +115,43 @@ myDropzone.on("sending", function(file, xhr, data) {
 
 load_images();
 
+function hello(){
+	alert('Hello world! in func hello');
+}
+$(function(){
+	$('div[onload]').trigger('onload');
+});
 
+var total = 0;
+function getDuration(aud_id){
+  setTimeout(function()
+  {
+    var duration = document.getElementById("audio"+aud_id).duration; //in seconds
+    var duration_in_sec = document.getElementById("audio"+aud_id).duration; //in seconds
+
+    //var x = parseFloat(duration).toFixed(2);
+    
+     //two digit places
+    //  var minutes = ((duration % 3600) / 60); //in minutes
+     //var minutes = Math.floor(x / 60)
+    //  minutes = minutes.toFixed(2); //two digit places
+
+  
+    var minutes = Math.floor(duration/60);
+    var seconds = Math.floor(duration%60);
+    console.log(seconds);
+    
+    //var num2 = Number(minutes.toString().match(/^\d+(?:\.\d{0,2})?/));
+  
+    // if(minutes < 1){
+      $("#duration"+aud_id).html(minutes+"."+seconds);  
+      $("#duration_in_sec").val(duration_in_sec);
+    // }else{
+      // $("#duration"+aud_id).html(minutes + 'min'); 
+     
+    // };
+  
+   
+  }, 100);
+    
+}
