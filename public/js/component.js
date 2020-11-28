@@ -91,13 +91,13 @@ Dropzone.options.dropzoneForm = {
 
 };
 
-function hello() {
-    alert('Hello world! in func hello');
-}
+// function hello() {
+//     alert('Hello world! in func hello');
+// }
 
-$(function () {
-    $('div[onload]').trigger('onload');
-});
+// $(function () {
+//     $('div[onload]').trigger('onload');
+// });
 
 var total = 0;
 
@@ -113,3 +113,43 @@ function getDuration(aud_id) {
     }, 500);
 
 }
+
+
+//paypal
+paypal.Buttons({
+  
+    env: 'sandbox', // Or 'production'
+    style: {
+      size: 'large',
+      color: 'gold',
+      shape: 'pill',
+    },
+    // Set up the payment:
+    // 1. Add a payment callback
+    payment: function (data, actions) {
+      // 2. Make a request to your server
+   
+  
+       return actions.request.post('/api/create-paypal-transaction/')
+       
+        .then(function (res) {
+          // 3. Return res.id from the response
+          console.log(res);
+          return res.id
+        })
+    },
+    // Execute the payment:
+    // 1. Add an onAuthorize callback
+    onAuthorize: function (data, actions) {
+      // 2. Make a request to your server
+      return actions.request.post('/api/confirm-paypal-transaction', {
+        payment_id: data.paymentID,
+        payer_id: data.payerID
+      })
+        .then(function (res) {
+          console.log(res)
+          alert('Payment successfully done!!')
+          // 3. Show the buyer a confirmation message.
+        })
+    }
+  }).render('#paypal-button');

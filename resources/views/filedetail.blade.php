@@ -38,16 +38,14 @@
        <b>Total Cost =  <span id="total-cost"></span> </b><br>
        <b>($1 per minute) </b>
 
-
 <!-- paypal code -->
-<div class="flex-center position-ref full-height">
-  <div class="content" >
-      <a href="{{ route('payment') }}" class="btn btn-success" style="margin:1%;">Pay & Checkout</a>
-      <a href="{{ url('file/fetch')}}" class="btn btn-success" style="margin:1%;">Cancel</a>
-
-  </div>
-</div>
-<!-- end paypal code -->
+<div class="content">
+          <div class="links">
+              <div id="paypal-button"></div>
+          </div>
+      </div>
+     <!-- end paypal code -->
+    
         </div>
         </div>
         </div>
@@ -57,4 +55,7 @@
 
 
 @endsection
+
+
+<!-- <script src="https://www.paypalobjects.com/api/checkout.js"></script> -->
 

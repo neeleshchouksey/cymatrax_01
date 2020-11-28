@@ -27,8 +27,4 @@ Route::get('/filedetail/{id}', 'HomeController@filedetail');
 
 
 
-//paypal account route
-Route::get('payment', 'PayPalController@payment')->name('payment');
-Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
-Route::get('payment/success', 'PayPalController@success')->name('payment.success');
 

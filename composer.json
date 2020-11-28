@@ -16,8 +16,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
         "pbmedia/laravel-ffmpeg": "^7.4",
-        "srmklive/paypal": "^3.0"
-        
+        "srmklive/paypal": "^3.0",
+        "paypal/rest-api-sdk-php": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
