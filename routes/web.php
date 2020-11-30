@@ -26,5 +26,7 @@ Route::get('file/fetch', 'HomeController@fetch');
 Route::get('/filedetail/{id}', 'HomeController@filedetail');
 
 
-
+Route::get('payment', 'PayPalController@payment')->name('payment');
+Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
+Route::get('payment/success', 'PayPalController@success')->name('payment.success');
 

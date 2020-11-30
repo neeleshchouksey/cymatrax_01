@@ -38,12 +38,18 @@
        <b>Total Cost =  <span id="total-cost"></span> </b><br>
        <b>($1 per minute) </b>
 
-<!-- paypal code -->
-<div class="content">
-          <div class="links">
-              <div id="paypal-button"></div>
-          </div>
-      </div>
+     <!-- paypal code -->
+           <div class="content">
+                  
+                <!-- <a href="{{ route('payment') }}" class="btn btn-success">Pay $100 from Paypal</a> -->
+
+                <form  method="GET" action="{{ route('payment') }}">
+                <input type="hidden" name="totalcost" value="" id="paypal_total_cost"/>
+                <input type="hidden" name="totalduration" value="" id="paypal_total_duration"/>
+                <input type="submit" value="Pay & Checkout" class="btn btn-success" name="submit"/>
+                </form>
+  
+            </div>
      <!-- end paypal code -->
     
         </div>
@@ -57,5 +63,4 @@
 @endsection
 
 
-<!-- <script src="https://www.paypalobjects.com/api/checkout.js"></script> -->
 
