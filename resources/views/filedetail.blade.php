@@ -25,7 +25,7 @@
             <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
              <b> File duration = <span id="duration{{$key}}" ></span> </b>
               <button style="visibility:hidden;" type="button" onclick="getDuration({{$key}})" class="getdur">Get Duration</button>
-
+              <span id="ids{{$key}}" ></span>
             </div>
 
             </div>
@@ -41,10 +41,10 @@
      <!-- paypal code -->
            <div class="content">
                   
-                <!-- <a href="{{ route('payment') }}" class="btn btn-success">Pay $100 from Paypal</a> -->
 
                 <form  method="GET" action="{{ route('payment') }}">
                 <input type="hidden" name="totalcost" value="" id="paypal_total_cost"/>
+                <input type="hidden" name="fileids" value="{{$audioids}}" id="paypal_audio_ids"/>
                 <input type="hidden" name="totalduration" value="" id="paypal_total_duration"/>
                 <input type="submit" value="Pay & Checkout" class="btn btn-success" name="submit"/>
                 </form>

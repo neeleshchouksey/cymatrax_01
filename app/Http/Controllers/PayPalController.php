@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\ExpressCheckout;
 use Illuminate\Support\Facades\Redirect;
 use  App\Paymentdetail;
+use App\Upload;
+use DB;
 
 class PayPalController extends Controller
 {
@@ -17,7 +19,7 @@ class PayPalController extends Controller
         $data = [];
         $data['items'] = [
             [
-                'name' => 'ItSolutionStuff.com',
+                'name' => $request->fileids,
                 'price' => $totalcost,
                 'desc'  => $totalduration,
                 'qty' => 1
@@ -29,33 +31,7 @@ class PayPalController extends Controller
         $data['return_url'] = route('payment.success');
         $data['cancel_url'] = route('payment.cancel');
         $data['total'] = $totalcost;
-        //dd($data);
-
-
-        // $totalcost = $request->totalcost;
-        // $totalduration = $request->totalduration;
-//dd($totalcost,$totalduration);
-      
-        //  $data = [];
-        // $data['items'] = [
-        //     [
-
-        //         'name' => 'null',
-        //         'price' => $totalcost,
-        //         'desc'  => 'description',
-        //         'qty' => 1
-
-
-        //     ]
-        // ];
-       
-        // $data['invoice_id'] = 1;
-        // $data['invoice_description'] = "Order #{$data['invoice_id']} Invoice";
-        // $data['return_url'] = route('payment.success');
-        // $data['cancel_url'] = route('payment.cancel');
-        // $data['total'] = $totalduration;
-       
-    
+        
         $provider = new ExpressCheckout; 
         
         $response = $provider->setExpressCheckout($data);
@@ -74,7 +50,7 @@ class PayPalController extends Controller
      */
     public function cancel()
     {
-        dd('Your payment is canceled. You can create cancel page here.');
+        return  Redirect::to('/home')->with('alert', 'Your payment not done.');
     }
   
     /**
@@ -82,16 +58,37 @@ class PayPalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function soxProcessFile ($fName) {
+        $dir = "public/images/";
+        
+        $inName = $dir.$fName;
+        // dd($inName);
+        $coreName = explode('.',$fName);
+       // dd($coreName);
+        $coreName = $coreName[0];
+        //dd($coreName);
+        $outName1 = $dir.$coreName . '.WAV';
+        //dd($outName1);
+
+        $outName2 = $dir.$coreName . 'B.WAV';
+        //dd($outName2);
+
+        $outName = $dir.'new_'.$coreName.".mp3";
+        //dd($outName);
+
+        exec('lame --quiet --decode ' . $inName . ' ' . $outName1 . ' 2>&1;' .'sox ' . $outName1 . ' -C6 ' . $outName2 . ' --effects-file public/sox/ce.fkt 2>&1;' . 'lame --quiet -V 2 ' . $outName2 . ' ' . $outName);
+     
+        return $outName;
+        }
+
     public function success(Request $request)
     {
        
         $provider = new ExpressCheckout; 
         $response = $provider->getExpressCheckoutDetails($request->token);
-       
+      
          if (in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
-             //dd($response);
-        
-
 
             $paymentdetails = new Paymentdetail();
             $paymentdetails->firstname = $response['FIRSTNAME'];  
@@ -106,14 +103,30 @@ class PayPalController extends Controller
             $paymentdetails->duration = $response['L_DESC0'];
             $paymentdetails->save();
 
+            $paymentid =  db::table('paymentdetails')->where('id','=',$paymentdetails->id)->first();
+            $Audio_Ids = $response['L_NAME0'];
+            $ids_in_array = (explode(",", $Audio_Ids)); //convert into array
 
-           
+            foreach($ids_in_array as $item){
 
+                $getfilename = DB::table('uploads')
+                ->where('id', $item)
+                ->select('file_name')  //get file name
+                ->first();
 
-        //     dd('Your payment was successfully');
-             return Redirect::to('/home')->with(['message' => 'Your payment done was successfully']);
+                $totalfilename = $this->soxProcessFile($getfilename->file_name); //call function for file cleaning 
+                $filename_new =  substr($totalfilename, 14);
+             
+                $uploads = DB::table('uploads')
+                ->where('id', $item)  //update uploads
+                ->update(['paymentdetails_id' => $paymentid->id,'processed_file' => $filename_new,'cleaned' => 1]);
+                
+              }
+
+            return  Redirect::to('/transactondetails')->with('alert', 'Your payment done successfully');
+            //return  Redirect::to('/home')->with('alert', 'Your payment done successfully');
+
         }
   
-        // dd('Something is wrong.');
     }
 }

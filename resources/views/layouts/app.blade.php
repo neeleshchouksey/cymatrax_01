@@ -20,6 +20,9 @@
         $(document).ready(function () {
             var userSelection = document.getElementsByClassName('getdur');
 
+            console.log(userSelection);
+           
+
             for (var i = 0; i < userSelection.length; i++) {
                 (userSelection[i]).click();
             }
@@ -42,7 +45,8 @@
                 $("#total-duration").html(minutes + ' min ' + seconds + ' sec')
                 $("#total-cost").html(total_cost.toFixed(2) + '$')
 
-               
+
+
                 total_cost=total_cost.toFixed(2);
                 document.getElementById("paypal_total_cost").setAttribute('value',total_cost);
                 document.getElementById("paypal_total_duration").setAttribute('value',minutes+'.'+seconds);

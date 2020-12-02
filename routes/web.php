@@ -24,6 +24,8 @@ Route::get('/home', 'HomeController@index');
 Route::post('file/upload', 'HomeController@upload')->name('file.upload');
 Route::get('file/fetch', 'HomeController@fetch');
 Route::get('/filedetail/{id}', 'HomeController@filedetail');
+Route::get('/transactondetails', 'HomeController@transactondetails');
+Route::get('/transactionfileinfo/{id}','HomeController@transactionfile_info');
 
 
 Route::get('payment', 'PayPalController@payment')->name('payment');
