@@ -13,9 +13,26 @@ class PayPalController extends Controller
 {
     public function payment(Request $request)
     {
-
+        //for single file
         $totalcost = $request->totalcost;
         $totalduration = $request->totalduration;
+        if($totalcost == "singlefile"){
+        $fileid =  $request->fileids;
+        $durationseconds = $request->totalduration;
+        $minutes = intval($durationseconds / 60);
+        $seconds =  $durationseconds % 60;
+        $totalduration =  $minutes . '.' . $seconds;
+        $totalduration = (float)$totalduration;
+        $totalcost = $totalduration*1;
+        
+        
+        // $totalcost = round($totalcost, 2);
+        // dd($totalcost);
+        }
+        // end single file
+
+        // $totalcost = $request->totalcost;
+        
         $data = [];
         $data['items'] = [
             [
@@ -123,7 +140,7 @@ class PayPalController extends Controller
                 
               }
 
-            return  Redirect::to('/transactondetails')->with('alert', 'Your payment done successfully');
+            return  Redirect::to('/transactondetails')->with('alert', 'Payment Completed Successfully');
             //return  Redirect::to('/home')->with('alert', 'Your payment done successfully');
 
         }

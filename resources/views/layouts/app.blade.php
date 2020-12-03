@@ -10,7 +10,11 @@
     <title>{{ config('app.name', 'Cymatrax') }}</title>
 
     <!-- Scripts -->
+<!-- for pro paypal -->
+<!-- <link href="{{ asset('public/css/card.css') }}" rel="stylesheet"> -->
 
+
+<!-- end pro paypal -->
     <script>
         var APP_URL = '{{URL::to("/")}}';
     </script>
@@ -85,6 +89,14 @@
 
     <!-- Include a polyfill for ES6 Promises (optional) for IE11 -->
     <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+
+
+<!-- paypal pro scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="{{ asset('public/js/jquery.card.js') }}"></script>
+<script src="{{ asset('public/js/card.js') }}"></script>
+<!-- paypal pro scripts end-->
 
 
 </head>

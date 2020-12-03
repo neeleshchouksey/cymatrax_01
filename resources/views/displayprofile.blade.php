@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
         <div class="card-header">My Account</div>
-        @foreach($getData as $item)  
+        @foreach($getData as $key=>$item)  
         @if($item->cleaned == 0)
         <div class="card" style="margin-bottom:1%;">
         <div class="card-body">
@@ -24,9 +24,57 @@
         
             <a class="btn btn-success" href="{{ asset('public/images/'.$item->file_name) }}" download>Download</a>
           
-            <a class="btn btn-warning" download style="margin-left:2%;">Pay & Clean</a>
+            <!-- <a class="btn btn-warning" download style="margin-left:2%;">Pay & Clean</a> -->
 
           <!-- paypal code -->
+
+
+
+
+                      
+<!-- get duration end -->
+
+            <div class="card" style="display:none;">
+            <div class="card-body">
+            <p id="demo"></p>
+                <audio style="display:none;" id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/images/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
+                    Your browser does not support the audio element.
+                </audio>
+                <!-- <b> File duration = <span id="duration{{$key}}" ></span> </b> -->
+                <button style="visibility:hidden;" type="button" onclick="getDuration({{$key}})" class="getdur">Get Duration</button>
+                <span id="ids{{$key}}" ></span>
+                </div>
+
+                </div>
+           
+
+<!-- get duration end -->
+             
+
+        <!-- <audio style="display:none;" id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/images/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
+                Your browser does not support the audio element.
+            </audio>
+            <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
+             <b> File duration = <span id="duration{{$key}}"></span> </b>
+              <button style="visibility:hidden;" type="button" onclick="getDuration({{$key}})" class="getdur">Get Duration</button>
+              <span id="ids{{$key}}" ></span>
+            </div>
+
+            </div> -->
+
+            <div class="content" style="display:inline-flex;">
+                  
+
+                  <form  method="GET" action="{{ route('payment') }}">
+                  <input type="hidden"  name="totalduration" value=""  id="duration_in_sec{{$key}}" class="durValue"/>
+                  
+
+                  <input type="hidden" name="totalcost" value="singlefile" >
+                  <input type="hidden" name="fileids" value="{{$item->id}}" id="paypal_audio_ids"/>
+                  <input type="submit" value="Pay & Checkout" class="btn btn-warning" name="submit"/>
+                  </form>
+  
+              </div>
            
          <!-- end paypal code -->
 
@@ -48,6 +96,7 @@
             <a class="btn btn-success" href="{{ asset('public/images/'.$item->processed_file) }}" download>Download</a>
             </div>
             </div>
+
             @endif
         @endforeach
 

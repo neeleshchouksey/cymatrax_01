@@ -32,3 +32,10 @@ Route::get('payment', 'PayPalController@payment')->name('payment');
 Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
 Route::get('payment/success', 'PayPalController@success')->name('payment.success');
 
+//paypal pro
+// Route::resource('payment', 'PaymentController');
+
+Route::get('/propaypal', 'HomeController@propaypal');
+
+Route::post('/payment/store', 'Paymentcontroller@store');
+

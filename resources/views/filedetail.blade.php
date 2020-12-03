@@ -19,7 +19,7 @@
            <b> File Name:</b><p>{{$item->file_name}}</p>
 
 
-            <audio id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/images/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
+            <audio  id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/images/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
                 Your browser does not support the audio element.
             </audio>
             <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
@@ -39,7 +39,7 @@
        <b>($1 per minute) </b>
 
      <!-- paypal code -->
-           <div class="content" style="display:inline-flex;">
+           <div class="content" style="display:inline-flex;margin-left: 58%;">
                   
 
                 <form  method="GET" action="{{ route('payment') }}">
@@ -52,6 +52,10 @@
 
             </div>
      <!-- end paypal code -->
+     <!-- <a href="{{URL::to('/propaypal')}}">Propaypal</a>      -->
+    
+
+
 
         </div>
         </div>

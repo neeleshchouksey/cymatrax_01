@@ -56,7 +56,9 @@ class HomeController extends Controller
     public function fetch()
     {
           $getData=DB::table('uploads')->where('user_id','=',auth()->user()->id)->get();
-          
+
+         
+
           return view('displayprofile',compact('getData'));
     }
 
@@ -93,4 +95,11 @@ class HomeController extends Controller
         return view('transactonHistory',compact('paymentdetails'));
     }
 
+    public function propaypal(){
+
+       
+        return view('propaypal');
+    }
+
+    
 }
