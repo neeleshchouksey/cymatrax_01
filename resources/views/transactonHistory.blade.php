@@ -9,7 +9,7 @@
             <table class="table">
             <thead>
                 <tr>
-                    <th>id </th>
+                    <!-- <th>id </th> -->
                     <th>Firstname</th>
                     <th>Lastname</th>
                     <th> Email</th>
@@ -21,7 +21,7 @@
             <tbody>
             @foreach($paymentdetails as $item)
             <tr>
-               <td>id{{$item->id}}</td>
+               <!-- <td>id{{$item->id}}</td> -->
                 <td>{{$item->firstname}}</td>
                 <td>{{$item->lastname}}</td>
                 <td>{{$item->email}}</td>

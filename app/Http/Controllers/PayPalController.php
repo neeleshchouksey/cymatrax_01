@@ -23,9 +23,11 @@ class PayPalController extends Controller
         $seconds =  $durationseconds % 60;
         $totalduration =  $minutes . '.' . $seconds;
         $totalduration = (float)$totalduration;
-        $totalcost = $totalduration*1;
-        
-        
+        // $totalcost = $totalduration*1;
+        $per_sec_cost = 1 / 60;
+        $totalcost = $per_sec_cost * $durationseconds;
+        $totalcost = round($totalcost, 2);
+
         // $totalcost = round($totalcost, 2);
         // dd($totalcost);
         }
