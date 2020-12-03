@@ -39,7 +39,7 @@
        <b>($1 per minute) </b>
 
      <!-- paypal code -->
-           <div class="content">
+           <div class="content" style="display:inline-flex;">
                   
 
                 <form  method="GET" action="{{ route('payment') }}">
@@ -48,10 +48,11 @@
                 <input type="hidden" name="totalduration" value="" id="paypal_total_duration"/>
                 <input type="submit" value="Pay & Checkout" class="btn btn-success" name="submit"/>
                 </form>
-  
+                <span style="margin-left:1%;"><a href="{{URL::to('/file/fetch')}}" class="btn btn-success">Cancel</a></span>
+
             </div>
      <!-- end paypal code -->
-    
+
         </div>
         </div>
         </div>
