@@ -47,7 +47,7 @@
                 total_cost = per_sec_cost * total_duration;
 
                 $("#total-duration").html(minutes + ' min ' + seconds + ' sec')
-                $("#total-cost").html(total_cost.toFixed(2) + '$')
+                $("#total-cost").html( '$' + total_cost.toFixed(2))
 
 
 

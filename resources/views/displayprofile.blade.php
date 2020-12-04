@@ -17,12 +17,12 @@
            <p> {{ Carbon\Carbon::parse($item->created_at)->format('d-m-Y, H: i: s') }}</p>
           
   
-            <audio controls="" style="vertical-align: middle" src="{{ asset('public/images/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
+            <audio controls="" style="vertical-align: middle" src="{{ asset('public/upload/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
                 Your browser does not support the audio element.
             </audio>
         
         
-            <a class="btn btn-success" href="{{ asset('public/images/'.$item->file_name) }}" download>Download</a>
+            <a class="btn btn-success" href="{{ asset('public/upload/'.$item->file_name) }}" download>Download</a>
           
             <!-- <a class="btn btn-warning" download style="margin-left:2%;">Pay & Clean</a> -->
 
@@ -37,7 +37,7 @@
             <div class="card" style="display:none;">
             <div class="card-body">
             <p id="demo"></p>
-                <audio style="display:none;" id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/images/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
+                <audio style="display:none;" id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/upload/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
                     Your browser does not support the audio element.
                 </audio>
                 <!-- <b> File duration = <span id="duration{{$key}}" ></span> </b> -->
@@ -51,7 +51,7 @@
 <!-- get duration end -->
              
 
-        <!-- <audio style="display:none;" id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/images/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
+        <!-- <audio style="display:none;" id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/upload/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
                 Your browser does not support the audio element.
             </audio>
             <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
@@ -91,10 +91,10 @@
             <b> File Name:</b><p>{{$item->processed_file}}</p>
             <b> Upload Time:</b>
             <p> {{ Carbon\Carbon::parse($item->created_at)->format('d-m-Y, H: i: s') }}</p>
-            <audio controls="" style="vertical-align: middle" src="{{ asset('public/images/'.$item->processed_file) }}" type="audio/mp3" controlslist="nodownload">
+            <audio controls="" style="vertical-align: middle" src="{{ asset('public/upload/'.$item->processed_file) }}" type="audio/mp3" controlslist="nodownload">
                 Your browser does not support the audio element.
             </audio>
-            <a class="btn btn-success" href="{{ asset('public/images/'.$item->processed_file) }}" download>Download</a>
+            <a class="btn btn-success" href="{{ asset('public/upload/'.$item->processed_file) }}" download>Download</a>
             </div>
             </div>
 

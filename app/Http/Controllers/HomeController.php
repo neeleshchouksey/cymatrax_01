@@ -40,7 +40,7 @@ class HomeController extends Controller
          
         
             $imageName = time().'_'.$item->getClientOriginalName();
-            $item->move(public_path('images'), $imageName);
+            $item->move(public_path('upload'), $imageName);
             $data = new Upload();
             $data->user_id = auth()->user()->id;   
             $data->file_name = $imageName;
@@ -55,7 +55,7 @@ class HomeController extends Controller
 
     public function fetch()
     {
-          $getData=DB::table('uploads')->where('user_id','=',auth()->user()->id)->get();
+          $getData=DB::table('uploads')->where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->get();
 
          
 
@@ -90,7 +90,7 @@ class HomeController extends Controller
 
     public function transactondetails(){
 
-        $paymentdetails=DB::table('paymentdetails')->get();
+        $paymentdetails=DB::table('paymentdetails')->orderBy('created_at', 'desc')->get();
 
         return view('transactonHistory',compact('paymentdetails'));
     }

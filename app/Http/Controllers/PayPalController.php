@@ -77,7 +77,7 @@ class PayPalController extends Controller
      */
 
     public function soxProcessFile ($fName) {
-        $dir = "public/images/";
+        $dir = "public/upload/";
         
         $inName = $dir.$fName;
         // dd($inName);
