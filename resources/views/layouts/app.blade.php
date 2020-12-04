@@ -56,7 +56,7 @@
                 document.getElementById("paypal_total_duration").setAttribute('value',minutes+'.'+seconds);
 
 
-            }, 1000);
+            }, 1500);
 
         });
     </script>

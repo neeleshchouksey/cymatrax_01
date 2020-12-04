@@ -42,7 +42,8 @@
            <div class="content" style="display:inline-flex;margin-left: 58%;">
                   
 
-                <form  method="GET" action="{{ route('payment') }}">
+                <form  method="Post" action="{{ route('payment') }}">
+                  @csrf
                 <input type="hidden" name="totalcost" value="" id="paypal_total_cost"/>
                 <input type="hidden" name="fileids" value="{{$audioids}}" id="paypal_audio_ids"/>
                 <input type="hidden" name="totalduration" value="" id="paypal_total_duration"/>

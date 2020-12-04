@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Omnipay\Omnipay;
 
 
-class PaymentController extends Controller
+class Paymentcontroller extends Controller
 {
     public $gateway;
  
@@ -45,7 +45,7 @@ class PaymentController extends Controller
                 'currency' => 'USD',
                 'card' => $formData
             ])->send();
- 
+ //dd($response);
             // Process response
             if ($response->isSuccessful()) {
  

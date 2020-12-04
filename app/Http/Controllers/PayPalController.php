@@ -13,6 +13,7 @@ class PayPalController extends Controller
 {
     public function payment(Request $request)
     {
+
         //for single file
         $totalcost = $request->totalcost;
         $totalduration = $request->totalduration;
@@ -49,15 +50,12 @@ class PayPalController extends Controller
         $data['invoice_description'] = "Order #{$data['invoice_id']} Invoice";
         $data['return_url'] = route('payment.success');
         $data['cancel_url'] = route('payment.cancel');
-        $data['total'] = $totalcost;
+        $data['total'] = $totalcost;        
         
         $provider = new ExpressCheckout; 
-        
-        $response = $provider->setExpressCheckout($data);
-     
   
         $response = $provider->setExpressCheckout($data, true);
-       
+        
   
         return redirect($response['paypal_link']);
     }

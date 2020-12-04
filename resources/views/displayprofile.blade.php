@@ -65,7 +65,8 @@
             <div class="content" style="display:inline-flex;">
                   
 
-                  <form  method="GET" action="{{ route('payment') }}">
+                  <form  method="post" action="{{ route('payment') }}">
+                    @csrf
                   <input type="hidden"  name="totalduration" value=""  id="duration_in_sec{{$key}}" class="durValue"/>
                   
 

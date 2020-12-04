@@ -44,7 +44,7 @@
 
             Swal.fire({
                 title: 'Thank You',
-                text: 'File uploaded sucessfully...',
+                text: 'Payment Completed Successfully',
                 icon: 'success',
                 showCancelButton: false,
             });

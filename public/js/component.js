@@ -114,7 +114,7 @@ function getDuration(aud_id) {
 
         $("#duration_in_sec" + aud_id).val(duration_in_sec);
         
-    }, 500);
+    }, 1500);
 
 }
 
