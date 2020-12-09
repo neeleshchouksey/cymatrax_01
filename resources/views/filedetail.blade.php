@@ -19,13 +19,13 @@
            <b> File Name:</b><p>{{$item->file_name}}</p>
 
 
-            <audio id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/images/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
+            <audio  id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/upload/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
                 Your browser does not support the audio element.
             </audio>
             <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
              <b> File duration = <span id="duration{{$key}}" ></span> </b>
               <button style="visibility:hidden;" type="button" onclick="getDuration({{$key}})" class="getdur">Get Duration</button>
-
+              <span id="ids{{$key}}" ></span>
             </div>
 
             </div>
@@ -39,19 +39,42 @@
        <b>($1 per minute) </b>
 
      <!-- paypal code -->
-           <div class="content">
-                  
-                <!-- <a href="{{ route('payment') }}" class="btn btn-success">Pay $100 from Paypal</a> -->
+           <div class="content" >
+                <!-- <form  method="Post" action="{{ route('payment') }}"> -->
+                  <!-- @csrf -->
+                <!-- <input type="hidden" name="totalcost" value="" id="paypal_total_cost"/>
+                <input type="hidden" name="fileids" value="{{$audioids}}" id="paypal_audio_ids"/>
+                <input type="hidden" name="totalduration" value="" id="paypal_total_duration"/> -->
+                <!-- <input type="submit" value="Pay & Checkout" class="btn btn-success" name="submit"/>
+                </form> -->
+                <span>   <a href="{{URL::to('/file/fetch')}}" class="btn btn-success" style="float:right;">Cancel</a></span>
+                <a href="{{URL::to('/')}}/propaypal/{{$id}}" class="btn btn-warning" style="float:right;">Propaypal</a>    
 
-                <form  method="GET" action="{{ route('payment') }}">
-                <input type="hidden" name="totalcost" value="" id="paypal_total_cost"/>
-                <input type="hidden" name="totalduration" value="" id="paypal_total_duration"/>
-                <input type="submit" value="Pay & Checkout" class="btn btn-success" name="submit"/>
-                </form>
-  
             </div>
+
+
+
+
+
      <!-- end paypal code -->
-    
+   
+
+   
+         
+  <!-- direct payment code --> 
+             <form  method="Post" action="{{URL::to('/directpayment')}}" style="visibility:hidden;">
+                  @csrf
+                <input type="hidden" name="totalcost" value="" id="paypal_total_cost"/>
+                <input type="hidden" name="fileids" value="{{$audioids}}" id="paypal_audio_ids"/>
+                <input type="hidden" name="totalduration" value="" id="paypal_total_duration"/>
+                <input type="submit" value="Direct DPay & Checkout" class="btn btn-success" name="submit"/>
+              </form>
+  
+     <!-- direct payment code end--> 
+
+
+
+
         </div>
         </div>
         </div>

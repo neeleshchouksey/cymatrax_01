@@ -33,7 +33,31 @@
     </div>
 </div>
 
+<!-- <script>
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+        Swal.fire({
+                title: 'Error',
+                text: 'Your payment not done.',
+                icon: 'error',
+                showCancelButton: false,
+            });
+    }
+  </script> -->
 
+  <script>
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
 
+            Swal.fire({
+                title: 'Thank You',
+                text: 'File uploaded sucessfully...',
+                icon: 'success',
+                showCancelButton: false,
+            });
+    }
+  </script>
 @endsection
 

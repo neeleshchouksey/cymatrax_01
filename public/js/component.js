@@ -102,15 +102,19 @@ Dropzone.options.dropzoneForm = {
 var total = 0;
 
 function getDuration(aud_id) {
+  
     setTimeout(function () {
         var duration = document.getElementById("audio" + aud_id).duration; //in seconds
         var duration_in_sec = document.getElementById("audio" + aud_id).duration; //in seconds
+
         var minutes = Math.floor(duration / 60);
         var seconds = Math.floor(duration % 60);
 
         $("#duration" + aud_id).html(minutes + "." + seconds);
+
         $("#duration_in_sec" + aud_id).val(duration_in_sec);
-    }, 500);
+        
+    }, 1500);
 
 }
 

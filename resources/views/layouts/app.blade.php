@@ -10,7 +10,11 @@
     <title>{{ config('app.name', 'Cymatrax') }}</title>
 
     <!-- Scripts -->
+<!-- for pro paypal -->
+<!-- <link href="{{ asset('public/css/card.css') }}" rel="stylesheet"> -->
 
+
+<!-- end pro paypal -->
     <script>
         var APP_URL = '{{URL::to("/")}}';
     </script>
@@ -18,7 +22,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
+
+
+            
             var userSelection = document.getElementsByClassName('getdur');
+
+            console.log(userSelection);
+           
 
             for (var i = 0; i < userSelection.length; i++) {
                 (userSelection[i]).click();
@@ -40,15 +50,16 @@
                 total_cost = per_sec_cost * total_duration;
 
                 $("#total-duration").html(minutes + ' min ' + seconds + ' sec')
-                $("#total-cost").html(total_cost.toFixed(2) + '$')
+                $("#total-cost").html( '$' + total_cost.toFixed(2))
 
-               
+
+
                 total_cost=total_cost.toFixed(2);
                 document.getElementById("paypal_total_cost").setAttribute('value',total_cost);
                 document.getElementById("paypal_total_duration").setAttribute('value',minutes+'.'+seconds);
 
 
-            }, 1000);
+            }, 1500);
 
         });
     </script>
@@ -81,6 +92,14 @@
 
     <!-- Include a polyfill for ES6 Promises (optional) for IE11 -->
     <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+
+
+<!-- paypal pro scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="{{ asset('public/js/jquery.card.js') }}"></script>
+<script src="{{ asset('public/js/card.js') }}"></script>
+<!-- paypal pro scripts end-->
 
 
 </head>

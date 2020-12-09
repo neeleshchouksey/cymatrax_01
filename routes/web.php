@@ -24,9 +24,22 @@ Route::get('/home', 'HomeController@index');
 Route::post('file/upload', 'HomeController@upload')->name('file.upload');
 Route::get('file/fetch', 'HomeController@fetch');
 Route::get('/filedetail/{id}', 'HomeController@filedetail');
+Route::get('/transactondetails', 'HomeController@transactondetails');
+Route::get('/transactionfileinfo/{id}','HomeController@transactionfile_info');
 
 
-Route::get('payment', 'PayPalController@payment')->name('payment');
+Route::post('payment', 'PayPalController@payment')->name('payment');
 Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
 Route::get('payment/success', 'PayPalController@success')->name('payment.success');
+
+//paypal pro
+// Route::resource('payment', 'PaymentController');
+
+Route::get('/propaypal/{id}', 'HomeController@propaypal');
+Route::get('/propaypalsingle/{id}', 'HomeController@propaypalsingle');
+Route::post('/payment/store', 'Paymentcontroller@store');
+
+Route::post('/directpayment', 'Paymentcontroller@store');
+
+
 

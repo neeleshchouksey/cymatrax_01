@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Upload;
 use DB;
 use FFMpeg;
+use Omnipay\Omnipay;
+use Omnipay\Common\CreditCard;
 
 class HomeController extends Controller
 {
@@ -38,16 +40,9 @@ class HomeController extends Controller
         $count = count($request->file);
         foreach($request->file as $item){
          
-            //duration
-        //     $media = FFMpeg::open($item->getClientOriginalName());
-
-        //    $durationInSeconds = $media->getDurationInSeconds(); // returns an int
-        //     console.log($durationInSeconds);
-        //     console.log("durationInSeconds");
-            //duration
-            
+        
             $imageName = time().'_'.$item->getClientOriginalName();
-            $item->move(public_path('images'), $imageName);
+            $item->move(public_path('upload'), $imageName);
             $data = new Upload();
             $data->user_id = auth()->user()->id;   
             $data->file_name = $imageName;
@@ -62,52 +57,97 @@ class HomeController extends Controller
 
     public function fetch()
     {
-          $getData=DB::table('uploads')->where('user_id','=',auth()->user()->id)->get();
-        //   foreach($getData as $item){
-        
+          $getData=DB::table('uploads')->where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->get();
 
-        // //   function calculateFileSize($file){
+         
 
-        // //     $ratio = 16000; //bytespersec
-        
-        // //     if (!$file) {
-        
-        // //         exit("Verify file name and it's path");
-        
-        // //     }
-            
-        // //     $file_size = filesize($file);
-        
-        // //     if (!$file_size)
-        // //         exit("Verify file, something wrong with your file");
-        
-        // //     $duration = ($file_size / $ratio);
-        // //     $minutes = floor($duration / 60);
-        // //     $seconds = $duration - ($minutes * 60);
-        // //     $seconds = round($seconds);
-        // //     echo "$minutes:$seconds minutes";
-        
-        // // }
-        
-        // // $file = 'file_example_MP3_700KB.mp3'; //Enter File Name mp3/wav
-        // // print(calculateFileSize($file));
-
-        // //   }
-          
           return view('displayprofile',compact('getData'));
     }
 
     public function filedetail($id)
     {
-       // dd($id);
-        //$getData=DB::table('uploads')->where('user_id','=',auth()->user()->id)->orderBy('created_at','desc')->take(3);
+      
+       
        $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
+        
+       $Audio_ids=array();
+       foreach($getData  as $item){
+           $Audio_ids[]=$item->id;
+       }
+   
+       $audioids=(implode(',',$Audio_ids));
+      
 
-
-    // dd($getData);
-        return view('filedetail',compact('getData'));
+       return view('filedetail',compact('getData','audioids','id'));
     
+    }
+    public function transactionfile_info($id)
+    {
+       
+       $getData = Upload::where('paymentdetails_id','=',$id)->get();
+
+       return view('paymentinfo',compact('getData'));
+    
+    }
+    
+
+    public function transactondetails(){
+
+        $paymentdetails=DB::table('paymentdetails')->orderBy('created_at', 'desc')->get();
+
+        return view('transactonHistory',compact('paymentdetails'));
+    }
+
+    public function propaypal($id){
+
+        $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
+        
+        $Audio_ids=array();
+        foreach($getData  as $item){
+            $Audio_ids[]=$item->id;
+        }
+    
+        $audioids=(implode(',',$Audio_ids));
+       
+
+        return view('propaypal',compact('getData','audioids'));
+       
+    }
+
+    public function propaypalsingle($id){
+
+        $getData = Upload::where('id','=',$id)->where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        
+        $Audio_ids=array();
+        foreach($getData  as $item){
+            $Audio_ids[]=$item->id;
+        }
+    
+        $audioids=(implode(',',$Audio_ids));
+       
+
+        return view('propaypal',compact('getData','audioids'));
+       
     }
 
 
+
+    public function directpayment($id){
+
+        $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
+        
+        $Audio_ids=array();
+        foreach($getData  as $item){
+            $Audio_ids[]=$item->id;
+        }
+    
+        $audioids=(implode(',',$Audio_ids));
+       
+
+        
+        return view('propaypal',compact('getData','audioids'));
+       
+    }
+
+    
 }

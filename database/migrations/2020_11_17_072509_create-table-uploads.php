@@ -15,9 +15,13 @@ class CreateTableUploads extends Migration
     {
         Schema::create('uploads', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('file_name');
             $table->tinyInteger('cleaned')->default('0');
+            $table->unsignedBigInteger('paymentdetails_id')->nullable();
+            $table->foreign('paymentdetails_id')->references('id')->on('paymentdetails');
+            $table->string('processed_file')->nullable();
             $table->timestamps();
         });
     }
