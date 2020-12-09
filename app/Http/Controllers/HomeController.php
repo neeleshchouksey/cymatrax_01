@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Upload;
 use DB;
 use FFMpeg;
+use Omnipay\Omnipay;
+use Omnipay\Common\CreditCard;
 
 class HomeController extends Controller
 {
@@ -64,6 +66,7 @@ class HomeController extends Controller
 
     public function filedetail($id)
     {
+      
        
        $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
         
@@ -75,7 +78,7 @@ class HomeController extends Controller
        $audioids=(implode(',',$Audio_ids));
       
 
-       return view('filedetail',compact('getData','audioids'));
+       return view('filedetail',compact('getData','audioids','id'));
     
     }
     public function transactionfile_info($id)
@@ -95,10 +98,55 @@ class HomeController extends Controller
         return view('transactonHistory',compact('paymentdetails'));
     }
 
-    public function propaypal(){
+    public function propaypal($id){
 
+        $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
+        
+        $Audio_ids=array();
+        foreach($getData  as $item){
+            $Audio_ids[]=$item->id;
+        }
+    
+        $audioids=(implode(',',$Audio_ids));
        
-        return view('propaypal');
+
+        return view('propaypal',compact('getData','audioids'));
+       
+    }
+
+    public function propaypalsingle($id){
+
+        $getData = Upload::where('id','=',$id)->where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        
+        $Audio_ids=array();
+        foreach($getData  as $item){
+            $Audio_ids[]=$item->id;
+        }
+    
+        $audioids=(implode(',',$Audio_ids));
+       
+
+        return view('propaypal',compact('getData','audioids'));
+       
+    }
+
+
+
+    public function directpayment($id){
+
+        $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
+        
+        $Audio_ids=array();
+        foreach($getData  as $item){
+            $Audio_ids[]=$item->id;
+        }
+    
+        $audioids=(implode(',',$Audio_ids));
+       
+
+        
+        return view('propaypal',compact('getData','audioids'));
+       
     }
 
     

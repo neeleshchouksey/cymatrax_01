@@ -26,7 +26,7 @@
                 <td>{{$item->lastname}}</td>
                 <td>{{$item->email}}</td>
                 <td>{{$item->duration}}</td>
-                <td>{{$item->totalprice}}</td>
+                <td>${{$item->totalprice}}</td>
                 <td><a href="{{URL::to('/')}}/transactionfileinfo/{{$item->id}}">View Details</a></td>
 
             </tr>

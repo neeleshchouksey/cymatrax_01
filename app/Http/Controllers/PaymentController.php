@@ -27,6 +27,8 @@ class Paymentcontroller extends Controller
  
     public function store(Request $request)
     {
+
+        
         $arr_expiry = explode("/", $request->input('expiry'));
   
         $formData = array(
@@ -45,7 +47,6 @@ class Paymentcontroller extends Controller
                 'currency' => 'USD',
                 'card' => $formData
             ])->send();
- //dd($response);
             // Process response
             if ($response->isSuccessful()) {
  

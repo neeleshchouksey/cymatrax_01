@@ -39,22 +39,39 @@
        <b>($1 per minute) </b>
 
      <!-- paypal code -->
-           <div class="content" style="display:inline-flex;margin-left: 58%;">
-                  
+           <div class="content" >
+                <!-- <form  method="Post" action="{{ route('payment') }}"> -->
+                  <!-- @csrf -->
+                <!-- <input type="hidden" name="totalcost" value="" id="paypal_total_cost"/>
+                <input type="hidden" name="fileids" value="{{$audioids}}" id="paypal_audio_ids"/>
+                <input type="hidden" name="totalduration" value="" id="paypal_total_duration"/> -->
+                <!-- <input type="submit" value="Pay & Checkout" class="btn btn-success" name="submit"/>
+                </form> -->
+                <span>   <a href="{{URL::to('/file/fetch')}}" class="btn btn-success" style="float:right;">Cancel</a></span>
+                <a href="{{URL::to('/')}}/propaypal/{{$id}}" class="btn btn-warning" style="float:right;">Propaypal</a>    
 
-                <form  method="Post" action="{{ route('payment') }}">
+            </div>
+
+
+
+
+
+     <!-- end paypal code -->
+   
+
+   
+         
+  <!-- direct payment code --> 
+             <form  method="Post" action="{{URL::to('/directpayment')}}" style="visibility:hidden;">
                   @csrf
                 <input type="hidden" name="totalcost" value="" id="paypal_total_cost"/>
                 <input type="hidden" name="fileids" value="{{$audioids}}" id="paypal_audio_ids"/>
                 <input type="hidden" name="totalduration" value="" id="paypal_total_duration"/>
-                <input type="submit" value="Pay & Checkout" class="btn btn-success" name="submit"/>
-                </form>
-                <span style="margin-left:1%;"><a href="{{URL::to('/file/fetch')}}" class="btn btn-success">Cancel</a></span>
+                <input type="submit" value="Direct DPay & Checkout" class="btn btn-success" name="submit"/>
+              </form>
+  
+     <!-- direct payment code end--> 
 
-            </div>
-     <!-- end paypal code -->
-     <!-- <a href="{{URL::to('/propaypal')}}">Propaypal</a>      -->
-    
 
 
 

@@ -15,8 +15,9 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
-        "league/omnipay": "^3",
+        "league/omnipay": "^3.1",
         "omnipay/paypal": "^3.0",
+        "omnipay/stripe": "^3.1",
         "paypal/rest-api-sdk-php": "*",
         "pbmedia/laravel-ffmpeg": "^7.4",
         "srmklive/paypal": "~1.0"

@@ -51,19 +51,9 @@
 <!-- get duration end -->
              
 
-        <!-- <audio style="display:none;" id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/upload/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
-                Your browser does not support the audio element.
-            </audio>
-            <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
-             <b> File duration = <span id="duration{{$key}}"></span> </b>
-              <button style="visibility:hidden;" type="button" onclick="getDuration({{$key}})" class="getdur">Get Duration</button>
-              <span id="ids{{$key}}" ></span>
-            </div>
-
-            </div> -->
+   
 
             <div class="content" style="display:inline-flex;">
-                  
 
                   <form  method="post" action="{{ route('payment') }}">
                     @csrf
@@ -77,6 +67,8 @@
   
               </div>
            
+              <a href="{{URL::to('/')}}/propaypalsingle/{{$item->id}}" class="btn btn-warning">Propaypal</a>     
+
          <!-- end paypal code -->
 
 

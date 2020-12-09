@@ -35,7 +35,11 @@ Route::get('payment/success', 'PayPalController@success')->name('payment.success
 //paypal pro
 // Route::resource('payment', 'PaymentController');
 
-Route::get('/propaypal', 'HomeController@propaypal');
-
+Route::get('/propaypal/{id}', 'HomeController@propaypal');
+Route::get('/propaypalsingle/{id}', 'HomeController@propaypalsingle');
 Route::post('/payment/store', 'Paymentcontroller@store');
+
+Route::post('/directpayment', 'Paymentcontroller@store');
+
+
 
