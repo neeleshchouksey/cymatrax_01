@@ -80,7 +80,7 @@ Dropzone.options.dropzoneForm = {
             })
                 .then((result) => {
                     console.log(result);
-                    window.location = APP_URL + '/filedetail/' + count;
+                    window.location = APP_URL + '/upload-summary/' + count;
                     //  window.location = APP_URL+'/file/fetch';
 
                 })
@@ -102,7 +102,7 @@ Dropzone.options.dropzoneForm = {
 var total = 0;
 
 function getDuration(aud_id) {
-  
+
     setTimeout(function () {
         var duration = document.getElementById("audio" + aud_id).duration; //in seconds
         var duration_in_sec = document.getElementById("audio" + aud_id).duration; //in seconds
@@ -113,8 +113,72 @@ function getDuration(aud_id) {
         $("#duration" + aud_id).html(minutes + "." + seconds);
 
         $("#duration_in_sec" + aud_id).val(duration_in_sec);
-        
+
     }, 1500);
 
+}
+
+function onlyNumberKey(evt) {
+
+    // Only ASCII charactar in that range allowed
+    var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+        return false;
+    return true;
+}
+
+function checkout() {
+
+    $("#process-button").html("Loading...");
+    $("#input-button").prop("disabled",true);
+    $("#process-button").prop("disabled",true);
+    $.ajax({
+        method: "post",
+        url: APP_URL + "/payment/store",
+        data: {
+            "_token": CSRF_TOKEN,
+            "amount": $("#paypal_total_cost").val(),
+            "number": $("#number").val(),
+            "expiry": $("#expiry").val(),
+            "cvc": $("#cvc").val(),
+            "firstName": $("#first-name").val(),
+            "lastName": $("#last-name").val(),
+            "email": $("#email").val(),
+            "streetaddress": $("#streetaddress").val(),
+            "city": $("#city").val(),
+            "state": $("#state").val(),
+            "country": $("#country").val(),
+            "zipcode": $("#zipcode").val(),
+            "checkout_id": $("#checkout_id").val(),
+            "totalduration": $("#paypal_total_duration").val(),
+            "fileids": $("#fileids").val()
+        },
+        success: function (response) {
+            $("#process-button").html("Process Payment");
+            $("#process-button").prop("disabled",false);
+            $("#input-button").prop("disabled",false);
+            console.log(response);
+            Swal.fire({
+                title: 'Thank You',
+                text: response.msg,
+                icon: 'success',
+                showCancelButton: false,
+            }).then((result) => {
+                console.log(result);
+                window.location = APP_URL + '/transactions';
+            })
+        },
+        error: function (error) {
+            $("#process-button").html("Process Payment");
+            $("#process-button").prop("disabled",false);
+            $("#input-button").prop("disabled",false);
+            console.log(error);
+            Swal.fire({
+                title: "Error",
+                text: error.responseJSON.msg,
+                icon: "error",
+            });
+        }
+    });
 }
 

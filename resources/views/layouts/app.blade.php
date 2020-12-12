@@ -1,34 +1,86 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
+    <title>Cymatrax</title>
+    <meta name="description" content="Cymatrax offers audio processing...">
+    <meta name="keywords" content="Audio Processing, Audio Equalization">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Cymatrax') }}</title>
-
-    <!-- Scripts -->
-<!-- for pro paypal -->
-<!-- <link href="{{ asset('public/css/card.css') }}" rel="stylesheet"> -->
-
-
-<!-- end pro paypal -->
+    <link rel="icon" type="image/png" href="{{URL::to('/')}}/assets/images/favicon.png">
+    <link rel="stylesheet" href="{{asset('assets/dropzone/dist/dropzone.css')}}"/>
+    <link href="{{URL::to('/')}}/assets/css/index.css" rel="stylesheet"/>
     <script>
         var APP_URL = '{{URL::to("/")}}';
+        var CSRF_TOKEN = '{{csrf_token()}}'
     </script>
 
+
+</head>
+<body>
+<header>
+    <div class="inner-header">
+        <img src="{{URL::to('/')}}/assets/images/logo.banner.png" class="logo-banner"/>
+        <img src="{{URL::to('/')}}/assets/images/logo.png" class="logo-icon"/>
+        <a class="mobile-toggle" onclick="$('header ul').toggleClass('open');">&#9776;</a>
+        <ul>
+            <li><a href="{{URL::to('/')}}">Home</a></li>
+            <li><a href="{{URL::to('/')}}/services/">Services</a></li>
+            @if(Auth::user())
+                <li><a href="{{URL::to('/')}}/account">My Account</a></li>
+                <li>
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                        Sign Out
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+
+                </li>
+            @else
+                <li><a href="{{URL::to('/')}}/login">Login</a></li>
+            @endif
+        </ul>
+    </div>
+</header>
+
+<div id="app">
+    @yield('content')
+</div>
+<footer>
+    <div class="inner-footer">
+        <p class="copyright">&copy; 2020, All Rights Reserved, cymatrax.com</p>
+        <nav>
+            <a href="{{URL::to('/')}}/privacy/">Privacy Policy</a> | <a href="{{URL::to('/')}}/terms/">Terms
+                of Use</a>
+        </nav>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{asset('assets/dropzone/dist/dropzone.js')}}"></script>
+    <script src="{{ asset('public/js/app.js') }}" defer></script>
+    <script src="{{ asset('public/js/component.js') }}"></script>
+    <!-- sweet aleart -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- Include a polyfill for ES6 Promises (optional) for IE11 -->
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+    <!-- paypal pro scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script src="{{ asset('public/js/jquery.card.js') }}"></script>
+    <script src="{{ asset('public/js/card.js') }}"></script>
+    <!-- paypal pro scripts end-->
     <script>
         $(document).ready(function () {
 
 
-            
             var userSelection = document.getElementsByClassName('getdur');
 
             console.log(userSelection);
-           
+
 
             for (var i = 0; i < userSelection.length; i++) {
                 (userSelection[i]).click();
@@ -50,136 +102,81 @@
                 total_cost = per_sec_cost * total_duration;
 
                 $("#total-duration").html(minutes + ' min ' + seconds + ' sec')
-                $("#total-cost").html( '$' + total_cost.toFixed(2))
+                $("#total-cost").html('$' + total_cost.toFixed(2))
 
 
-
-                total_cost=total_cost.toFixed(2);
-                document.getElementById("paypal_total_cost").setAttribute('value',total_cost);
-                document.getElementById("paypal_total_duration").setAttribute('value',minutes+'.'+seconds);
-
-
+                total_cost = total_cost.toFixed(2);
+                $("#paypal_total_cost").val(total_cost)
+                $("#span_paypal_total_cost").html("$ "+total_cost);
+                $("#paypal_total_duration").val( minutes + '.' + seconds)
             }, 1500);
 
         });
     </script>
+    <script>
+        var msg = '{{Session::get('alert')}}';
+        var exist = '{{Session::has('alert')}}';
+        if (exist) {
+
+            Swal.fire({
+                title: 'Thank You',
+                text: msg,
+                icon: 'success',
+                showCancelButton: false,
+            });
+        }
+     var msg = '{{Session::get('error')}}';
+        var exist = '{{Session::has('error')}}';
+        if (exist) {
+            Swal.fire({
+                title: 'Error!',
+                text: msg,
+                icon: 'error',
+                showCancelButton: false,
+            });
+        }
+    </script>
 
 
+    <script>
+        @if(isset($file))
+        $(document).ready(function(){
+            var wavesurfer = WaveSurfer.create({
+                container: '#input-waveform',
+                waveColor: '#384a50',
+                progressColor: '#71b3b0',
+                barWidth: 3
+            });
 
+            var wavesurfer1 = WaveSurfer.create({
+                container: '#output-waveform',
+                waveColor: '#71b3b0',
+                progressColor: '#384a50',
+                barWidth: 3
+            });
 
- 
+            wavesurfer.load(APP_URL+'/public/upload/{{$file->file_name}}');
+            wavesurfer1.load(APP_URL+'/public/upload/{{$file->processed_file}}');
 
+            $("#play-btn").click(function (){
+                wavesurfer.play();
+            });
+            $("#pause-btn").click(function (){
+                wavesurfer.pause();
+            });
+           $("#play-btn1").click(function (){
+                wavesurfer1.play();
+            });
+            $("#pause-btn1").click(function (){
+                wavesurfer1.pause();
+            });
+            // $("#output-btn").click(function (){
+            //     wavesurfer1.playPause();
+            // });
+        });
+        @endif
+    </script>
 
-    <script src="{{asset('assets/dropzone/dist/dropzone.js')}}"></script>
-    <link rel="stylesheet" href="{{asset('assets/dropzone/dist/dropzone.css')}}"/>
-
-
-    <script src="{{ asset('public/js/app.js') }}" defer></script>
-    <script src="{{ asset('public/js/component.js') }}"></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('public/css/style.css') }}" rel="stylesheet">
-
-
-    <!-- sweet aleart -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-
-    <!-- Include a polyfill for ES6 Promises (optional) for IE11 -->
-    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
-
-
-<!-- paypal pro scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<script src="{{ asset('public/js/jquery.card.js') }}"></script>
-<script src="{{ asset('public/js/card.js') }}"></script>
-<!-- paypal pro scripts end-->
-
-
-</head>
-<body>
-<div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Cymatrax') }}
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
-                    <!-- Authentication Links -->
-                    @guest
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/home') }}">{{ __('Home') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">{{ __('Service') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}"> {{ __('Register') }}</a>
-                            </li>
-                        @endif
-
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/home') }}">{{ __('Home') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">{{ __('Service') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href='{{URL::to("file/fetch")}}'>{{ __('My Account') }}</a>
-                        </li>
-                        <li class="nav-item">
-                        <!-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                            </a> -->
-
-                            <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> -->
-                            <a class="nav-link" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                {{ __('Sign Out') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-
-
-                            <!-- </div> -->
-                        </li>
-                    @endguest
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <main class="py-4">
-        @yield('content')
-    </main>
-</div>
+</footer>
 </body>
 </html>

@@ -8,7 +8,6 @@ class CreatePaymentDetailsTable extends Migration
 {
     /**
      * Run the migrations.
-     * 
      *
      * @return void
      */
@@ -16,6 +15,7 @@ class CreatePaymentDetailsTable extends Migration
     {
         Schema::create('paymentdetails', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email');
@@ -23,17 +23,9 @@ class CreatePaymentDetailsTable extends Migration
             $table->string('totalprice');
             $table->string('timestamp');
             $table->string('transationId');
-            $table->string('patmentstatus');
+            $table->string('payment_status');
             $table->double('duration', 15, 8);
-            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('card_id')->nullable();
-
-            
-            // $table->bigInteger('cardnumber');
-            // $table->bigInteger('expirymonth');
-            // $table->bigInteger('expiryyear');
-            // $table->bigInteger('cvvnumber');
             $table->timestamps();
 
         });
@@ -46,6 +38,6 @@ class CreatePaymentDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paymentdetails');
+        Schema::dropIfExists('payment_details');
     }
 }

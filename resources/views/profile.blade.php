@@ -3,6 +3,8 @@
 @section('content')
     <div class="content">
         <section>
+            @include('layouts/menu')
+
             <div class="relative">
                 @if (session('status'))
                     <div class="success">{{ session('status') }}</div>
@@ -17,67 +19,43 @@
                 <div class="errors">{{ $message }}</div>
                 @endif
                 <br>
-                <form method="POST" action="{{ route('register') }}" class="register">
+                <form method="POST" action="{{ route('update-profile') }}" class="register">
                     @csrf
 
                     <table>
                         <tbody>
                         <tr>
-                            <td colspan="2"><h3>Registration</h3></td>
+                            <td colspan="2"><h3>Profile</h3></td>
                         </tr>
                         <tr>
                             <td>Name:</td>
                             <td>
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                       name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                       name="name" value="{{ $user->name }}" required autocomplete="name" autofocus>
                             </td>
                         </tr>
                         <tr>
                             <td>Email Address:</td>
                             <td>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                       name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Password:</td>
-                            <td>
-                                <input id="password" type="password"
-                                       class="form-control @error('password') is-invalid @enderror" name="password"
-                                       required
-                                       autocomplete="new-password">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Confirm Password:</td>
-                            <td>
-                                <input id="password-confirm" type="password" class="form-control"
-                                       name="password_confirmation" required autocomplete="new-password">
+                                       name="email" value="{{ $user->email }}" readonly autocomplete="email" autofocus>
                             </td>
                         </tr>
                         <tr>
                             <td>User Type</td>
                             <td>
-                                <input type="radio" name="user" value="1" checked>
+                                <input type="radio" name="user" value="1" @if($user->user == 1) checked @endif>
                                 Single User
 
 
-                                <input type="radio" name="user" value="2" style="margin-left: 22px;">
+                                <input type="radio" name="user" value="2" @if($user->user == 2) checked @endif>
                                 Company User
                             </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td>
-                                <button type="submit">Create Account</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <p><a href="{{URL::to('/')}}/login">Back to login</a></p>
+                                <button type="submit">Update Profile</button>
                             </td>
                         </tr>
                         </tbody>

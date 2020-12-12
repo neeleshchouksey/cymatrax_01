@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\UserCard;
 use Illuminate\Http\Request;
 use App\Upload;
 use DB;
@@ -18,7 +19,6 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     /**
@@ -26,128 +26,18 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+
+    public function services()
     {
-        return view('home');
+        return view('services');
     }
 
-   
-
-    public function upload(Request $request)
-    { 
-  
-        
-        $count = count($request->file);
-        foreach($request->file as $item){
-         
-        
-            $imageName = time().'_'.$item->getClientOriginalName();
-            $item->move(public_path('upload'), $imageName);
-            $data = new Upload();
-            $data->user_id = auth()->user()->id;   
-            $data->file_name = $imageName;
-            $data->save();
-           
-        }
-      
-        return response()->json(['success' => $imageName,'count'=>$count]);
-    
-
-    }
-
-    public function fetch()
+    public function terms()
     {
-          $getData=DB::table('uploads')->where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->get();
-
-         
-
-          return view('displayprofile',compact('getData'));
+        return view('terms');
     }
-
-    public function filedetail($id)
+    public function privacy()
     {
-      
-       
-       $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
-        
-       $Audio_ids=array();
-       foreach($getData  as $item){
-           $Audio_ids[]=$item->id;
-       }
-   
-       $audioids=(implode(',',$Audio_ids));
-      
-
-       return view('filedetail',compact('getData','audioids','id'));
-    
+        return view('privacy');
     }
-    public function transactionfile_info($id)
-    {
-       
-       $getData = Upload::where('paymentdetails_id','=',$id)->get();
-
-       return view('paymentinfo',compact('getData'));
-    
-    }
-    
-
-    public function transactondetails(){
-
-        $paymentdetails=DB::table('paymentdetails')->orderBy('created_at', 'desc')->get();
-
-        return view('transactonHistory',compact('paymentdetails'));
-    }
-
-    public function propaypal($id){
-
-        $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
-        
-        $Audio_ids=array();
-        foreach($getData  as $item){
-            $Audio_ids[]=$item->id;
-        }
-    
-        $audioids=(implode(',',$Audio_ids));
-       
-
-        return view('propaypal',compact('getData','audioids'));
-       
-    }
-
-    public function propaypalsingle($id){
-
-        $getData = Upload::where('id','=',$id)->where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->get();
-        
-        $Audio_ids=array();
-        foreach($getData  as $item){
-            $Audio_ids[]=$item->id;
-        }
-    
-        $audioids=(implode(',',$Audio_ids));
-       
-
-        return view('propaypal',compact('getData','audioids'));
-       
-    }
-
-
-
-    public function directpayment($id){
-
-        $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
-        
-        $Audio_ids=array();
-        foreach($getData  as $item){
-            $Audio_ids[]=$item->id;
-        }
-    
-        $audioids=(implode(',',$Audio_ids));
-       
-
-        
-        return view('propaypal',compact('getData','audioids'));
-       
-    }
-
-    
 }

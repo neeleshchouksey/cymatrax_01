@@ -1,104 +1,83 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Cymatrax</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                        <a class="nav-link" href="#">{{ __('Service') }}</a>
-                        <a class="nav-link" href='{{URL::to("file/fetch")}}'>{{ __('My Account') }}</a>
-                        <a class="nav-link" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Sign Out') }}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                    @else
-                    <a class="nav-link" href="#">{{ __('Home') }}</a>
-
-                
-                        <a class="nav-link" href="#">{{ __('Service') }}</a>
-                        <a href="{{ route('login') }}">Login</a>
-                               @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-
-             
+@section('content')
+    <div class="content">
+        <h3 class="headline">All digital audio can make you healthier. You are one step away from making it happen.</h3>
+        <div class="feature">
+            <article>
+                <div>
+                    <h3>Conversion Service</h3>
+                    <div class="clip-wrapper">
+                        <video autoplay muted loop>
+                            <source src="{{URL::to('/')}}/assets/images/spectrum.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <h4>Digital Audio</h4>
+                    <p>$1.00 per minute</p>
+                    <a href="https://dev.alcondts.com/services/">
+                        <button>LEARN MORE</button>
+                    </a>
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                Cymatrax
-                </div>
-            </div>
+            </article>
+            <!--
+            <video controls autoplay muted>
+              <source src="assets/v9.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+            -->
         </div>
-    </body>
-</html>
+        <section class="inverted">
+            <h1>Why Cymatrax?</h1>
+            <blockquote>
+                <q>It’s absolutely logical and surprising no one has ever thought of this.</q>
+                <p>Neurobiology Chair, UAB</p>
+            </blockquote>
+            <ul class="faq">
+                <li>
+                    <h3>White Noise Puts You to Sleep</h3>
+                    <p>You know people that listen to white noise to go to sleep. White noise is found in all digital
+                        audio.
+                        With a reduction of the white noise volume in recordings your concentration and energy levels
+                        are
+                        raised for greater cognitive ability.</p>
+                </li>
+                <li>
+                    <h3>Former NASA Engineer</h3>
+                    <p>&#8220;Having this remarkable quality audio enhanced the ability of our listeners to hear the
+                        materials.&#8221; C.C. Culver, international speaker Leadership ,Management, Organization,
+                        Systems
+                        Engineering and Space Exploration.</p>
+                </li>
+                <li>
+                    <h3>Music Recording Studios</h3>
+                    <p>&#8220;I had so much energy, I felt like I could dance all night long. (My own master) was murky
+                        and
+                        put me to sleep. Every recording studio on the world needs to be using this!&#8221; claims one
+                        Grammy Hall of Fame Member.</p>
+                </li>
+                <li>
+                    <h3>Audio fidelity at its finest.</h3>
+                    <p>Cymatrax combines vibrational frequency, world-class sound engineering in a patented system,
+                        enabling
+                        , less stress , more energy and a higher cognitive ability of the brain from any digital audio
+                        file.</p>
+                </li>
+                <li>
+                    <h3>Podcasters</h3>
+                    <p>Reap rewards of longer engagement, increased audiences and higher subscriptions with frequency
+                        based
+                        delivery of digital audio in a process called &#8220;Optimized Signal Transduction.&#8221;</p>
+                </li>
+                <li>
+                    <h3>Online education</h3>
+                    <p>Retention is significantly raised with the Cymatrax patented technology, which will raise a
+                        student’s
+                        GPA as well as so higher success in teaching success from all online teaching educational
+                        entities.</p>
+                </li>
+
+            </ul>
+        </section>
+    </div>
+@endsection
