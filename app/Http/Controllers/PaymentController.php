@@ -39,6 +39,7 @@ class PaymentController extends Controller
     }
 
     public function checkout($id){
+        $title = "Process Payment";
         $user = User::find(Auth::user()->id);
 
         $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
@@ -48,7 +49,7 @@ class PaymentController extends Controller
         }
         $audioids=(implode(',',$Audio_ids));
 
-        return view('checkout',compact('getData','audioids','user'));
+        return view('checkout',compact('getData','title','audioids','user'));
     }
 
     public function checkout_single($id)
@@ -197,7 +198,6 @@ class PaymentController extends Controller
                         $uploads = DB::table('uploads')
                             ->where('id', $item)  //update uploads
                             ->update(['paymentdetails_id' => $paymentid->id, 'processed_file' => $filename_new, 'cleaned' => 1]);
-
                     }
 
                     return response()->json(["status" => "success", "msg" => "Payment Completed Successfully"], 200);

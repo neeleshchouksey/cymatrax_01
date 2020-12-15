@@ -2,12 +2,10 @@
 
 @section('content')
 
-    <section>
+    <section class="contained">
         @include('layouts/menu')
         <div class="checkouttotal">
-            <h3>Upload Summary</h3>
-
-            <table>
+            <table class="tr-table">
                 <tbody>
                 @foreach($getData as $key=>$item)
                     <tr>
@@ -16,9 +14,15 @@
                                 Your browser does not support the audio element.
                             </audio>
                             <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
-                            <b> File duration = <span id="duration{{$key}}" ></span> </b>
+                        </td>
+
+                        <td>
+                            <b> File Duration : <span id="duration{{$key}}" ></span> </b>
                             <button style="visibility:hidden;" type="button" onclick="getDuration({{$key}})" class="getdur">Get Duration</button>
                             <span id="ids{{$key}}" ></span>
+                        </td>
+                        <td>
+                            <b> File Name : <span>{{$item->file_name}}</span> </b>
                         </td>
                     </tr>
                 @endforeach

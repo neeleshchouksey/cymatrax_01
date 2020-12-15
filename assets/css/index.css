@@ -563,7 +563,12 @@ footer nav a:hover{
 .upload-btn:hover{
     background-color: #75aba9;
 }
-
+audio{
+    width: 250px!important;
+}
+/*table {*/
+/*    margin-left: 10px;*/
+/*}*/
 h1.myaccount{
 	border-bottom: solid 1px #ccc;
 	margin-right: 50px;
@@ -571,8 +576,8 @@ h1.myaccount{
 .profileMenu{
 	position: absolute;
     z-index: 999;
-    top: 59px;
-    right: 0px;
+    top: 200px;
+    right: 200px;
     background-color: #eee;
     border-radius: 4px;
     padding: 16px;
@@ -738,6 +743,13 @@ table.transactions span.timestamp{
     padding: 10px;
     margin-top: 10px;
 }
+.tr-table tr td{
+    border-bottom: 1px solid #f2f8f7;
+    padding-top:10px !important;
+}
+tr td {
+    padding-bottom: 10px !important;
+}
 
 @media only screen and (max-width: 940px) {
 	section ul.faq li{
@@ -812,10 +824,6 @@ table.transactions span.timestamp{
 		displpay:none;
 	}
 }
-tr td {
-    padding-bottom: 10px !important;
-}
-
 /* height restrictions */
 
 @media only screen and (max-height: 700px) {

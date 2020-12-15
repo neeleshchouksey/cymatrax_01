@@ -32,13 +32,21 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('upload');
+        $title = "Dashboard";
+
+        return view('home',compact('title'));
+    }
+  public function upload_audio()
+    {
+        $title = "Upload Audio";
+        return view('upload',compact('title'));
     }
 
     public function profile()
     {
+        $title = "Profile";
         $user = User::find(Auth::user()->id);
-        return view('profile', ["user" => $user]);
+        return view('profile', ["user" => $user,"title"=>$title]);
     }
 
     public function update_profile(Request $request)
@@ -69,41 +77,53 @@ class UserController extends Controller
 
     public function account()
     {
+        $title = "My Account";
         $getData = DB::table('uploads')->where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
-        return view('account', compact('getData'));
+        return view('account', compact('getData','title'));
     }
 
     public function upload_summary($id)
     {
+        $title = "Upload Summary";
         $getData = Upload::where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
         $Audio_ids = array();
         foreach ($getData as $item) {
             $Audio_ids[] = $item->id;
         }
         $audioids = (implode(',', $Audio_ids));
-        return view('upload-summary', compact('getData', 'audioids', 'id'));
+        return view('upload-summary', compact('title','getData', 'audioids', 'id'));
 
     }
 
     public function transaction_details($id)
     {
-
+        $title = "Transaction Details";
         $getData = Upload::where('paymentdetails_id', '=', $id)->get();
 
-        return view('transaction-details', compact('getData'));
+        return view('transaction-details', compact('title','getData'));
 
     }
 
     public function transactions()
     {
-        $paymentdetails = DB::table('paymentdetails')->orderBy('created_at', 'desc')->get();
-        return view('transactions', compact('paymentdetails'));
+        $title = "Transaction History";
+        $paymentdetails = DB::table('paymentdetails')
+            ->where("user_id",Auth::user()->id)
+            ->orderBy('created_at', 'desc')->get();
+        return view('transactions', compact('paymentdetails','title'));
     }
 
     public function audio_analysis($id){
+        $title = "Audio Analysis";
         $file = Upload::find($id);
-        return view('audio-analysis', compact('file'));
+        return view('audio-analysis', compact('title','file'));
 
+    }
+
+    public function download_file($file){
+        $file = public_path().'/upload/'.$file;
+//        $file = asset('public/upload/').'/'.$file;
+        return response()->download($file, 'file.mp3');
     }
 
     public function directpayment($id)

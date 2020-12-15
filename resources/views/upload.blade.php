@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <section>
+    <section class="contained">
        @include('layouts/menu')
         <div class="tool">
             <h3>Audio Conversion Tool</h3>

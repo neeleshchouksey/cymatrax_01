@@ -25,9 +25,9 @@
         <img src="{{URL::to('/')}}/assets/images/logo.png" class="logo-icon"/>
         <a class="mobile-toggle" onclick="$('header ul').toggleClass('open');">&#9776;</a>
         <ul>
-            <li><a href="{{URL::to('/')}}">Home</a></li>
-            <li><a href="{{URL::to('/')}}/services/">Services</a></li>
             @if(Auth::user())
+                <li><a href="{{URL::to('/')}}/dashboard">Dashboard</a></li>
+                <li><a href="{{URL::to('/')}}/services/">Services</a></li>
                 <li><a href="{{URL::to('/')}}/account">My Account</a></li>
                 <li>
                     <a href="{{ route('logout') }}"
@@ -41,6 +41,8 @@
 
                 </li>
             @else
+                <li><a href="{{URL::to('/')}}">Home</a></li>
+                <li><a href="{{URL::to('/')}}/services/">Services</a></li>
                 <li><a href="{{URL::to('/')}}/login">Login</a></li>
             @endif
         </ul>

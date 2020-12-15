@@ -5,9 +5,8 @@
     <div class="content">
         @include('layouts/menu')
 
-        <section>
+        <section class="contained">
             <div class="relative">
-                <h3>Transaction History</h3>
                 <table class="transaction-table" cellspacing="0" cellpadding="0">
                     <thead>
                     <tr>

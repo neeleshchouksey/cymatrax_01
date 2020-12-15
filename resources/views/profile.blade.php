@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="content">
-        <section>
+        <section class="contained">
             @include('layouts/menu')
 
             <div class="relative">

@@ -5,26 +5,29 @@
     <div class="content">
         @include('layouts/menu')
 
-        <section>
+        <section class="contained">
             <div class="relative">
                 <h3>Transaction Details</h3>
 
-                <table>
+                <table class="tr-table">
                     <tbody>
                     @foreach($getData as $key=>$item)
                         <tr>
                             <td>
-                                <audio  id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/upload/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
+                                <audio  id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/upload/'.$item->processed_file) }}" type="audio/mp3" controlslist="nodownload">
                                     Your browser does not support the audio element.
                                 </audio>
                                 <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
-                                <b> File duration = <span id="duration{{$key}}" ></span> </b>
+                                <b> File duration : <span id="duration{{$key}}" ></span> </b>
                                 <button style="visibility:hidden;" type="button" onclick="getDuration({{$key}})" class="getdur">Get Duration</button>
                                 <span id="ids{{$key}}" ></span>
                             </td>
                             <td>
-                                <a class="btn btn-success" href="{{ asset('public/upload/'.$item->file_name) }}"
-                                   download>Download</a>
+                                <b> File Name : <span>{{$item->file_name}}</span> </b>
+
+                            </td>
+                            <td>
+                                <button class="wave-btn" onclick="window.location='{{URL::to('/')}}/download-file/{{$item->processed_file}}'">Download File</button>
 
                             </td>
                         </tr>
