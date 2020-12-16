@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" href="{{URL::to('/')}}/assets/images/favicon.png">
-    <link rel="stylesheet" href="{{asset('assets/dropzone/dist/dropzone.css')}}"/>
+    <link rel="stylesheet" href="{{asset('public/dropzone/dist/dropzone.css')}}"/>
     <link href="{{URL::to('/')}}/assets/css/index.css" rel="stylesheet"/>
     <script>
         var APP_URL = '{{URL::to("/")}}';
@@ -62,7 +62,7 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{{asset('assets/dropzone/dist/dropzone.js')}}"></script>
+    <script src="{{asset('public/dropzone/dist/dropzone.js')}}"></script>
     <script src="{{ asset('public/js/app.js') }}" defer></script>
     <script src="{{ asset('public/js/component.js') }}"></script>
     <!-- sweet aleart -->

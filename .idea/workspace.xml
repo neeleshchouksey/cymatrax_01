@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a58a6b5f-cef1-45bb-9158-dd9a75088303" name="Default Changelist" comment="" />
+    <list default="true" id="a58a6b5f-cef1-45bb-9158-dd9a75088303" name="Default Changelist" comment="ce.fkt file">
+      <change beforePath="$PROJECT_DIR$/.idea/new-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/new-project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/.tagconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/bower.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/component.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/composer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/dist/basic.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/dist/dropzone-amd-module.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/dist/dropzone.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/dist/dropzone.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/dist/dropzone.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/dist/min/basic.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/dist/min/dropzone-amd-module.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/dist/min/dropzone.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/dist/min/dropzone.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dropzone/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,6 +35,9 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -118,6 +146,25 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
       <path value="$PROJECT_DIR$/vendor/sebastian/lines-of-code" />
       <path value="$PROJECT_DIR$/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/vendor/srmklive/paypal" />
+      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/vendor/php-ffmpeg/php-ffmpeg" />
+      <path value="$PROJECT_DIR$/vendor/neutron/temporary-filesystem" />
+      <path value="$PROJECT_DIR$/vendor/alchemy/binary-driver" />
+      <path value="$PROJECT_DIR$/vendor/evenement/evenement" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/vendor/pbmedia/laravel-ffmpeg" />
+      <path value="$PROJECT_DIR$/vendor/paypal/rest-api-sdk-php" />
+      <path value="$PROJECT_DIR$/vendor/omnipay/common" />
+      <path value="$PROJECT_DIR$/vendor/omnipay/paypal" />
+      <path value="$PROJECT_DIR$/vendor/moneyphp/money" />
+      <path value="$PROJECT_DIR$/vendor/clue/stream-filter" />
+      <path value="$PROJECT_DIR$/vendor/php-http/guzzle7-adapter" />
+      <path value="$PROJECT_DIR$/vendor/php-http/discovery" />
+      <path value="$PROJECT_DIR$/vendor/php-http/promise" />
+      <path value="$PROJECT_DIR$/vendor/php-http/message-factory" />
+      <path value="$PROJECT_DIR$/vendor/php-http/message" />
+      <path value="$PROJECT_DIR$/vendor/php-http/httplug" />
     </include_path>
   </component>
   <component name="ProjectId" id="1k8EPDqPzWh569fq3WFvogn3bog" />
@@ -129,10 +176,30 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Infinito/workspace/git" />
+    <property name="last_opened_file_path" value="$USER_HOME$/e-blocks" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views" />
+      <recent name="$PROJECT_DIR$/app/Http/Controllers" />
+      <recent name="$PROJECT_DIR$/resources/views/layouts" />
+      <recent name="$PROJECT_DIR$/app" />
+    </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
@@ -150,20 +217,84 @@
       <workItem from="1605081438955" duration="2247000" />
       <workItem from="1605098392523" duration="2011000" />
       <workItem from="1605587423398" duration="620000" />
+      <workItem from="1607512564586" duration="3987000" />
+      <workItem from="1607575372221" duration="367000" />
+      <workItem from="1607584906920" duration="3364000" />
+      <workItem from="1607608847029" duration="1536000" />
+      <workItem from="1607663015932" duration="1088000" />
+      <workItem from="1607664663897" duration="3026000" />
+      <workItem from="1607683439749" duration="8651000" />
+      <workItem from="1607748610324" duration="28988000" />
+      <workItem from="1607938347448" duration="3005000" />
+      <workItem from="1607956668490" duration="1028000" />
+      <workItem from="1608015904363" duration="7223000" />
+      <workItem from="1608027266927" duration="305000" />
+      <workItem from="1608042232461" duration="1859000" />
+      <workItem from="1608130004734" duration="220000" />
     </task>
+    <task id="LOCAL-00001" summary="ce.fkt file">
+      <created>1607501001517</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1607501001517</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Complete flow">
+      <created>1607778050704</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1607778050705</updated>
+    </task>
+    <task id="LOCAL-00003" summary="payment controller">
+      <created>1607778382955</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1607778382955</updated>
+    </task>
+    <task id="LOCAL-00004" summary="assets">
+      <created>1607938427820</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1607938427821</updated>
+    </task>
+    <task id="LOCAL-00005" summary="done small fixes">
+      <created>1608025259977</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1608025259977</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="494" y="154" width="424" height="484" key="FileChooserDialogImpl" timestamp="1605082484708">
-      <screen x="57" y="27" width="1309" height="741" />
-    </state>
-    <state x="494" y="154" width="424" height="484" key="FileChooserDialogImpl/57.27.1309.741@57.27.1309.741" timestamp="1605082484708" />
-    <state x="374" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1605099718280">
-      <screen x="57" y="27" width="1309" height="741" />
-    </state>
-    <state x="374" y="89" width="672" height="678" key="search.everywhere.popup/57.27.1309.741@57.27.1309.741" timestamp="1605099718280" />
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ce.fkt file" />
+    <MESSAGE value="Complete flow" />
+    <MESSAGE value="payment controller" />
+    <MESSAGE value="assets" />
+    <MESSAGE value="done small fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="done small fixes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/resources/views/auth/login.blade.php</url>
+          <line>59</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/resources/views/transaction-details.blade.php</url>
+          <line>11</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
