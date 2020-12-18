@@ -79,17 +79,11 @@ class PaymentController extends Controller
         $coreName = explode('.', $fName);
 
         $coreName = $coreName[0];
-
-
         $outName1 = $dir . $coreName . '.WAV';
-
-
         $outName2 = $dir . $coreName . 'B.WAV';
-
-
         $outName = $dir . 'new_' . $coreName . ".mp3";
-        exec('lame --quiet --decode ' . $inName . ' ' . $outName1 . ' 2>&1;' . 'sox ' . $outName1 . ' -C6 ' . $outName2 . ' --effects-file public/sox/ce.fkt 2>&1;' . 'lame --quiet -V 2 ' . $outName2 . ' ' . $outName);
-
+//        $res = exec('lame --quiet --decode' . $inName . ' ' . $outName1 . ' 2>&1;' . 'sox ' . $outName1 . ' -C6 ' . $outName2 . ' --effects-file public/sox/ce.fkt 2>&1;' . 'lame --quiet -V 2 ' . $outName2 . ' ' . $outName);
+        $res = exec("lame --quiet --decode  $inName  $outName1  2>&1; sox  $outName1  -C6  $outName2  --effects-file public/sox/ce.fkt 2>&1; lame --quiet -V 2  $outName2  $outName");
         return $outName;
     }
 
