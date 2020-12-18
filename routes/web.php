@@ -24,7 +24,7 @@ Route::get('/privacy', 'HomeController@privacy');
 Route::get('/terms', 'HomeController@terms');
 
 Route::get('/dashboard', 'UserController@index');
-Route::get('/upload', 'UserController@upload_audio');
+Route::get('/upload-audio', 'UserController@upload_audio');
 Route::get('/profile', 'UserController@profile');
 Route::post('/update-profile', 'UserController@update_profile')->name("update-profile");
 Route::post('file/upload', 'UserController@upload')->name('file.upload');
