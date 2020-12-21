@@ -38,6 +38,12 @@ class UserController extends Controller
     }
   public function upload_audio()
     {
+//        $dir = "public/upload/";
+//        $inName = $dir."Ashnikko-DaisyLyrics.mp3";
+//        $outName1 = $dir."Ashnikko-DaisyLyrics.wav";
+//        $res = shell_exec("lame --quiet --decode  $inName  $outName1  2>&1;");
+//        dd($res);
+
         $title = "Upload Audio";
         return view('upload',compact('title'));
     }
@@ -64,7 +70,10 @@ class UserController extends Controller
     {
         $count = count($request->file);
         foreach ($request->file as $item) {
-            $imageName = time() . '_' . $item->getClientOriginalName();
+            $img = $item->getClientOriginalName();
+            $img = preg_replace("/[^a-z0-9\_\-\.]/i", '',$img);
+
+            $imageName = time() . '_' . $img;
             $item->move(public_path('upload'), $imageName);
             $data = new Upload();
             $data->user_id = auth()->user()->id;

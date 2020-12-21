@@ -54,6 +54,7 @@ class PaymentController extends Controller
 
     public function checkout_single($id)
     {
+        $title = "Process Payment";
         $user = User::find(Auth::user()->id);
         $getData = Upload::where('id', '=', $id)->where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
 
@@ -65,7 +66,7 @@ class PaymentController extends Controller
         $audioids = (implode(',', $Audio_ids));
 
 
-        return view('checkout', compact('getData', 'audioids','user'));
+        return view('checkout', compact('getData', 'audioids','user','title'));
 
     }
 
@@ -82,9 +83,9 @@ class PaymentController extends Controller
         $outName1 = $dir . $coreName . '.WAV';
         $outName2 = $dir . $coreName . 'B.WAV';
         $outName = $dir . 'new_' . $coreName . ".mp3";
-//        $res = exec('lame --quiet --decode' . $inName . ' ' . $outName1 . ' 2>&1;' . 'sox ' . $outName1 . ' -C6 ' . $outName2 . ' --effects-file public/sox/ce.fkt 2>&1;' . 'lame --quiet -V 2 ' . $outName2 . ' ' . $outName);
-        $res = exec("lame --quiet --decode  $inName  $outName1  2>&1; sox  $outName1  -C6  $outName2  --effects-file public/sox/ce.fkt 2>&1; lame --quiet -V 2  $outName2  $outName");
-        return $outName;
+        $res = exec("lame --quiet --decode $inName $outName1 2>&1; sox $outName1 -C6 $outName2 --effects-file public/sox/ce.fkt 2>&1; lame --quiet -V 2 $outName2 $outName");
+
+        return 'new_' . $coreName . ".mp3";
     }
 
     public function store(Request $request){
@@ -186,8 +187,7 @@ class PaymentController extends Controller
                             ->select('file_name')  //get file name
                             ->first();
 
-                        $totalfilename = $this->soxProcessFile($getfilename->file_name); //call function for file cleaning
-                        $filename_new = substr($totalfilename, 14);
+                        $filename_new = $this->soxProcessFile($getfilename->file_name); //call function for file cleaning
 
                         $uploads = DB::table('uploads')
                             ->where('id', $item)  //update uploads
@@ -196,11 +196,8 @@ class PaymentController extends Controller
 
                     return response()->json(["status" => "success", "msg" => "Payment Completed Successfully"], 200);
 
-//                return Redirect::to('/transactions')->with('alert', 'Payment Completed Successfully');
-
                 } else {
                     // Payment failed
-//                return redirect()->back()->with('error', $response->getMessage());
                     return response()->json(["status" => "error", "msg" => $response->getMessage()], 400);
                 }
             } catch (InvalidCreditCardException $ce) {

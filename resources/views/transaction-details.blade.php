@@ -23,7 +23,7 @@
                                 <span id="ids{{$key}}" ></span>
                             </td>
                             <td>
-                                <b> File Name : <span>{{$item->file_name}}</span> </b>
+                                <b> File Name : <span>{{$item->processed_file}}</span> </b>
 
                             </td>
                             <td>

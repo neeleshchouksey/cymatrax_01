@@ -21,7 +21,7 @@
                                 <span id="ids<?php echo e($key); ?>" ></span>
                             </td>
                             <td>
-                                <b> File Name : <span><?php echo e($item->file_name); ?></span> </b>
+                                <b> File Name : <span><?php echo e($item->processed_file); ?></span> </b>
 
                             </td>
                             <td>
