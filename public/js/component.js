@@ -6,7 +6,7 @@ Dropzone.options.dropzoneForm = {
     maxFiles: 25,
     maxFilesize: 500, // MB
     addRemoveLinks: true,
-    timeout: 900000,
+
     init: function () {
 
 
