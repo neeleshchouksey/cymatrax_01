@@ -164,8 +164,7 @@ function checkout() {
                 icon: 'success',
                 showCancelButton: false,
             }).then((result) => {
-                console.log(result);
-                window.location = APP_URL + '/transactions';
+                window.location = APP_URL + '/transaction-details/'+response.payment_id;
             })
         },
         error: function (error) {

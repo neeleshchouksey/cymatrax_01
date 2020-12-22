@@ -28,7 +28,9 @@
                             </td>
                             <td>
                                 <button class="wave-btn" onclick="window.location='{{URL::to('/')}}/download-file/{{$item->processed_file}}'">Download File</button>
-
+                            </td>
+                            <td>
+                                <button class="wave-btn" onclick="window.location='{{URL::to('/')}}/audio-analysis/{{$item->id}}'">Audio Analysis</button>
                             </td>
                         </tr>
                     @endforeach

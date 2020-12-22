@@ -194,7 +194,7 @@ class PaymentController extends Controller
                             ->update(['paymentdetails_id' => $paymentid->id, 'processed_file' => $filename_new, 'cleaned' => 1]);
                     }
 
-                    return response()->json(["status" => "success", "msg" => "Payment Completed Successfully"], 200);
+                    return response()->json(["status" => "success", "msg" => "Payment Completed Successfully","payment_id"=>$paymentid->id], 200);
 
                 } else {
                     // Payment failed

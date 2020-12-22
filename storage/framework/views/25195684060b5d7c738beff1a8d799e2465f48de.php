@@ -26,7 +26,9 @@
                             </td>
                             <td>
                                 <button class="wave-btn" onclick="window.location='<?php echo e(URL::to('/')); ?>/download-file/<?php echo e($item->processed_file); ?>'">Download File</button>
-
+                            </td>
+                            <td>
+                                <button class="wave-btn" onclick="window.location='<?php echo e(URL::to('/')); ?>/audio-analysis/<?php echo e($item->id); ?>'">Audio Analysis</button>
                             </td>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

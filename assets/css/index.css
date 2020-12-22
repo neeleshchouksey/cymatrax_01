@@ -88,7 +88,7 @@ table.transactions tbody tr td a img{
 	z-index: 99;
 	padding: 30px;
 	text-align: center;
-	font-family: helvetica;
+	/*font-family: helvetica;*/
 	font-size: 12px;
     border-radius: 5px;
 	color:#485863;
@@ -102,7 +102,7 @@ table.transactions tbody tr td a img{
     z-index: 99;
     padding: 18px;
     text-align: center;
-    font-family: helvetica;
+    /*font-family: helvetica;*/
     font-size: 12px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -118,7 +118,7 @@ table.transactions tbody tr td a img{
 }
 #spectrum-preview label{
 	position:absolute;
-	font-family:helvetica;
+	/*font-family:helvetica;*/
 	font-size:10px;
 	color:#757575;
 }
@@ -137,7 +137,7 @@ form.register label{
 	position: absolute;
     padding: 10px;
     text-align: center;
-    font-family: helvetica;
+    /*font-family: helvetica;*/
     font-size: 9px;
     color: #505050;
     width: 340px;
@@ -217,7 +217,8 @@ html, body{
 body{
 	margin:0px;
 	background-color:var(--body-background-color);
-	font-family: 'Cairo', sans-serif;
+	/*font-family: 'Cairo', sans-serif;*/
+    font-family: 'Russo One', sans-serif;
 	background-image: url("../images/bg.png");
 	background-position:top center;
 	background-size:100% auto;
@@ -275,7 +276,7 @@ body{
     transform: translateY(-50px);
 }
 h3.headline{
-	font-family: helvetica;
+	/*font-family: helvetica;*/
     font-size: 16pt;
     text-align: center;
     font-weight: normal;
@@ -466,7 +467,7 @@ footer p.copyright{
     left: 50%;
     margin-left: -160px;
     font-size: 10px;
-    font-family: 'Russo One', sans-serif;
+    /*font-family: 'Russo One', sans-serif;*/
     text-align: center;
 }
 footer nav{
