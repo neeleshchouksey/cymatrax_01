@@ -31,7 +31,7 @@
                             </p>
                             <p>
                                 <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
-                                <audio id="audio{{$key}}" controls="" style="vertical-align: middle"
+                                <audio id="audio{{$key}}" controls="" style="vertical-align: middle; width: 40%!important;"
                                        src="{{ asset('public/upload/'.$item->file_name) }}" type="audio/mp3"
                                        controlslist="nodownload">
                                     Your browser does not support the audio element.
