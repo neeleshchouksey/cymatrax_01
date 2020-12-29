@@ -218,7 +218,7 @@ body{
 	margin:0px;
 	background-color:var(--body-background-color);
 	/*font-family: 'Cairo', sans-serif;*/
-    font-family: 'Russo One', sans-serif;
+    font-family: Futura, Trebuchet MS, Arial, sans-serif;
 	background-image: url("../images/bg.png");
 	background-position:top center;
 	background-size:100% auto;
@@ -443,6 +443,8 @@ header ul li a{
     line-height: 42px;
 	border-bottom: solid 1px transparent;
     transition: all 0.5s;
+    font-size:18px;
+    letter-spacing: 0.2px;
 }
 header ul li a:hover{
 	color:var(--link-hover-color);
@@ -673,10 +675,11 @@ h1.myaccount{
 }
 .relative input{
 	padding: 5px;
-    color: #394951;
+    color: #000;
     font-size: 14px;
-    border: solid 1px #9bcecc;
+    border: solid 1px #eee;
     border-radius: 4px;
+    background: #efefef;
 }
 .relative select{
 	padding: 5px;
