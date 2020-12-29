@@ -27,18 +27,27 @@
         <ul>
             @if(Auth::user())
                 <li><a href="{{URL::to('/')}}/dashboard">Dashboard</a></li>
+                <li><a href="{{URL::to('/')}}/upload-audio/">Upload Audio</a></li>
                 <li><a href="{{URL::to('/')}}/services/">Services</a></li>
-                <li><a href="{{URL::to('/')}}/account">My Account</a></li>
                 <li>
-                    <a href="{{ route('logout') }}"
-                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                        Sign Out
-                    </a>
+                    <button class="profileButton" onclick="$('.profileMenu').toggleClass('open');"></button>
+                    <ul class="profileMenu">
+                        <li><a href="{{URL::to('/')}}/account">My Account</a></li>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                        <li><a href="{{URL::to('/')}}/transactions/">Transactions</a></li>
+                        <li><a href="{{URL::to('/')}}/profile/">Edit Profile</a></li>
+                        <li><a href="{{URL::to('/')}}/password/reset">Reset Password</a></li>
+                        <li>
+                            <a href="{{ route('logout') }}"
+                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
 
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
                 </li>
             @else
                 <li><a href="{{URL::to('/')}}">Home</a></li>
@@ -111,8 +120,8 @@
 
             total_cost = total_cost.toFixed(2);
             $("#paypal_total_cost").val(total_cost)
-            $("#span_paypal_total_cost").html("$ "+total_cost);
-            $("#paypal_total_duration").val( minutes + '.' + seconds)
+            $("#span_paypal_total_cost").html("$ " + total_cost);
+            $("#paypal_total_duration").val(minutes + '.' + seconds)
         }, 1500);
 
     });
@@ -144,7 +153,7 @@
 
 <script>
     @if(isset($file))
-    $(document).ready(function(){
+    $(document).ready(function () {
         var wavesurfer = WaveSurfer.create({
             container: '#input-waveform',
             waveColor: '#384a50',
@@ -159,19 +168,19 @@
             barWidth: 3
         });
 
-        wavesurfer.load(APP_URL+'/public/upload/{{$file->file_name}}');
-        wavesurfer1.load(APP_URL+'/public/upload/{{$file->processed_file}}');
+        wavesurfer.load(APP_URL + '/public/upload/{{$file->file_name}}');
+        wavesurfer1.load(APP_URL + '/public/upload/{{$file->processed_file}}');
 
-        $("#play-btn").click(function (){
+        $("#play-btn").click(function () {
             wavesurfer.play();
         });
-        $("#pause-btn").click(function (){
+        $("#pause-btn").click(function () {
             wavesurfer.pause();
         });
-        $("#play-btn1").click(function (){
+        $("#play-btn1").click(function () {
             wavesurfer1.play();
         });
-        $("#pause-btn1").click(function (){
+        $("#pause-btn1").click(function () {
             wavesurfer1.pause();
         });
         // $("#output-btn").click(function (){

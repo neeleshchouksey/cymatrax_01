@@ -3,7 +3,7 @@
 
 
     <section class="contained">
-        @include('layouts/menu')
+        <h1 class="myaccount">{{$title}}</h1>
         <div>
 
         </div>

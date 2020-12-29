@@ -3,28 +3,43 @@
 @section('content')
 
     <section class="contained">
-        @include('layouts/menu')
+        <h1 class="myaccount">{{$title}}</h1>
         <div class="checkouttotal">
             <table class="tr-table">
                 <tbody>
                 @foreach($getData as $key=>$item)
                     <tr>
                         <td>
-                            <audio  id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/upload/'.$item->file_name) }}" type="audio/mp3" controlslist="nodownload">
-                                Your browser does not support the audio element.
-                            </audio>
-                            <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
-                        </td>
-
-                        <td>
-                            <b> File Duration : <span id="duration{{$key}}" ></span> </b>
-                            <button style="visibility:hidden;" type="button" onclick="getDuration({{$key}})" class="getdur">Get Duration</button>
-                            <span id="ids{{$key}}" ></span>
-                        </td>
-                        <td>
-                            <b> File Name : <span>{{$item->file_name}}</span> </b>
+                            <p>
+                                <b> Upload Date:</b>
+                                <span> {{ Carbon\Carbon::parse($item->created_at)->format('d-M-Y, H: i A') }}</span>
+                            </p>
+                            <p>
+                                @if(!$item->cleaned)
+                                    <b>File Name:</b>
+                                    <span>{{$item->file_name}}</span>
+                                @else
+                                    <b>File Name: </b>
+                                    <span>{{$item->processed_file}}</span>
+                                @endif
+                            </p>
+                            <p>
+                                <b> File duration :</b>
+                                <span id="duration{{$key}}" ></span>
+                                <button style="visibility:hidden;" type="button" onclick="getDuration({{$key}})" class="getdur">Get Duration</button>
+                                <span id="ids{{$key}}" ></span>
+                            </p>
+                            <p>
+                                <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
+                                <audio id="audio{{$key}}" controls="" style="vertical-align: middle"
+                                       src="{{ asset('public/upload/'.$item->file_name) }}" type="audio/mp3"
+                                       controlslist="nodownload">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </p>
                         </td>
                     </tr>
+
                 @endforeach
                 </tbody>
             </table>

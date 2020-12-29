@@ -2,48 +2,77 @@
 
 @section('content')
 
-    <div class="content">
-        @include('layouts/menu')
+    <section class="contained">
+        <h1 class="myaccount">{{$title}}</h1>
 
-        <section class="contained">
-            <div class="relative">
-                <h3>Transaction Details</h3>
-
-                <table class="tr-table">
-                    <tbody>
-                    @foreach($getData as $key=>$item)
-                        <tr>
-                            <td>
-                                <audio  id="audio{{$key}}" controls="" style="vertical-align: middle" src="{{ asset('public/upload/'.$item->processed_file) }}" type="audio/mp3" controlslist="nodownload">
-                                    Your browser does not support the audio element.
-                                </audio>
-                                <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
-                                <b> File duration : <span id="duration{{$key}}" ></span> </b>
+        <div class="checkouttotal">
+            <table class="tr-table">
+                <tbody>
+                @foreach($getData as $key=>$item)
+                    <tr>
+                        <td>
+                            <p>
+                                <b> Upload Date:</b>
+                                <span> {{ Carbon\Carbon::parse($item->created_at)->format('d-M-Y, H: i A') }}</span>
+                            </p>
+                            <p>
+                                @if(!$item->cleaned)
+                                    <b>File Name:</b>
+                                    <span>{{$item->file_name}}</span>
+                                @else
+                                    <b>File Name: </b>
+                                    <span>{{$item->processed_file}}</span>
+                                @endif
+                            </p>
+                            <p>
+                                <b> File duration :</b>
+                                <span id="duration{{$key}}" ></span>
                                 <button style="visibility:hidden;" type="button" onclick="getDuration({{$key}})" class="getdur">Get Duration</button>
                                 <span id="ids{{$key}}" ></span>
-                            </td>
-                            <td>
-                                <b> File Name : <span>{{$item->processed_file}}</span> </b>
+                            </p>
+                            <p>
+                                <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
+                                <audio id="audio{{$key}}" controls="" style="vertical-align: middle"
+                                       src="{{ asset('public/upload/'.$item->file_name) }}" type="audio/mp3"
+                                       controlslist="nodownload">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </p>
+                        </td>
 
-                            </td>
-                            <td>
-                                <button class="wave-btn" onclick="window.location='{{URL::to('/')}}/download-file/{{$item->processed_file}}'">Download File</button>
-                            </td>
-                            <td>
-                                <button class="wave-btn" onclick="window.location='{{URL::to('/')}}/audio-analysis/{{$item->id}}'">Audio Analysis</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        <td colspan="2">
+                            @if(!$item->cleaned)
 
-                <b>Total duration = <span id="total-duration"></span></b> <br>
-                <b>Total Cost = <span id="total-cost"></span> </b><br>
-                <b>($1 per minute) </b>
+                                <a class="btn btn-success" href="{{URL::to('/')}}/download-file/{{$item->file_name}}"
+                                   download>Download</a>
+                            @else
+                                <a class="btn btn-success"
+                                   href="{{URL::to('/')}}/download-file/{{$item->processed_file}}"
+                                   download>Download</a>
+                            @endif
 
-            </div>
-        </section>
-    </div>
+                            @if(!$item->cleaned)
+                                <a href="{{URL::to('/')}}/checkout-single/{{$item->id}}" class="btn btn-sucess">Pay &
+                                    Checkout</a>
+                            @else
+                                <a href="{{URL::to('/')}}/audio-analysis/{{$item->id}}" class="btn btn-sucess">Audio
+                                    Analysis</a>
+                            @endif
+                        </td>
+
+                    </tr>
+
+                @endforeach
+                </tbody>
+            </table>
+
+            <b>Total duration = <span id="total-duration"></span></b> <br>
+            <b>Total Cost = <span id="total-cost"></span> </b><br>
+            <b>($1 per minute) </b>
+
+        </div>
+    </section>
+
 
 
 

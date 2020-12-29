@@ -2,7 +2,7 @@
 @section('content')
 
     <section class="contained">
-       @include('layouts/menu')
+        <h1 class="myaccount">{{$title}}</h1>
         <div class="tool">
             <h3>Audio Conversion Tool</h3>
             <p>$<?php echo "1" ?> per minute</p>

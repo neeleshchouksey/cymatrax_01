@@ -41,7 +41,7 @@ class PaymentController extends Controller
     public function checkout($id){
         $title = "Process Payment";
         $user = User::find(Auth::user()->id);
-
+        $countries = DB::table("countries")->get();
         $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
         $Audio_ids=array();
         foreach($getData  as $item){
@@ -49,7 +49,7 @@ class PaymentController extends Controller
         }
         $audioids=(implode(',',$Audio_ids));
 
-        return view('checkout',compact('getData','title','audioids','user'));
+        return view('checkout',compact('getData','title','audioids','user','countries'));
     }
 
     public function checkout_single($id)

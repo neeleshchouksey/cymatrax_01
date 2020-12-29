@@ -1,12 +1,10 @@
 @extends('layouts.app')
 @section('content')
 
-
-    <div class="content">
-        @include('layouts/menu')
-
-        <section class="contained">
-            <div class="relative">
+    <section class="contained">
+        <h1 class="myaccount">{{$title}}</h1>
+        <div class="relative">
+            @if(count($paymentdetails))
                 <table class="transaction-table" cellspacing="0" cellpadding="0">
                     <thead>
                     <tr>
@@ -34,9 +32,11 @@
                     @endforeach
                     </tbody>
                 </table>
-
-            </div>
-        </section>
+            @else
+                <h4>No Data Found</h4>
+            @endif
+        </div>
+    </section>
 
 
 @endsection

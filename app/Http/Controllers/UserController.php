@@ -51,8 +51,9 @@ class UserController extends Controller
     public function profile()
     {
         $title = "Profile";
+        $countries = DB::table("countries")->get();
         $user = User::find(Auth::user()->id);
-        return view('profile', ["user" => $user,"title"=>$title]);
+        return view('profile', ["user" => $user,"title"=>$title,"countries"=>$countries]);
     }
 
     public function update_profile(Request $request)
@@ -60,6 +61,11 @@ class UserController extends Controller
         $user = User::find(Auth::user()->id);
         $user->name = $request->name ? $request->name : $user->name;
         $user->user = $request->user ? $request->user : $user->user;
+        $user->address = $request->streetaddress ? $request->streetaddress : $user->address;
+        $user->city = $request->city ? $request->city : $user->city;
+        $user->state = $request->state ? $request->state : $user->state;
+        $user->country = $request->country ? $request->country : $user->country;
+        $user->zip_code = $request->zipcode ? $request->zipcode : $user->zip_code;
         $user->save();
 
         return Redirect::to('/profile')->with('alert', 'Profile Updated Successfully');

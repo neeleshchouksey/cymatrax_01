@@ -3,7 +3,7 @@
 @section('content')
 
     <section class="contained">
-        @include('layouts/menu')
+        <h1 class="myaccount">{{$title}}</h1>
 
         <div class="wave-div">
             <h5>Input Audio Analysis</h5>
