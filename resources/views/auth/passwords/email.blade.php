@@ -16,7 +16,7 @@
                     <table>
                         <tbody>
                         <tr>
-                            <td colspan="2"><h3>Reset Password</h3></td>
+                            <td colspan="2"><h3>Forget Password</h3></td>
                         </tr>
                         <tr>
                             <td>Email Address:</td>

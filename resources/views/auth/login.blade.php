@@ -51,7 +51,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <p>Forgot your password? <a href="{{ route('password.request') }}">Reset it</a></p>
+                                <p>Forgot your password? <a href="{{ route('password.request') }}">Click Here</a></p>
                                 <p>Don't have an account? <a href="{{ route('register') }}">Create one</a></p>
                             </td>
                         </tr>

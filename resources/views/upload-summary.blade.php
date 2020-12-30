@@ -48,7 +48,7 @@
             <b>Total Cost =  <span id="total-cost"></span> </b>
             <b>($1 per minute) </b><br><br><br>
 
-            <a href="{{URL::to('/')}}/checkout/{{$id}}" style="margin-top: 1rem">Proceed to Checkout</a>
+            <button class="c-btn"  onclick="document.location = '{{URL::to('/')}}/checkout/{{$id}}'" style="margin-top: 1rem">Proceed to Checkout</button>
 
         </div>
     </section>

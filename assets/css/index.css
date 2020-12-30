@@ -191,7 +191,7 @@ form.register label{
 }
 .c-btn {
     display: block !important;
-    width: 194px !important;
+    width: 200px !important;
     padding: 0px !important;
     border: none !important;
     line-height: 36px !important;
@@ -201,6 +201,45 @@ form.register label{
     cursor: pointer !important;
     transition: all 0.4s !important;
     margin-top: 15px;
+}
+.drop-btn {
+    display: block !important;
+    width: 200px !important;
+    padding: 0px !important;
+    border: 2px solid #44908d!important;
+    line-height: 36px !important;
+    background-color: #FFFFFF !important;
+    color: #44908d !important;
+    letter-spacing: 3px !important;
+    cursor: pointer !important;
+    transition: all 0.4s !important;
+    margin-top: 15px;
+    margin-left: 17.5rem;
+}
+.c-btn1 {
+    display: block !important;
+    width: 150px !important;
+    padding: 0px !important;
+    border: none !important;
+    line-height: 36px !important;
+    background-color: #44908d !important;
+    color: #fff !important;
+    letter-spacing: 3px !important;
+    cursor: pointer !important;
+    transition: all 0.4s !important;
+    margin-top: 15px;
+}
+
+.wave-btn{
+    border: none !important;
+    background: #44908d;
+    color:white;
+    line-height: 36px !important;
+    margin-top: 10px;
+    letter-spacing: 3px !important;
+    cursor: pointer !important;
+    transition: all 0.4s !important;
+    width: 150px !important;
 }
 .checkoutform button:hover{
 	background-color:#475862;
@@ -460,7 +499,7 @@ footer{
 	background-color: var(--footer-background-color);
     color: var(--footer-color);
     position: fixed;
-    height: 80px;
+    height: 40px;
     bottom: 0px;
     left: 0px;
     right: 0px;
@@ -571,9 +610,9 @@ footer nav a:hover{
 .upload-btn:hover{
     background-color: #75aba9;
 }
-audio{
-    width: 60%!important;
-}
+/*audio{*/
+/*    width: 60%!important;*/
+/*}*/
 /*table {*/
 /*    margin-left: 10px;*/
 /*}*/
@@ -753,18 +792,14 @@ table.transactions span.timestamp{
 	color:#666;
 }
 
-.wave-btn{
-    background: #475862;
-    color:white;
-    padding: 10px;
-    margin-top: 10px;
-}
 .tr-table{
     width: 100% !important;
 }
 .tr-table tr td{
-    border-bottom: 1px solid #f2f8f7;
     padding-top:10px !important;
+}
+.tr-border > td{
+    border-bottom: 1px solid #f2f8f7;
 }
 tr td {
     padding-bottom: 10px !important;

@@ -26,15 +26,15 @@
         <a class="mobile-toggle" onclick="$('header ul').toggleClass('open');">&#9776;</a>
         <ul>
             @if(Auth::user())
-                <li><a href="{{URL::to('/')}}/dashboard">Dashboard</a></li>
+{{--                <li><a href="{{URL::to('/')}}/dashboard">Dashboard</a></li>--}}
                 <li><a href="{{URL::to('/')}}/upload-audio/">Upload Audio</a></li>
+                <li><a href="{{URL::to('/')}}/account">My Account</a></li>
+                <li><a href="{{URL::to('/')}}/transactions/">Transactions</a></li>
                 <li><a href="{{URL::to('/')}}/services/">Services</a></li>
                 <li>
                     <button class="profileButton" onclick="$('.profileMenu').toggleClass('open');"></button>
                     <ul class="profileMenu">
-                        <li><a href="{{URL::to('/')}}/account">My Account</a></li>
 
-                        <li><a href="{{URL::to('/')}}/transactions/">Transactions</a></li>
                         <li><a href="{{URL::to('/')}}/profile/">Edit Profile</a></li>
                         <li><a href="{{URL::to('/')}}/password/reset">Reset Password</a></li>
                         <li>
