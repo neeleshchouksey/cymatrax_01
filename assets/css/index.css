@@ -194,20 +194,21 @@ form.register label{
     width: 200px !important;
     padding: 0px !important;
     border: none !important;
-    line-height: 36px !important;
+    line-height: 50px !important;
     background-color: #44908d !important;
     color: #fff !important;
     letter-spacing: 3px !important;
     cursor: pointer !important;
     transition: all 0.4s !important;
     margin-top: 15px;
+    border-radius:5px;
 }
 .drop-btn {
     display: block !important;
     width: 200px !important;
     padding: 0px !important;
     border: 2px solid #44908d!important;
-    line-height: 36px !important;
+    line-height: 50px !important;
     background-color: #FFFFFF !important;
     color: #44908d !important;
     letter-spacing: 3px !important;
@@ -215,10 +216,11 @@ form.register label{
     transition: all 0.4s !important;
     margin-top: 15px;
     margin-left: 17.5rem;
+    border-radius:5px;
 }
 .c-btn1 {
     display: block !important;
-    width: 150px !important;
+    width: 200px !important;
     padding: 0px !important;
     border: none !important;
     line-height: 36px !important;
@@ -227,19 +229,21 @@ form.register label{
     letter-spacing: 3px !important;
     cursor: pointer !important;
     transition: all 0.4s !important;
-    margin-top: 15px;
+    margin-top: 0px;
+    border-radius:5px;
 }
 
 .wave-btn{
     border: none !important;
     background: #44908d;
     color:white;
-    line-height: 36px !important;
+    line-height: 50px !important;
     margin-top: 10px;
     letter-spacing: 3px !important;
     cursor: pointer !important;
     transition: all 0.4s !important;
     width: 150px !important;
+    border-radius:5px;
 }
 .checkoutform button:hover{
 	background-color:#475862;
@@ -610,9 +614,9 @@ footer nav a:hover{
 .upload-btn:hover{
     background-color: #75aba9;
 }
-/*audio{*/
-/*    width: 60%!important;*/
-/*}*/
+audio{
+    width: 400px!important;
+}
 /*table {*/
 /*    margin-left: 10px;*/
 /*}*/
@@ -792,14 +796,9 @@ table.transactions span.timestamp{
 	color:#666;
 }
 
-.tr-table{
-    width: 100% !important;
-}
-.tr-table tr td{
-    padding-top:10px !important;
-}
-.tr-border > td{
+.tr-border{
     border-bottom: 1px solid #f2f8f7;
+    margin-bottom: 10px;
 }
 tr td {
     padding-bottom: 10px !important;
@@ -852,6 +851,26 @@ tr td {
 	section.inverted h1{
 		line-height:26px;
 	}
+}
+.mr-2{
+    margin-right: 1rem;
+}
+.flex{
+    display: flex;
+}
+.row {
+    display: grid;
+    /*grid-template-columns: 10fr 2fr;*/
+    grid-gap: 10px;
+    padding: 10px;
+    margin-left: -10px;
+}
+.half-row {
+    display: grid;
+    grid-template-columns: 3fr 6fr;
+    grid-gap: 10px;
+    padding: 10px;
+    margin-left: -10px;
 }
 @media only screen and (max-width: 640px) {
 	section ul.faq li{

@@ -54,6 +54,7 @@ class PaymentController extends Controller
 
     public function checkout_single($id)
     {
+        $countries = DB::table("countries")->get();
         $title = "Process Payment";
         $user = User::find(Auth::user()->id);
         $getData = Upload::where('id', '=', $id)->where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
@@ -66,7 +67,7 @@ class PaymentController extends Controller
         $audioids = (implode(',', $Audio_ids));
 
 
-        return view('checkout', compact('getData', 'audioids','user','title'));
+        return view('checkout', compact('getData', 'audioids','user','title','countries'));
 
     }
 
