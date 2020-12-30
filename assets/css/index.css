@@ -882,6 +882,6 @@ tr td {
 
 @media only screen and (max-height: 700px) {
 	footer{
-		position: relative;
+		position: fixed;
 	}
 }
