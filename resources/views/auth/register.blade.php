@@ -7,15 +7,29 @@
                 @if (session('status'))
                     <div class="success">{{ session('status') }}</div>
                 @endif
-                @error('error')
-                <div class="errors">{{ $message }}</div>
-                @enderror
-                @error('email')
-                <div class="errors">{{ $message }}</div>
-                @enderror
-                @error('password')
-                <div class="errors">{{ $message }}</div>
+
+                @php $error = $errors->getMessages();
+                print_r($error);
+                @endphp
+
+                @if(isset($error['name']))
+                    <div class="errors">{{ $error['name'][0] }}</div>
+                @elseif(isset($error['email']))
+                    <div class="errors">{{ $error['email'][0] }}</div>
+                @elseif(isset($error['password']))
+                    <div class="errors">{{ $error['password'][0] }}</div>
+                @elseif(isset($error['streetaddress']))
+                    <div class="errors">{{ $error['streetaddress'][0] }}</div>
+                @elseif(isset($error['city']))
+                    <div class="errors">{{ $error['city'][0] }}</div>
+                @elseif(isset($error['state']))
+                    <div class="errors">{{ $error['state'][0] }}</div>
+                @elseif(isset($error['country']))
+                    <div class="errors">{{ $error['country'][0] }}</div>
+                @elseif(isset($error['zipcode']))
+                    <div class="errors">{{ $error['zipcode'][0] }}</div>
                 @endif
+
                 <br>
                 <form method="POST" action="{{ route('register') }}" class="register">
                     @csrf
@@ -96,7 +110,7 @@
                             <td>Country:</td>
                             <td>
                                 <select name="country" id="country" class="input" style="max-width:165px;">
-                                    <option value="" selected="" >Select Country</option>
+                                    <option value="" selected="">Select Country</option>
                                     @foreach($countries as $c)
                                         <option value="{{$c->code}}">{{$c->name}}</option>
                                     @endforeach
@@ -108,7 +122,7 @@
                             <td>
                                 <input id="zipcode" type="text" name="zipcode" required="required"
                                        autocomplete="on" pattern="[0-9]*" maxlength="6"
-                                       placeholder="ZIP code" onkeypress="return onlyNumberKey(event)" />
+                                       placeholder="ZIP code" onkeypress="return onlyNumberKey(event)"/>
                             </td>
                         </tr>
                         <tr>

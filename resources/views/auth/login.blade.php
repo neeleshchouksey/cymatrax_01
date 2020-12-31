@@ -6,6 +6,13 @@
         <section>
 
             <div class="relative">
+                @error('email')
+                <div class="errors">{{ $message }}</div>
+                @enderror
+                @error('password')
+                <div class="errors">{{ $message }}</div>
+                @endif
+                <br>
                 <form method="POST" action="{{ route('login') }}" class="login">
                     @csrf
                     <table width="100%" border="0" cellspacing="0" cellpadding="6">
@@ -18,12 +25,6 @@
                             <td>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                        name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </td>
                         </tr>
                         <tr>
@@ -32,12 +33,6 @@
                                 <input id="password" type="password"
                                        class="form-control @error('password') is-invalid @enderror" name="password"
                                        required autocomplete="current-password">
-
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </td>
                         </tr>
                         <tr>
