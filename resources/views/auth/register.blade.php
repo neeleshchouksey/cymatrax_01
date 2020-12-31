@@ -82,7 +82,7 @@
                             <td>Address:</td>
                             <td>
                                 <input id="streetaddress" type="text" name="streetaddress" required="required"
-                                       autocomplete="on" maxlength="45" placeholder="Street Address"/>
+                                       value="{{ old('streetaddress') }}" autocomplete="on" maxlength="45" placeholder="Street Address"/>
 
                             </td>
                         </tr>
@@ -90,7 +90,7 @@
                             <td>City:</td>
                             <td>
                                 <input id="city" type="text" name="city" required="required"
-                                       autocomplete="on"
+                                       autocomplete="on" value="{{ old('city') }}"
                                        maxlength="20" placeholder="City"/>
 
                             </td>
@@ -99,7 +99,7 @@
                             <td>State:</td>
                             <td>
                                 <input id="state" type="text" name="state" required="required"
-                                       autocomplete="on"
+                                       autocomplete="on" value="{{ old('state') }}"
                                        maxlength="20" placeholder="State"/>
 
                             </td>
@@ -119,7 +119,7 @@
                             <td>Zip Code:</td>
                             <td>
                                 <input id="zipcode" type="text" name="zipcode" required="required"
-                                       autocomplete="on" pattern="[0-9]*" maxlength="6"
+                                       value="{{ old('zipcode') }}" autocomplete="on" pattern="[0-9]*" maxlength="6"
                                        placeholder="ZIP code" onkeypress="return onlyNumberKey(event)"/>
                             </td>
                         </tr>
