@@ -8,9 +8,7 @@
                     <div class="success">{{ session('status') }}</div>
                 @endif
 
-                @php $error = $errors->getMessages();
-                print_r($error);
-                @endphp
+                @php $error = $errors->getMessages(); @endphp
 
                 @if(isset($error['name']))
                     <div class="errors">{{ $error['name'][0] }}</div>
