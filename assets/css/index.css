@@ -804,6 +804,12 @@ tr td {
     padding-bottom: 10px !important;
 }
 
+.href-link{
+    background: transparent !important;
+    color: var(--link-color) !important;
+    padding: 0 !important;
+}
+
 @media only screen and (max-width: 940px) {
 	section ul.faq li{
 		width: calc(50% - 32px);
