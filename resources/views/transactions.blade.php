@@ -33,7 +33,7 @@
                     </tbody>
                 </table>
             @else
-                <h4>No Data Found</h4>
+                <h4>No transaction history found</h4>
             @endif
         </div>
     </section>
