@@ -24,13 +24,19 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-        $this->gateway = Omnipay::create('PayPal_Pro');
+//        $this->gateway = Omnipay::create('PayPal_Pro');
+//        $this->gateway->setUsername(env('PAYPAL_API_USERNAME'));
+//        $this->gateway->setPassword(env('PAYPAL_API_PASSWORD'));
+//        $this->gateway->setSignature(env('PAYPAL_API_SIGNATURE'));
+//        $this->gateway->setTestMode(true); // here 'true' is for sandbox. Pass 'false' when go live
+
+        $this->gateway = Omnipay::create('Payflow_Pro');
         $this->gateway->setUsername(env('PAYPAL_API_USERNAME'));
         $this->gateway->setPassword(env('PAYPAL_API_PASSWORD'));
-        $this->gateway->setSignature(env('PAYPAL_API_SIGNATURE'));
-//        $this->gateway->setClientId('Adv3jhEKut2LArUJsrYLivAIyXznwWEgWG2Q2dpXUxVUbDwo40sqxZtSX6fdUVVxWb2I25qB0deSRdll');
-//        $this->gateway->setSecret('EOqYgWNYRjmHw2a0mKBD6XyerOFdg-1gwujR8MdtldBJaDH3uDX4YmOaJarvlaP5fP1tNyu5bpuOJB2x');
-        $this->gateway->setTestMode(true); // here 'true' is for sandbox. Pass 'false' when go live
+        $this->gateway->setVendor(env('PAYPAL_API_VENDOR'));
+        $this->gateway->setPartner(env('PAYPAL_API_PARTNER'));
+        $this->gateway->setTestMode(false); // here 'true' is for sandbox. Pass 'false' when go live
+
     }
 
     public function index()
@@ -161,7 +167,6 @@ class PaymentController extends Controller
                     $currency = $arr_body['CURRENCYCODE'];
                     $transaction_id = $arr_body['TRANSACTIONID'];
 
-
                     $paymentdetails = new Paymentdetail();
                     $paymentdetails->firstname = $first_name;
                     $paymentdetails->lastname = $last_name;
@@ -194,9 +199,7 @@ class PaymentController extends Controller
                             ->where('id', $item)  //update uploads
                             ->update(['paymentdetails_id' => $paymentid->id, 'processed_file' => $filename_new, 'cleaned' => 1]);
                     }
-
                     return response()->json(["status" => "success", "msg" => "Payment Completed Successfully","payment_id"=>$paymentid->id], 200);
-
                 } else {
                     // Payment failed
                     return response()->json(["status" => "error", "msg" => $response->getMessage()], 400);
