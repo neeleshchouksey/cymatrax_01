@@ -36,7 +36,6 @@ class PaymentController extends Controller
         $this->gateway->setVendor(env('PAYPAL_API_VENDOR'));
         $this->gateway->setPartner(env('PAYPAL_API_PARTNER'));
         $this->gateway->setTestMode(false); // here 'true' is for sandbox. Pass 'false' when go live
-
     }
 
     public function index()
@@ -159,50 +158,60 @@ class PaymentController extends Controller
                     'card' => $formData,
                 ])->send();
 
+
                 // Process response
                 if ($response->isSuccessful()) {
+                    ##if ($response->getMessage() == "Approved") {
                     // Payment was successful
-                    $arr_body = $response->getData();
-                    $amount = $arr_body['AMT'];
-                    $currency = $arr_body['CURRENCYCODE'];
-                    $transaction_id = $arr_body['TRANSACTIONID'];
+                    try {
+                        $date = time();;
+                        $arr_body = $response->getData();
+                        $amount = $amt; ##$arr_body['AMT'];
+                        $currency = 'USD';## $arr_body['CURRENCYCODE'];
+                        $transaction_id = $arr_body['PPREF']; ##$arr_body['TRANSACTIONID'];
 
-                    $paymentdetails = new Paymentdetail();
-                    $paymentdetails->firstname = $first_name;
-                    $paymentdetails->lastname = $last_name;
-                    $paymentdetails->email = $email;
-                    $paymentdetails->currencycode = $currency;
-                    $paymentdetails->totalprice = $amount;
-                    $paymentdetails->timestamp = $arr_body['TIMESTAMP'];
-                    $paymentdetails->transationId = $transaction_id;
-                    $paymentdetails->user_id = auth()->user()->id;
-                    $paymentdetails->payment_status = $arr_body['ACK'];
-                    $paymentdetails->duration = $total_duration;
-                    $paymentdetails->address = $address;
-                    $paymentdetails->city = $city;
-                    $paymentdetails->state = $state;
-                    $paymentdetails->country = $country;
-                    $paymentdetails->zip_code = $zipcode;
-                    $paymentdetails->save();
 
-                    $paymentid = db::table('paymentdetails')->where('id', '=', $paymentdetails->id)->first();
-                    $ids_in_array = (explode(",", $Audio_Ids)); //convert into array
-                    foreach ($ids_in_array as $item) {
-                        $getfilename = DB::table('uploads')
-                            ->where('id', $item)
-                            ->select('file_name')  //get file name
-                            ->first();
+                        $paymentdetails = new Paymentdetail();
+                        $paymentdetails->firstname = $first_name;
+                        $paymentdetails->lastname = $last_name;
+                        $paymentdetails->email = $email;
+                        $paymentdetails->currencycode = $currency;
+                        $paymentdetails->totalprice = $amount;
+                        $paymentdetails->timestamp = date("Y-m-d",$date); ##$arr_body['TIMESTAMP'];
+                        $paymentdetails->transationId = $transaction_id;
+                        $paymentdetails->user_id = auth()->user()->id;
+                        $paymentdetails->payment_status = 'Approved'; ##$arr_body['ACK'];
+                        $paymentdetails->duration = $total_duration;
+                        $paymentdetails->address = $address;
+                        $paymentdetails->city = $city;
+                        $paymentdetails->state = $state;
+                        $paymentdetails->country = $country;
+                        $paymentdetails->zip_code = $zipcode;
+                        $paymentdetails->save();
 
-                        $filename_new = $this->soxProcessFile($getfilename->file_name); //call function for file cleaning
+                        $paymentid = db::table('paymentdetails')->where('id', '=', $paymentdetails->id)->first();
+                        $ids_in_array = (explode(",", $Audio_Ids)); //convert into array
+                        foreach ($ids_in_array as $item) {
+                            $getfilename = DB::table('uploads')
+                                ->where('id', $item)
+                                ->select('file_name')  //get file name
+                                ->first();
 
-                        $uploads = DB::table('uploads')
-                            ->where('id', $item)  //update uploads
-                            ->update(['paymentdetails_id' => $paymentid->id, 'processed_file' => $filename_new, 'cleaned' => 1]);
+                            $filename_new = $this->soxProcessFile($getfilename->file_name); //call function for file cleaning
+
+                            $uploads = DB::table('uploads')
+                                ->where('id', $item)  //update uploads
+                                ->update(['paymentdetails_id' => $paymentid->id, 'processed_file' => $filename_new, 'cleaned' => 1]);
+                        }
+                    }catch (Exce $e) {
+                        //return response()->json(["status" => "error", "msg" => $e->getMessage()], 400);
                     }
+
                     return response()->json(["status" => "success", "msg" => "Payment Completed Successfully","payment_id"=>$paymentid->id], 200);
+
                 } else {
                     // Payment failed
-                    return response()->json(["status" => "error", "msg" => $response->getMessage()], 400);
+                    return response()->json(["status" => "error", "msg" =>  $response->getMessage()], 400);
                 }
             } catch (InvalidCreditCardException $ce) {
                 return response()->json(["status" => "error", "msg" => $ce->getMessage()], 400);
