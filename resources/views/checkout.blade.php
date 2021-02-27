@@ -13,25 +13,15 @@
                     </div>
                 @endif
 
-                @foreach($getData as $key=>$item)
+{{--                @foreach($getData as $key=>$item)--}}
 
 
                     <div class="card" style="display:none;">
-                        <div class="card-body">
-                            <audio id="audio{{$key}}" controls=""
-                                   src="{{ asset('public/upload/'.$item->file_name) }}" type="audio/mp3"
-                                   controlslist="nodownload">
-                                hello
-                            </audio>
-                            <input type="hidden" id="duration_in_sec{{$key}}" class="durValue"/>
-                            <button style="visibility:hidden;" type="button" onclick="getDuration({{$key}})"
-                                    class="getdur">Get Duration
-                            </button>
-                        </div>
+                       @include("common-uploaded-files");
                     </div>
 
 
-                @endforeach
+{{--                @endforeach--}}
 
 
                 <form class="checkoutform" method="POST" class="register"

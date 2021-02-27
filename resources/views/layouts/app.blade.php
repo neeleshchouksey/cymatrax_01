@@ -16,7 +16,23 @@
         var CSRF_TOKEN = '{{csrf_token()}}'
     </script>
 
-
+<style>
+    #overlay{
+        position:fixed;
+        z-index:99999;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+        background:rgba(0,0,0,0.9);
+        transition: 1s 0.4s;
+    }
+    #overlay > img{
+        position: absolute;
+        top: 35%;
+        left: 45%;
+    }
+</style>
 </head>
 <body>
 <header>
@@ -26,7 +42,7 @@
         <a class="mobile-toggle" onclick="$('header ul').toggleClass('open');">&#9776;</a>
         <ul>
             @if(Auth::user())
-{{--                <li><a href="{{URL::to('/')}}/dashboard">Dashboard</a></li>--}}
+                <li><a href="{{URL::to('/')}}/dashboard">Dashboard</a></li>
                 <li><a href="{{URL::to('/')}}/upload-audio/">Upload Audio</a></li>
                 <li><a href="{{URL::to('/')}}/account">My Account</a></li>
                 <li><a href="{{URL::to('/')}}/transactions/">Transactions</a></li>
@@ -59,6 +75,9 @@
 </header>
 
 <div id="app">
+    <div id="overlay">
+        <img src="{{asset('assets/images/loader.gif')}}" alt="Loading" />
+    </div>
     @yield('content')
 </div>
 <footer>
@@ -86,46 +105,18 @@
 {{--<script src="{{ asset('public/js/jquery.card.js') }}"></script>--}}
 {{--<script src="{{ asset('public/js/card.js') }}"></script>--}}
 <!-- paypal pro scripts end-->
-<script>
-    $(document).ready(function () {
 
+@if(session()->has('message'))
+    <script>
+        Swal.fire({
+            title: 'Success!',
+            text: "{{ session()->get('message') }}",
+            icon: 'success',
+            showCancelButton: false,
+        });
+    </script>
+@endif
 
-        var userSelection = document.getElementsByClassName('getdur');
-
-        console.log(userSelection);
-
-
-        for (var i = 0; i < userSelection.length; i++) {
-            (userSelection[i]).click();
-        }
-
-        var total_duration = 0;
-
-        setTimeout(() => {
-            var total = 0;
-            for (var i = 0; i < userSelection.length; i++) {
-                total = $("#duration_in_sec" + i).val();
-                total_duration = total_duration + parseFloat(total);
-            }
-            var minutes = Math.floor(total_duration / 60);
-            var seconds = Math.floor(total_duration % 60);
-
-            var per_sec_cost = 1 / 60;
-
-            total_cost = per_sec_cost * total_duration;
-
-            $("#total-duration").html(minutes + ' min ' + seconds + ' sec')
-            $("#total-cost").html('$' + total_cost.toFixed(2))
-
-
-            total_cost = total_cost.toFixed(2);
-            $("#paypal_total_cost").val(total_cost)
-            $("#span_paypal_total_cost").html("$ " + total_cost);
-            $("#paypal_total_duration").val(minutes + '.' + seconds)
-        }, 1500);
-
-    });
-</script>
 <script>
     var msg = '{{Session::get('alert')}}';
     var exist = '{{Session::has('alert')}}';
@@ -138,12 +129,12 @@
             showCancelButton: false,
         });
     }
-    var msg = '{{Session::get('error')}}';
-    var exist = '{{Session::has('error')}}';
-    if (exist) {
+    var msg1 = '{{Session::get('error')}}';
+    var exist1 = '{{Session::has('error')}}';
+    if (exist1) {
         Swal.fire({
             title: 'Error!',
-            text: msg,
+            text: msg1,
             icon: 'error',
             showCancelButton: false,
         });
@@ -188,6 +179,15 @@
         // });
     });
     @endif
+
+    $(document).ready(function(){
+        // PAGE IS FULLY LOADED
+        // FADE OUT YOUR OVERLAYING DIV
+        setTimeout(function () {
+            $('#overlay').fadeOut();
+        },1600);
+    });
+
 </script>
 
 </html>

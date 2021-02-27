@@ -15,7 +15,7 @@
                     </div>
                     <h4>Digital Audio</h4>
                     <p>$1.00 per minute</p>
-                    <a href="https://dev.alcondts.com/services/">
+                    <a href="{{URL::to('/')}}/services/">
                         <button>LEARN MORE</button>
                     </a>
                 </div>

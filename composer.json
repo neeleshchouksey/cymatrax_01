@@ -16,8 +16,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
         "league/omnipay": "^3",
-        "omnipay/payflow": "^3.0",
         "omnipay/paypal": "^3.0",
+        "omnipay/payflow": "^3.0",
         "pbmedia/laravel-ffmpeg": "^7.4"
     },
     "require-dev": {
@@ -41,6 +41,9 @@
         "psr-4": {
             "App\\": "app/"
         },
+        "files": [
+            "app/Helper.php"
+        ],
         "classmap": [
             "database/seeds",
             "database/factories"

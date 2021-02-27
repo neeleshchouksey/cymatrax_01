@@ -24,18 +24,20 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-//        $this->gateway = Omnipay::create('PayPal_Pro');
-//        $this->gateway->setUsername(env('PAYPAL_API_USERNAME'));
-//        $this->gateway->setPassword(env('PAYPAL_API_PASSWORD'));
-//        $this->gateway->setSignature(env('PAYPAL_API_SIGNATURE'));
-//        $this->gateway->setTestMode(true); // here 'true' is for sandbox. Pass 'false' when go live
-
-        $this->gateway = Omnipay::create('Payflow_Pro');
-        $this->gateway->setUsername(env('PAYPAL_API_USERNAME'));
-        $this->gateway->setPassword(env('PAYPAL_API_PASSWORD'));
-        $this->gateway->setVendor(env('PAYPAL_API_VENDOR'));
-        $this->gateway->setPartner(env('PAYPAL_API_PARTNER'));
-        $this->gateway->setTestMode(false); // here 'true' is for sandbox. Pass 'false' when go live
+        if(env('PAYPAL_MODE') == 'sandbox') {
+            $this->gateway = Omnipay::create('PayPal_Pro');
+            $this->gateway->setUsername(env('PAYPAL_API_USERNAME'));
+            $this->gateway->setPassword(env('PAYPAL_API_PASSWORD'));
+            $this->gateway->setSignature(env('PAYPAL_API_SIGNATURE'));
+            $this->gateway->setTestMode(true); // here 'true' is for sandbox. Pass 'false' when go live
+        }else {
+            $this->gateway = Omnipay::create('Payflow_Pro');
+            $this->gateway->setUsername(env('PAYPAL_API_USERNAME'));
+            $this->gateway->setPassword(env('PAYPAL_API_PASSWORD'));
+            $this->gateway->setVendor(env('PAYPAL_API_VENDOR'));
+            $this->gateway->setPartner(env('PAYPAL_API_PARTNER'));
+            $this->gateway->setTestMode(false); // here 'true' is for sandbox. Pass 'false' when go live
+        }
     }
 
     public function index()
@@ -166,10 +168,15 @@ class PaymentController extends Controller
                     try {
                         $date = time();;
                         $arr_body = $response->getData();
-                        $amount = $amt; ##$arr_body['AMT'];
-                        $currency = 'USD';## $arr_body['CURRENCYCODE'];
-                        $transaction_id = $arr_body['PPREF']; ##$arr_body['TRANSACTIONID'];
-
+                        if(env('PAYPAL_MODE') == 'sandbox') {
+                            $amount = $arr_body['AMT'];
+                            $currency = $arr_body['CURRENCYCODE'];
+                            $transaction_id = $arr_body['TRANSACTIONID'];
+                        }else {
+                            $amount = $amt; ##$arr_body['AMT'];
+                            $currency = 'USD';## $arr_body['CURRENCYCODE'];
+                            $transaction_id = $arr_body['PPREF']; ##$arr_body['TRANSACTIONID'];
+                        }
 
                         $paymentdetails = new Paymentdetail();
                         $paymentdetails->firstname = $first_name;
@@ -221,6 +228,43 @@ class PaymentController extends Controller
                 return response()->json(["status" => "error", "msg" => $e->getMessage()], 400);
             }
         }
+    }
+
+    public function clean_file($id){
+        $ids_in_array = Upload::where("id",$id)->pluck('id');
+        foreach ($ids_in_array as $item) {
+            $getfilename = DB::table('uploads')
+                ->where('id', $item)
+                ->select('file_name')  //get file name
+                ->first();
+
+            $filename_new = $this->soxProcessFile($getfilename->file_name); //call function for file cleaning
+
+            $uploads = DB::table('uploads')
+                ->where('id', $item)  //update uploads
+                ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
+        }
+
+        return redirect(url('/account'))->with('message', 'File Cleaned Successfully!');
+
+    }
+
+    public function clean_files($id){
+        $ids_in_array = Upload::where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->pluck('id');
+        foreach ($ids_in_array as $item) {
+            $getfilename = DB::table('uploads')
+                ->where('id', $item)
+                ->select('file_name')  //get file name
+                ->first();
+
+            $filename_new = $this->soxProcessFile($getfilename->file_name); //call function for file cleaning
+
+            $uploads = DB::table('uploads')
+                ->where('id', $item)  //update uploads
+                ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
+        }
+        return redirect(url('/account'))->with('message', 'File Cleaned Successfully!');
+
     }
 
 }

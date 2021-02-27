@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\FreeSubscription;
 use App\UserCard;
 use App\User;
 use Illuminate\Http\Request;
 use App\Upload;
-use DB;
 use FFMpeg;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Omnipay\Omnipay;
 use Omnipay\Common\CreditCard;
@@ -101,12 +102,7 @@ class UserController extends Controller
     {
         $title = "Upload Summary";
         $getData = Upload::where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
-        $Audio_ids = array();
-        foreach ($getData as $item) {
-            $Audio_ids[] = $item->id;
-        }
-        $audioids = (implode(',', $Audio_ids));
-        return view('upload-summary', compact('title','getData', 'audioids', 'id'));
+        return view('upload-summary', compact('title','getData', 'id'));
 
     }
 
@@ -158,5 +154,36 @@ class UserController extends Controller
 
     }
 
+    public function getUploadedAudio($id){
+        $getData = Upload::select('*',DB::Raw('DATE_FORMAT(created_at, "%d-%b-%Y %H:%i %p") as created'))->where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
+        return response()->json(['status' => 'success', 'res' => $getData],200);
+
+    }
+
+    public function getTransactionAudio($id){
+        $getData = Upload::select('*',DB::Raw('DATE_FORMAT(created_at, "%d-%b-%Y %H:%i %p") as created'))->where('paymentdetails_id', '=', $id)->get();
+        return response()->json(['status' => 'success', 'res' => $getData],200);
+    }
+
+    public function getAccountAudio(){
+        $getData = Upload::join("users","users.id","uploads.user_id")->select('uploads.*','users.trial_expiry_date',DB::Raw('DATE_FORMAT(uploads.created_at, "%d-%b-%Y %H:%i %p") as created'))->where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        return response()->json(['status' => 'success', 'res' => $getData],200);
+
+    }
+
+    public function free_subscription(){
+        $title = "Confirm Free Subscription";
+        return view("free-subscription",compact("title"));
+    }
+
+    public function confirm_subscription(){
+        $user = User::find(Auth::user()->id);
+        $days = FreeSubscription::first()->days;
+        $trial_expiry_date = strtotime("+$days days ", time());
+        $user->trial_expiry_date = $trial_expiry_date;
+        $user->save();
+
+        return redirect(url('/upload-audio'))->with('message', 'You have successfully subscribed free trial!');
+    }
 
 }
