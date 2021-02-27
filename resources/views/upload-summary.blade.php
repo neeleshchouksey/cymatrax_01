@@ -15,7 +15,7 @@
                         style="margin-top: 1rem">Proceed to Checkout
                 </button>
             @else
-                <button class="c-btn" onclick="document.location = '{{URL::to('/')}}/clean-files/{{$id}}'"
+                <button id="clean-btn" class="c-btn" onclick="clean_files({{$id}})"
                         style="margin-top: 1rem">Clean File(s)
                 </button>
             @endif

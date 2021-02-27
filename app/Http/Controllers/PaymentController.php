@@ -245,7 +245,7 @@ class PaymentController extends Controller
                 ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
         }
 
-        return redirect(url('/account'))->with('message', 'File Cleaned Successfully!');
+        return response()->json(["status" => "success", "msg" => "File Cleaned Successfully!"], 200);
 
     }
 
@@ -263,7 +263,7 @@ class PaymentController extends Controller
                 ->where('id', $item)  //update uploads
                 ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
         }
-        return redirect(url('/account'))->with('message', 'File Cleaned Successfully!');
+        return response()->json(["status" => "success", "msg" => "File Cleaned Successfully!"], 200);
 
     }
 

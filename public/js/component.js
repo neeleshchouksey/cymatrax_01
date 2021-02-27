@@ -172,6 +172,68 @@ function checkout() {
         }
     });
 }
+function clean_files(id) {
+    $("#clean-btn").html("Loading...");
+    $("#clean-btn").prop("disabled", true);
+    $.ajax({
+        method: "get",
+        url: APP_URL + "/clean-files/"+id,
+        success: function (response) {
+            $("#clean-btn").html("Clean File(s)");
+            $("#clean-btn").prop("disabled", false);
+            console.log(response);
+            Swal.fire({
+                title: 'Success!',
+                text: response.msg,
+                icon: 'success',
+                showCancelButton: false,
+            }).then((result) => {
+                window.location = APP_URL + '/account';
+            })
+        },
+        error: function (error) {
+            $("#clean-btn").html("Loading...");
+            $("#clean-btn").prop("disabled", true);
+            console.log(error);
+            Swal.fire({
+                title: "Error",
+                text: error.responseJSON.msg,
+                icon: "error",
+            });
+        }
+    });
+}
+function clean_file(id) {
+    $("#clean-btn"+id).html("Loading...");
+    $("#clean-btn"+id).prop("disabled", true);
+    $.ajax({
+        method: "get",
+        url: APP_URL + "/clean-file/"+id,
+        success: function (response) {
+            $("#clean-btn"+id).html("Clean File(s)");
+            $("#clean-btn"+id).prop("disabled", false);
+            console.log(response);
+            Swal.fire({
+                title: 'Success!',
+                text: response.msg,
+                icon: 'success',
+                showCancelButton: false,
+            }).then((result) => {
+                window.location = APP_URL + '/account';
+            })
+        },
+        error: function (error) {
+            $("#clean-btn"+id).html("Loading...");
+            $("#clean-btn"+id).prop("disabled", true);
+            console.log(error);
+            Swal.fire({
+                title: "Error",
+                text: error.responseJSON.msg,
+                icon: "error",
+            });
+        }
+    });
+}
 
 function redirectUrl(url) {
     window.location = url;
@@ -216,10 +278,9 @@ $(document).ready(function () {
                                     '</div>';
                             }else{
                                 var oncl1 = APP_URL + '/download-file/' + data[i].file_name
-                                var oncl2 = APP_URL + '/clean-file/' + data[i].id
                                 html = '<div class="flex">' +
                                     '<button class="c-btn1 mr-2" onclick="redirectUrl(\'' + oncl1 + '\')">Download </button>' +
-                                    '<button class="c-btn1 mr-2" onclick="redirectUrl(\'' + oncl2 + '\')">Clean File </button>' +
+                                    '<button class="c-btn1 mr-2" id="clean-btn'+data[i].id+'" onclick="clean_file('+data[i].id+')">Clean File </button>' +
                                     '</div>';
                             }
                         } else {

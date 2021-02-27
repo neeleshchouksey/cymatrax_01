@@ -81,14 +81,14 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="{{URL::to('/admin/')}}/dashboard" class="nav-link active">
+            <a href="{{URL::to('/admin/')}}/dashboard" class="nav-link @if(Request::segment(2) == "dashboard") active @endif">
               <p>
-                Dashboard
+               Dashboard
               </p>
             </a>
           </li>
           <li class="nav-item menu-open">
-            <a href="{{URL::to('/admin/')}}/free-subscription" class="nav-link">
+            <a href="{{URL::to('/admin/')}}/free-subscription" class="nav-link  @if(Request::segment(2) == "free-subscription") active @endif">
               <p>
                 Free Subscription
               </p>
