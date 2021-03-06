@@ -176,14 +176,18 @@ class UserController extends Controller
         return view("free-subscription",compact("title"));
     }
 
-    public function confirm_subscription(){
+    public function confirm_subscription()
+    {
         $user = User::find(Auth::user()->id);
-        $days = FreeSubscription::first()->days;
-        $trial_expiry_date = strtotime("+$days days ", time());
-        $user->trial_expiry_date = $trial_expiry_date;
-        $user->save();
-
-        return redirect(url('/upload-audio'))->with('message', 'You have successfully subscribed free trial!');
+        if (!$user->trial_expiry_date) {
+            $days = FreeSubscription::first()->days;
+            $trial_expiry_date = strtotime("+$days days ", time());
+            $user->trial_expiry_date = $trial_expiry_date;
+            $user->save();
+            return redirect(url('/upload-audio'))->with('message', 'You have successfully subscribed free trial!');
+        }else{
+            return redirect(url('/dashboard'))->with('error', 'You have already subscribed free trial!');
+        }
     }
 
 }
