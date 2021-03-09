@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\FreeSubscription;
+use App\User;
 use App\UserCard;
 use Illuminate\Http\Request;
 use App\Upload;
@@ -68,4 +69,30 @@ class AdminController extends Controller
         return redirect()->back()->with('success','Updated Successfully');
 
     }
+
+    public function users()
+    {
+        $users = User::withTrashed()->get();
+        return view('admin.users',compact("users"));
+    }
+
+    public function activate_deactivate_user(Request $request){
+        if(!$request->status) {
+            $st = "Deactivated";
+            $user = User::find($request->id)->delete();
+        }else{
+            $st = "Activated";
+            $user = User::withTrashed()->find($request->id)->restore();
+        }
+        return response(["status"=>"success","msg"=>"User ".$st." successfully"],200);
+    }
+    public function reset_trial($id){
+        $user = User::find($id);
+        $days = FreeSubscription::first()->days;
+        $trial_expiry_date = strtotime("+$days days ", time());
+        $user->trial_expiry_date = $trial_expiry_date;
+        $user->save();
+        return response(["status"=>"success","msg"=>"Free Trial reset successfully"],200);
+    }
+
 }

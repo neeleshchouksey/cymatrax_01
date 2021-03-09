@@ -2,9 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
-class AdminTableSeeder extends Seeder
+class AdminRolesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +12,7 @@ class AdminTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table("admins")->insert(["email"=>"admin@cymatrax.com","password"=>Hash::make(12345678),"role_id"=>1]);
+        DB::table("admin_roles")->insert([["role"=>"Master Admin"],["role"=>"Editor"]]);
+
     }
 }

@@ -38,6 +38,7 @@ Route::get('/checkout/{id}', 'PaymentController@checkout');
 Route::post('/payment/store', 'PaymentController@store');
 Route::get('/checkout-single/{id}', 'PaymentController@checkout_single');
 Route::get('/clean-files/{id}', 'PaymentController@clean_files');
+Route::get('/clean-files-with-free-trial/{id}', 'PaymentController@clean_files_with_free_trial');
 Route::get('/clean-file/{id}', 'PaymentController@clean_file');
 Route::get('/get-account-audio','UserController@getAccountAudio');
 Route::get('/get-transaction-audio/{id}','UserController@getTransactionAudio');
@@ -55,5 +56,8 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/logout', 'AdminController@logout');
     Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard');
     Route::get('/free-subscription', 'AdminController@free_subscription')->name('admin.dashboard');
+    Route::get('/users', 'AdminController@users')->name('admin.users');
     Route::post('/update-free-subscription-days', 'AdminController@update_free_subscription_days');
+    Route::post('/activate-deactivate-user', 'AdminController@activate_deactivate_user');
+    Route::get('/reset-trial/{id}', 'AdminController@reset_trial');
 });

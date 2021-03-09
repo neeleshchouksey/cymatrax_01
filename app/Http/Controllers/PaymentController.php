@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\FreeSubscription;
 use App\Upload;
 use App\UserCard;
 use App\User;
@@ -250,6 +251,32 @@ class PaymentController extends Controller
     }
 
     public function clean_files($id){
+        $ids_in_array = Upload::where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->pluck('id');
+        foreach ($ids_in_array as $item) {
+            $getfilename = DB::table('uploads')
+                ->where('id', $item)
+                ->select('file_name')  //get file name
+                ->first();
+
+            $filename_new = $this->soxProcessFile($getfilename->file_name); //call function for file cleaning
+
+            $uploads = DB::table('uploads')
+                ->where('id', $item)  //update uploads
+                ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
+        }
+        return response()->json(["status" => "success", "msg" => "File Cleaned Successfully!"], 200);
+
+    }
+
+    public function clean_files_with_free_trial($id){
+        $user = User::find(Auth::user()->id);
+        if (!$user->trial_expiry_date) {
+            $days = FreeSubscription::first()->days;
+            $trial_expiry_date = strtotime("+$days days ", time());
+            $user->trial_expiry_date = $trial_expiry_date;
+            $user->save();
+        }
+
         $ids_in_array = Upload::where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->pluck('id');
         foreach ($ids_in_array as $item) {
             $getfilename = DB::table('uploads')

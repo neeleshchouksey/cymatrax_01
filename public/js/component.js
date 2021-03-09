@@ -203,6 +203,38 @@ function clean_files(id) {
         }
     });
 }
+
+function clean_files_with_free_trial(id) {
+    $("#clean-btn").html("Loading...");
+    $("#clean-btn").prop("disabled", true);
+    $.ajax({
+        method: "get",
+        url: APP_URL + "/clean-files-with-free-trial/"+id,
+        success: function (response) {
+            $("#clean-btn").html("Clean File(s)");
+            $("#clean-btn").prop("disabled", false);
+            console.log(response);
+            Swal.fire({
+                title: 'Success!',
+                text: response.msg,
+                icon: 'success',
+                showCancelButton: false,
+            }).then((result) => {
+                window.location = APP_URL + '/account';
+            })
+        },
+        error: function (error) {
+            $("#clean-btn").html("Loading...");
+            $("#clean-btn").prop("disabled", true);
+            console.log(error);
+            Swal.fire({
+                title: "Error",
+                text: error.responseJSON.msg,
+                icon: "error",
+            });
+        }
+    });
+}
 function clean_file(id) {
     $("#clean-btn"+id).html("Loading...");
     $("#clean-btn"+id).prop("disabled", true);
