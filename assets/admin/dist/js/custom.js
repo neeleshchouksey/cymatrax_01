@@ -169,6 +169,11 @@ function getSingleAdmin(id) {
             $("#edit_name").val(response.res.name);
             $("#edit_password").val('');
             $("#edit_role").val(response.res.role_id);
+            if(response.res.role_id == 1){
+                $("#edit_role").prop("disabled",true);
+            }else{
+                $("#edit_role").prop("disabled",false);
+            }
         },
     });
 

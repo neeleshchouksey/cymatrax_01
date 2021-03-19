@@ -45,11 +45,13 @@
                                             <td>{{$v->email}}</td>
                                             <td>
                                                 @if(!$v->deleted_at)
-                                                    <button class="btn-sm btn-danger mb-1"
-                                                            onclick="activateDeactivateAdmin({{$v->id}},0)"><i
-                                                            class="fa fa-trash"></i>
-                                                        Deactivate
-                                                    </button>
+                                                    @if($v->role_id!=1)
+                                                        <button class="btn-sm btn-danger mb-1"
+                                                                onclick="activateDeactivateAdmin({{$v->id}},0)"><i
+                                                                class="fa fa-trash"></i>
+                                                            Deactivate
+                                                        </button>
+                                                    @endif
                                                 @else
                                                     <button class="btn-sm btn-success mb-1"
                                                             onclick="activateDeactivateAdmin({{$v->id}},1)"><i

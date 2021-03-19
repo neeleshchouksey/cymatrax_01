@@ -192,19 +192,20 @@ class AdminController extends Controller
             $a->role_id = $request->role;
             $a->save();
 
-            $u = User::where("email", $request->email)->first();
-            if(!$u){
-                $u = new User();
+            if($a->role_id!=1) {
+                $u = User::where("email", $request->email)->first();
+                if (!$u) {
+                    $u = new User();
+                }
+                $u->name = $request->name;
+                $u->email = $request->email;
+                if ($request->password) {
+                    $u->password = Hash::make($request->password);
+                }
+                $u->user = 1;
+                $u->is_admin = 1;
+                $u->save();
             }
-            $u->name = $request->name;
-            $u->email = $request->email;
-            if ($request->password) {
-                $u->password = Hash::make($request->password);
-            }
-            $u->user = 1;
-            $u->is_admin = 1;
-            $u->save();
-
             return response()->json(["status" => "success", "message" => "Admin Added Successfully"], 200);
 
         }
@@ -212,7 +213,7 @@ class AdminController extends Controller
 
     public function roles()
     {
-        $roles = AdminRole::all();
+        $roles = AdminRole::where("id","!=",1)->get();
         $features = Feature::all();
         return view('admin.roles', compact("roles", "features"));
     }

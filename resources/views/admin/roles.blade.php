@@ -53,9 +53,8 @@
                                     <tfoot>
                                     <tr>
                                         <th>S. No.</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Action</th>
+                                        <th>Role</th>
+                                        <th>Action </th>
                                     </tr>
                                     </tfoot>
                                 </table>
