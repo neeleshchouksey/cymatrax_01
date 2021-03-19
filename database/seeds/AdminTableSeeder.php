@@ -13,6 +13,6 @@ class AdminTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table("admins")->insert(["email"=>"admin@cymatrax.com","password"=>Hash::make(12345678),"role_id"=>1]);
+        DB::table("users")->insert(["email"=>"admin@cymatrax.com","password"=>Hash::make(12345678),"role_id"=>1,"name"=>"Master Admin"]);
     }
 }

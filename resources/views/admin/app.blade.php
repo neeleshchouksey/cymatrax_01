@@ -34,6 +34,9 @@
     <link rel="stylesheet" href="{{asset('/assets/admin/')}}/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('/assets/admin/')}}/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="{{asset('/assets/admin/')}}/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet"
+          href="{{asset('/assets/admin/')}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <script>
         var APP_URL = '{{URL::to("/")}}';
         var CSRF_TOKEN = '{{csrf_token()}}'
@@ -87,7 +90,7 @@
                          alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">Admin</a>
+                    <a href="#" class="d-block">{{Auth::guard('admin')->user()->name}}</a>
                 </div>
             </div>
 
@@ -105,22 +108,46 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item menu-open">
-                        <a href="{{URL::to('/admin/')}}/free-subscription"
-                           class="nav-link  @if(Request::segment(2) == "free-subscription") active @endif">
-                            <p>
-                                Free Subscription
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item menu-open">
-                        <a href="{{URL::to('/admin/')}}/users"
-                           class="nav-link  @if(Request::segment(2) == "users") active @endif">
-                            <p>
-                                Users
-                            </p>
-                        </a>
-                    </li>
+                    @if(checkRoleFeature('free-subscription'))
+                        <li class="nav-item menu-open">
+                            <a href="{{URL::to('/admin/')}}/free-subscription"
+                               class="nav-link  @if(Request::segment(2) == "free-subscription") active @endif">
+                                <p>
+                                    Free Subscription
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+                    @if(checkRoleFeature('users'))
+                        <li class="nav-item menu-open">
+                            <a href="{{URL::to('/admin/')}}/users"
+                               class="nav-link  @if(Request::segment(2) == "users") active @endif">
+                                <p>
+                                    Users
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+                    @if(checkRoleFeature('admins'))
+                        <li class="nav-item menu-open">
+                            <a href="{{URL::to('/admin/')}}/admins"
+                               class="nav-link  @if(Request::segment(2) == "admins") active @endif">
+                                <p>
+                                    Admins
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+                    @if(checkRoleFeature('roles'))
+                        <li class="nav-item menu-open">
+                            <a href="{{URL::to('/admin/')}}/roles"
+                               class="nav-link  @if(Request::segment(2) == "roles") active @endif">
+                                <p>
+                                    Roles
+                                </p>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -154,6 +181,9 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('/assets/admin/')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="{{asset('/assets/admin/')}}/plugins/select2/js/select2.full.min.js"></script>
+
 <!-- ChartJS -->
 <script src="{{asset('/assets/admin/')}}/plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
@@ -221,6 +251,17 @@
         "responsive": true, "lengthChange": false, "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+    $(document).ready(function () {
+        $('.select2').select2({
+            dropdownParent: $('#update-role-modal')
+        });
+        $('.select2bs4').select2({
+            theme: 'bootstrap4',
+            dropdownParent: $('#update-role-modal')
+
+        })
+    });
 
 </script>
 </body>

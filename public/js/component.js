@@ -302,12 +302,22 @@ $(document).ready(function () {
                         var current_time = Math.floor(Date.now() / 1000);
                         if (!data[i].cleaned) {
                             if(!data[i].trial_expiry_date || data[i].trial_expiry_date<current_time) {
-                                var oncl1 = APP_URL + '/download-file/' + data[i].file_name
-                                var oncl2 = APP_URL + '/checkout-single/' + data[i].id
-                                html = '<div class="flex">' +
-                                    '<button class="c-btn1 mr-2" onclick="redirectUrl(\'' + oncl1 + '\')">Download </button>' +
-                                    '<button class="c-btn1 mr-2" onclick="redirectUrl(\'' + oncl2 + '\')">Pay & Checkout </button>' +
-                                    '</div>';
+
+                                if(data[i].is_admin){
+                                    var oncl1 = APP_URL + '/download-file/' + data[i].file_name
+                                    html = '<div class="flex">' +
+                                        '<button class="c-btn1 mr-2" onclick="redirectUrl(\'' + oncl1 + '\')">Download </button>' +
+                                        '<button class="c-btn1 mr-2" id="clean-btn'+data[i].id+'" onclick="clean_file('+data[i].id+')">Clean File </button>' +
+                                        '</div>';
+                                }else{
+                                    var oncl1 = APP_URL + '/download-file/' + data[i].file_name
+                                    var oncl2 = APP_URL + '/checkout-single/' + data[i].id
+                                    html = '<div class="flex">' +
+                                        '<button class="c-btn1 mr-2" onclick="redirectUrl(\'' + oncl1 + '\')">Download </button>' +
+                                        '<button class="c-btn1 mr-2" onclick="redirectUrl(\'' + oncl2 + '\')">Pay & Checkout </button>' +
+                                        '</div>';
+                                }
+
                             }else{
                                 var oncl1 = APP_URL + '/download-file/' + data[i].file_name
                                 html = '<div class="flex">' +

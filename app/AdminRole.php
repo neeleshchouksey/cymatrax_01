@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
-class Admin extends Authenticatable
+class AdminRole extends Model
 {
-    use SoftDeletes;
-    protected $guard = 'admin';
-    protected $table = "admins";
+    protected $table = "admin_roles";
 
-
+    function features(){
+        return $this->hasMany(AdminRoleFeature::class,"role_id","id");
+    }
 }

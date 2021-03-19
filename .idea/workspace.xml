@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="80783c2b-5eba-4d67-b6e5-7e615c2d5416" name="Default Changelist" comment="admin implementation">
-      <change afterPath="$PROJECT_DIR$/assets/admin/dist/js/custom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_09_073102_create_admin_roles_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_09_073850_add_role_id_to_admins_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_09_074050_add_soft_delete_to_users_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_09_075910_create_features_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_09_075949_create_admin_role_features_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/AdminRolesTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/users.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/new-project.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="80783c2b-5eba-4d67-b6e5-7e615c2d5416" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/AdminRole.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/AdminRoleFeature.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Feature.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Middleware/AdminRole.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_13_030146_add_soft_delete_and_name_to_admins_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_16_080939_add_is_admin_to_users_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeds/FeaturesTableSeeder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/admins.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/roles.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/unauthorize-access.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helper.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PaymentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/admin/dist/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/admin/dist/js/custom.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeds/AdminTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/AdminTableSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/component.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/component.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/upload-summary.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/upload-summary.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
@@ -184,7 +185,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/admin/dist/js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -196,8 +197,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/assets/admin/dist/js" />
       <recent name="$PROJECT_DIR$/resources/views/admin" />
+      <recent name="$PROJECT_DIR$/app" />
+      <recent name="$PROJECT_DIR$/assets/admin/dist/js" />
     </key>
   </component>
   <component name="RunManager">
@@ -218,7 +220,12 @@
       <workItem from="1615009835988" duration="1227000" />
       <workItem from="1615012210361" duration="45000" />
       <workItem from="1615272346105" duration="6604000" />
-      <workItem from="1615279810357" duration="1548000" />
+      <workItem from="1615279810357" duration="1870000" />
+      <workItem from="1615354555909" duration="1617000" />
+      <workItem from="1615603994748" duration="1947000" />
+      <workItem from="1615790776660" duration="3430000" />
+      <workItem from="1615795600246" duration="9661000" />
+      <workItem from="1615878055341" duration="7109000" />
     </task>
     <task id="LOCAL-00001" summary="admin implementation">
       <created>1614403459655</created>
@@ -269,7 +276,21 @@
       <option name="project" value="LOCAL" />
       <updated>1615010461721</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="testing">
+      <created>1615285479053</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1615285479053</updated>
+    </task>
+    <task id="LOCAL-00009" summary="3. User section&#10;4. reset trial period for user&#10;6. free trial link on upload summery page">
+      <created>1615285533521</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1615285533521</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,6 +305,8 @@
     <MESSAGE value="clean file using js" />
     <MESSAGE value="ok cancel btn on subscription" />
     <MESSAGE value="free subscription already subscribed condition" />
-    <option name="LAST_COMMIT_MESSAGE" value="free subscription already subscribed condition" />
+    <MESSAGE value="testing" />
+    <MESSAGE value="3. User section&#10;4. reset trial period for user&#10;6. free trial link on upload summery page" />
+    <option name="LAST_COMMIT_MESSAGE" value="3. User section&#10;4. reset trial period for user&#10;6. free trial link on upload summery page" />
   </component>
 </project>
