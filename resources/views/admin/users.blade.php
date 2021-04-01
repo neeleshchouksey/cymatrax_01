@@ -37,6 +37,10 @@
                                         <th>Country</th>
                                         <th>Zip Code</th>
                                         <th>Trial Expiry</th>
+                                        <th>Total Uploaded File(s)</th>
+                                        <th>Total Cleaned File(s)</th>
+                                        <th>Total Paid File(s)</th>
+                                        <th>Last Login</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -51,7 +55,11 @@
                                             <td>{{$v->state}}</td>
                                             <td>{{$v->country}}</td>
                                             <td>{{$v->zip_code}}</td>
-                                            <td>@if($v->trial_expiry_date){{date("d-m-Y",$v->trial_expiry_date)}}@else Not Taken Free Trial @endif</td>
+                                            <td>@if($v->trial_expiry_date){{date("d-m-Y",$v->trial_expiry_date)}}@else Trial Not Started @endif</td>
+                                            <td>{{$v->uploaded_files_count}}</td>
+                                            <td>{{$v->cleaned_files_count}}</td>
+                                            <td>{{$v->paid_files_count}}</td>
+                                            <td>{{date("d-m-Y h:i A",$v->last_login_at)}}</td>
                                             <td>
                                                 @if(!$v->deleted_at)
                                                     <button class="btn-sm btn-danger mb-1" onclick="activateDeactivateUser({{$v->id}},0)"><i class="fa fa-trash"></i>
@@ -80,6 +88,9 @@
                                         <th>Country</th>
                                         <th>Zip Code</th>
                                         <th>Trial Expiry</th>
+                                        <th>Total Uploaded File(s)</th>
+                                        <th>Total Cleaned File(s)</th>
+                                        <th>Total Paid File(s)</th>
                                         <th>Action</th>
                                     </tr>
                                     </tfoot>

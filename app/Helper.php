@@ -1,6 +1,7 @@
 <?php
 
-use App\Admin;use App\FreeSubscription;
+use App\Admin;
+use App\FreeSubscription;
 use Illuminate\Support\Facades\Auth;
 
 function get_free_trial_days(){

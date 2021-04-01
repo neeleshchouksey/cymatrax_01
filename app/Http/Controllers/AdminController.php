@@ -79,7 +79,9 @@ class AdminController extends Controller
 
     public function users()
     {
-        $users = User::withTrashed()->get();
+        $users = User::withTrashed()->withCount(['uploadedFiles','cleanedFiles','paidFiles'=>function($q){
+            $q->join("paymentdetails","paymentdetails.id","uploads.paymentdetails_id");
+        }])->get();
         return view('admin.users', compact("users"));
     }
 

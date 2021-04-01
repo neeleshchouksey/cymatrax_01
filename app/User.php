@@ -6,7 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Notifications\ResetPassword; // At the top under your namespace
+use App\Notifications\ResetPassword;
+
+// At the top under your namespace
 
 class User extends Authenticatable
 {
@@ -18,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','user','address','city','state','country','zip_code'
+        'name', 'email', 'password', 'user', 'address', 'city', 'state', 'country', 'zip_code'
     ];
 
     /**
@@ -43,5 +45,19 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    public function uploadedFiles()
+    {
+        return $this->hasMany(Upload::class, 'user_id', 'id');
+    }
+
+    public function cleanedFiles()
+    {
+        return $this->hasMany(Upload::class, 'user_id', 'id')->where("cleaned",1);
+    }
+    public function paidFiles()
+    {
+        return $this->hasMany(Upload::class, 'user_id', 'id');
     }
 }
