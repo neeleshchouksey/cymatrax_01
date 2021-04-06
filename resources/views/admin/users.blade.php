@@ -59,7 +59,7 @@
                                             <td>{{$v->uploaded_files_count}}</td>
                                             <td>{{$v->cleaned_files_count}}</td>
                                             <td>{{$v->paid_files_count}}</td>
-                                            <td>@if($v->last_login){{date("d-m-Y h:i A",$v->last_login_at)}} @else Not login yet @endif</td>
+                                            <td>@if($v->last_login_at){{date("d-m-Y h:i A",$v->last_login_at)}} @else Not login yet @endif</td>
                                             <td>
                                                 @if(!$v->deleted_at)
                                                     <button class="btn-sm btn-danger mb-1" onclick="activateDeactivateUser({{$v->id}},0)"><i class="fa fa-trash"></i>
