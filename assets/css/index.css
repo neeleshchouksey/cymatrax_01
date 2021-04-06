@@ -18,6 +18,10 @@ font-family: 'Russo One', sans-serif;
 *{
 	outline:none;
 }
+.font-weight-normal{
+    font-weight: normal !important;
+}
+
 .downloadlink{
 	font-size:15px;
 	display:block;
