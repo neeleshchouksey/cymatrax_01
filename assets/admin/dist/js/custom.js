@@ -329,9 +329,10 @@ function get_roles() {
 function get_users() {
 
     $("#user-datatable").DataTable({
-        "responsive": false,
+        // "responsive": false,
         "lengthChange": false,
-        "autoWidth": true,
+        "autoWidth": false,
+        "scrollX": true,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "bDestroy": true,
         "ordering":false,
