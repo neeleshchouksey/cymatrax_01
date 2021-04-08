@@ -1,3 +1,17 @@
+$(function () {
+
+    var uri_segment = document.URL.split('/')[document.URL.split('/').length-1];
+
+    if(uri_segment == 'admins'){
+        get_admins();
+    }
+    if(uri_segment == 'roles'){
+        get_roles();
+    }
+    if(uri_segment == 'users'){
+        get_users();
+    }
+});
 function activateDeactivateUser(id, status) {
     if (status) {
         st = "Activate";
@@ -29,7 +43,7 @@ function activateDeactivateUser(id, status) {
                         icon: 'success',
                         showCancelButton: false,
                     }).then((result) => {
-                        window.location.reload();
+                        get_users();
                     })
                 },
                 error: function (error) {
@@ -42,6 +56,29 @@ function activateDeactivateUser(id, status) {
             });
         }
     });
+}
+
+function get_admins() {
+
+    var admin_datatable =  $("#admin-datatable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "bDestroy": true,
+        "ordering":false,
+        ajax: {
+            url:APP_URL+"/admin/get-all-admins",
+            type:"GET",
+        },
+        "columns": [
+            { mData: 'sno' } ,
+            { mData: 'name' },
+            { mData: 'email' },
+            { mData: 'action' }
+        ]
+
+    }).buttons().container().appendTo('#admin-datatable_wrapper .col-md-6:eq(0)');
 }
 
 function activateDeactivateAdmin(id, status) {
@@ -75,7 +112,7 @@ function activateDeactivateAdmin(id, status) {
                         icon: 'success',
                         showCancelButton: false,
                     }).then((result) => {
-                        window.location.reload();
+                        get_admins();
                     })
                 },
                 error: function (error) {
@@ -111,7 +148,7 @@ function resetTrial(id) {
                         icon: 'success',
                         showCancelButton: false,
                     }).then((result) => {
-                        window.location.reload();
+                        get_users();
                     })
                 },
                 error: function (error) {
@@ -144,13 +181,14 @@ function addAdmin() {
                 icon: 'success',
                 showCancelButton: false,
             }).then((result) => {
-                window.location.reload();
+                $("#add-admin-modal").modal("hide");
+                get_admins();
             })
         },
         error: function (error) {
             Swal.fire({
                 title: "Error",
-                text: error.responseJSON.message,
+                text: error.responseJSON.msg,
                 icon: "error",
             });
         }
@@ -198,13 +236,14 @@ function updateAdmin() {
                 icon: 'success',
                 showCancelButton: false,
             }).then((result) => {
-                window.location.reload();
+                $("#update-admin-modal").modal("hide");
+                get_admins();
             })
         },
         error: function (error) {
             Swal.fire({
                 title: "Error",
-                text: error.responseJSON.message,
+                text: error.responseJSON.msg,
                 icon: "error",
             });
         }
@@ -251,13 +290,14 @@ function updateRole() {
                 icon: 'success',
                 showCancelButton: false,
             }).then((result) => {
-                window.location.reload();
+                $("#update-role-modal").modal("hide");
+                get_roles();
             })
         },
         error: function (error) {
             Swal.fire({
                 title: "Error",
-                text: error.responseJSON.message,
+                text: error.responseJSON.msg,
                 icon: "error",
             });
         }
@@ -265,3 +305,56 @@ function updateRole() {
 
 }
 
+function get_roles() {
+
+    $("#role-datatable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "bDestroy": true,
+        "ordering":false,
+        ajax: {
+            url:APP_URL+"/admin/get-all-roles",
+            type:"GET",
+        },
+        "columns": [
+            { mData: 'sno' } ,
+            { mData: 'role' },
+            { mData: 'action' }
+        ]
+
+    }).buttons().container().appendTo('#role-datatable_wrapper .col-md-6:eq(0)');
+}
+function get_users() {
+
+    $("#user-datatable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "bDestroy": true,
+        "ordering":false,
+        ajax: {
+            url:APP_URL+"/admin/get-all-users",
+            type:"GET",
+        },
+        "columns": [
+            { mData: 'sno' } ,
+            { mData: 'name' },
+            { mData: 'email' },
+            { mData: 'address' },
+            { mData: 'city' },
+            { mData: 'state' },
+            { mData: 'country' },
+            { mData: 'zip_code' },
+            { mData: 'trial_expiry_date' },
+            { mData: 'uploaded_files_count' },
+            { mData: 'cleaned_files_count' },
+            { mData: 'paid_files_count' },
+            { mData: 'last_login_at' },
+            { mData: 'action' }
+        ]
+
+    }).buttons().container().appendTo('#user-datatable_wrapper .col-md-6:eq(0)');
+}

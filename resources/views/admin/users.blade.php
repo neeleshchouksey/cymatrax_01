@@ -25,7 +25,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="user-datatable" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>S. No.</th>
@@ -45,37 +45,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($users as $k=>$v)
-                                        <tr>
-                                            <td>{{$k+1}}</td>
-                                            <td>{{$v->name}}</td>
-                                            <td>{{$v->email}}</td>
-                                            <td>{{$v->address}}</td>
-                                            <td>{{$v->city}}</td>
-                                            <td>{{$v->state}}</td>
-                                            <td>{{$v->country}}</td>
-                                            <td>{{$v->zip_code}}</td>
-                                            <td>@if($v->trial_expiry_date){{date("d-m-Y",$v->trial_expiry_date)}}@else Trial Not Started @endif</td>
-                                            <td>{{$v->uploaded_files_count}}</td>
-                                            <td>{{$v->cleaned_files_count}}</td>
-                                            <td>{{$v->paid_files_count}}</td>
-                                            <td>@if($v->last_login_at){{date("d-m-Y h:i A",$v->last_login_at)}} @else Not login yet @endif</td>
-                                            <td>
-                                                @if(!$v->deleted_at)
-                                                    <button class="btn-sm btn-danger mb-1" onclick="activateDeactivateUser({{$v->id}},0)"><i class="fa fa-trash"></i>
-                                                        Deactivate
-                                                    </button><br>
-                                                @else
-                                                    <button class="btn-sm btn-success mb-1" onclick="activateDeactivateUser({{$v->id}},1)"><i class="fa fa-check"></i>
-                                                        Activate
-                                                    </button><br>
-                                                @endif
-                                                <button class="btn-sm btn-primary" onclick="resetTrial({{$v->id}})"><i class="fa fa-sync"></i> Reset
-                                                    Trial
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+
                                     </tbody>
                                     <tfoot>
                                     <tr>

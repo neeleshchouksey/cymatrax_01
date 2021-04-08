@@ -79,11 +79,54 @@ class AdminController extends Controller
 
     public function users()
     {
-        $users = User::withTrashed()->withCount(['uploadedFiles','cleanedFiles','paidFiles'=>function($q){
-            $q->join("paymentdetails","paymentdetails.id","uploads.paymentdetails_id");
-        }])->get();
-        return view('admin.users', compact("users"));
+
+        return view('admin.users');
     }
+
+    public function get_users(){
+        $data = User::withTrashed()->withCount(['uploadedFiles','cleanedFiles','paidFiles'=>function($q){
+            $q->join("paymentdetails","paymentdetails.id","uploads.paymentdetails_id");
+        }])->orderBy('id','desc')->get();
+        foreach ($data as $k=>$v){
+            $v->sno = $k+1;
+
+            if($v->trial_expiry_date){
+                $v->trial_expiry_date = date("d-m-Y",$v->trial_expiry_date);
+            }else{
+                $v->trial_expiry_date = "Trial Not Started";
+            }
+
+            if($v->last_login_at){
+                $v->last_login_at = date("d-m-Y h:i A",$v->last_login_at);
+            }else {
+                $v->last_login_at = date("d-m-Y h:i A",strtotime($v->created_at));;
+            }
+
+            $updateButton = "<button class='btn btn-sm btn-primary' onclick='resetTrial($v->id)'>Reset Trial</button><br>";
+
+            if($v->deleted_at){
+                // activate Button
+                $deleteButton = "<button class='btn btn-sm btn-success' onclick='activateDeactivateUser($v->id,1)'>Activate</button>";
+
+            }else{
+                // Deactivate Button
+                $deleteButton = "<button class='btn btn-sm btn-danger' onclick='activateDeactivateUser($v->id,0)'>Deactivate</button>";
+            }
+
+            $action = $updateButton." ".$deleteButton;
+            $v->action = $action;
+
+        }
+
+        $results = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($data),
+            "iTotalDisplayRecords" => count($data),
+            "aaData" => $data
+        );
+        return response()->json($results);
+    }
+
 
     public function activate_deactivate_user(Request $request)
     {
@@ -109,11 +152,44 @@ class AdminController extends Controller
 
     public function admins()
     {
-        $admins = Admin::withTrashed()->get();
+//        $admins = Admin::withTrashed()->get();
         $roles = AdminRole::all();
-        return view('admin.admins', compact("admins", "roles"));
+        return view('admin.admins', compact( "roles"));
     }
 
+    public function get_admins(){
+        $data = Admin::withTrashed()->orderBy('id','desc')->get();
+        foreach ($data as $k=>$v){
+
+            $v->sno = $k+1;
+
+//            $v->created = date("d-m-Y h:i A",strtotime($v->created_at));
+//            $v->updated = date("d-m-Y h:i A",strtotime($v->updated_at));
+
+            // Update Button
+            $updateButton = "<button class='btn btn-sm btn-primary' onclick='getSingleAdmin($v->id)'>Edit</button>";
+
+            if($v->deleted_at){
+                // activate Button
+                $deleteButton = "<button class='btn btn-sm btn-success' onclick='activateDeactivateAdmin($v->id,1)'>Activate</button>";
+
+            }else{
+                // Deactivate Button
+                $deleteButton = "<button class='btn btn-sm btn-danger' onclick='activateDeactivateAdmin($v->id,0)'>Deactivate</button>";
+            }
+            $action = $updateButton." ".$deleteButton;
+            $v->action = $action;
+
+        }
+
+        $results = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($data),
+            "iTotalDisplayRecords" => count($data),
+            "aaData" => $data
+        );
+        return response()->json($results);
+    }
 
     public function add_admin(Request $request)
     {
@@ -125,7 +201,7 @@ class AdminController extends Controller
         ]);
         if ($validator->fails()) {
             $error = $validator->getMessageBag()->first();
-            return response()->json(["status" => "error", "message" => $error], 400);
+            return response()->json(["status" => "error", "msg" => $error], 400);
         } else {
             $a = new Admin();
             $a->name = $request->name;
@@ -142,7 +218,7 @@ class AdminController extends Controller
             $u->is_admin = 1;
             $u->save();
 
-            return response()->json(["status" => "success", "message" => "Admin Added Successfully"], 200);
+            return response()->json(["status" => "success", "msg" => "Admin Added Successfully"], 200);
 
         }
     }
@@ -156,7 +232,7 @@ class AdminController extends Controller
             $st = "Activated";
             $user = Admin::withTrashed()->find($request->id)->restore();
         }
-        return response(["status" => "success", "msg" => "User " . $st . " successfully"], 200);
+        return response(["status" => "success", "msg" => "Admin " . $st . " successfully"], 200);
     }
 
     public function get_admin(Request $request)
@@ -183,7 +259,7 @@ class AdminController extends Controller
         }
         if ($validator->fails()) {
             $error = $validator->getMessageBag()->first();
-            return response()->json(["status" => "error", "message" => $error], 400);
+            return response()->json(["status" => "error", "msg" => $error], 400);
         } else {
             $a = Admin::find($request->id);
             $a->name = $request->name;
@@ -208,16 +284,38 @@ class AdminController extends Controller
                 $u->is_admin = 1;
                 $u->save();
             }
-            return response()->json(["status" => "success", "message" => "Admin Added Successfully"], 200);
+            return response()->json(["status" => "success", "msg" => "Admin Updated Successfully"], 200);
 
         }
     }
 
     public function roles()
     {
-        $roles = AdminRole::where("id","!=",1)->get();
+//        $roles = AdminRole::where("id","!=",1)->get();
         $features = Feature::all();
-        return view('admin.roles', compact("roles", "features"));
+        return view('admin.roles', compact( "features"));
+    }
+
+    public function get_roles(){
+        $data = AdminRole::where("id","!=",1)->get();
+        foreach ($data as $k=>$v){
+            $v->sno = $k+1;
+
+            // Update Button
+            $updateButton = "<button class='btn btn-sm btn-primary' onclick='getSingleRole($v->id)'>Edit</button>";
+
+            $action = $updateButton;
+            $v->action = $action;
+
+        }
+
+        $results = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($data),
+            "iTotalDisplayRecords" => count($data),
+            "aaData" => $data
+        );
+        return response()->json($results);
     }
 
     public function get_role(Request $request)
@@ -254,7 +352,7 @@ class AdminController extends Controller
             }
         }
 
-        return response(["status" => "success", "res" => $ar], 200);
+        return response(["status" => "success","msg"=>"Role updated successfully", "res" => $ar], 200);
 
     }
 

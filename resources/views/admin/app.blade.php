@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="{{asset('/assets/admin/')}}/plugins/jqvmap/jqvmap.min.css">
 
     <link rel="stylesheet" href="{{asset('/assets/admin/')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{asset('/assets/admin/')}}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+
     <link rel="stylesheet"
           href="{{asset('/assets/admin/')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="{{asset('/assets/admin/')}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
@@ -203,8 +205,7 @@
 <script src="{{asset('/assets/admin/')}}/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="{{asset('/assets/admin/')}}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+<script src="{{asset('/assets/admin/')}}/plugins/sweetalert2/sweetalert2.min.js"></script>
 
 <script src="{{asset('/assets/admin/')}}/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="{{asset('/assets/admin/')}}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>

@@ -28,7 +28,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="admin-datatable" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>S. No.</th>
@@ -38,36 +38,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($admins as $k=>$v)
-                                        <tr>
-                                            <td>{{$k+1}}</td>
-                                            <td>{{$v->name}}</td>
-                                            <td>{{$v->email}}</td>
-                                            <td>
-                                                @if(!$v->deleted_at)
-                                                    @if($v->role_id!=1)
-                                                        <button class="btn-sm btn-danger mb-1"
-                                                                onclick="activateDeactivateAdmin({{$v->id}},0)"><i
-                                                                class="fa fa-trash"></i>
-                                                            Deactivate
-                                                        </button>
-                                                    @endif
-                                                @else
-                                                    <button class="btn-sm btn-success mb-1"
-                                                            onclick="activateDeactivateAdmin({{$v->id}},1)"><i
-                                                            class="fa fa-check"></i>
-                                                        Activate
-                                                    </button>
-                                                @endif
-                                                @if(!$v->deleted_at)
-                                                    <button class="btn-sm btn-primary"
-                                                            onclick="getSingleAdmin({{$v->id}})"><i
-                                                            class="fa fa-user-edit"></i> Edit
-                                                    </button>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
+
                                     </tbody>
                                     <tfoot>
                                     <tr>

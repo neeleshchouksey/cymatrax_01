@@ -21,7 +21,13 @@ font-family: 'Russo One', sans-serif;
 .font-weight-normal{
     font-weight: normal !important;
 }
-
+.free-trial{
+    font-size: medium !important;
+    float: right !important;
+}
+.free-trial a{
+    text-decoration: none !important;
+}
 .downloadlink{
 	font-size:15px;
 	display:block;

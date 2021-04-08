@@ -26,7 +26,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="role-datatable" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>S. No.</th>
@@ -35,20 +35,6 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($roles as $k=>$v)
-                                        <tr>
-                                            <td>{{$k+1}}</td>
-                                            <td>{{$v->role}}</td>
-                                            <td>
-                                                @if(!$v->deleted_at)
-                                                    <button class="btn-sm btn-primary"
-                                                            onclick="getSingleRole({{$v->id}})"><i
-                                                            class="fa fa-user-edit"></i> Edit
-                                                    </button>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
                                     </tbody>
                                     <tfoot>
                                     <tr>

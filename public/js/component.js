@@ -272,7 +272,7 @@ function redirectUrl(url) {
 }
 
 $(document).ready(function () {
-    $('#overlay').fadeIn();
+    // $('#overlay').fadeIn();
     var currentUrl = document.URL.split('/');
     var segment1 = currentUrl[currentUrl.length - 1];
     var segment2 = currentUrl[currentUrl.length - 2];
@@ -280,14 +280,14 @@ $(document).ready(function () {
     if (segment1 == "account") {
         var url = APP_URL + "/get-account-audio";
     }
-    if (segment2 == "upload-summary" || segment2 == "checkout") {
+    if (segment2 == "upload-summary" || segment2 == "checkout" || segment2 == "checkout-single") {
         var url = APP_URL + "/get-uploaded-audio/" + segment1;
     }
     if (segment2 == "transaction-details") {
         var url = APP_URL + "/get-transaction-audio/" + segment1;
     }
 
-    if (segment1 == "account" || segment2 == "upload-summary" || segment2 == "transaction-details" || segment2 == "checkout") {
+    if (segment1 == "account" || segment2 == "upload-summary" || segment2 == "transaction-details" || segment2 == "checkout" || segment2 == "checkout-single") {
 
         $.ajax({
             method: "get",
@@ -368,7 +368,7 @@ $(document).ready(function () {
                         '            </div>')
 
                     getDuration1(APP_URL + '/public/upload/' + data[i].file_name,aud_id);
-                    $('#overlay').fadeOut();
+                    // $('#overlay').fadeOut();
                 }
             },
             error: function (error) {
@@ -382,6 +382,7 @@ var total_sec = 0;
 var total_duration = 0;
 var total_cost = 0;
 function getDuration1(path,aud_id){
+    console.log("duration1 calling");
     // Create a non-dom allocated Audio element
     var au = document.createElement('audio');
 

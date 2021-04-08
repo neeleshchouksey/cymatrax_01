@@ -58,19 +58,24 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard')->middleware('role:dashboard');
     Route::get('/free-subscription', 'AdminController@free_subscription')->middleware('role:free-subscription');
     Route::get('/users', 'AdminController@users')->name('admin.users')->middleware('role:users');
+
     Route::get('/admins', 'AdminController@admins')->name('admin.admins')->middleware('role:admins');
     Route::get('/roles', 'AdminController@roles')->name('admin.roles')->middleware('role:roles');
 
     Route::post('/update-free-subscription-days', 'AdminController@update_free_subscription_days');
+
+    Route::get('/get-all-users', 'AdminController@get_users');
     Route::post('/activate-deactivate-user', 'AdminController@activate_deactivate_user');
     Route::get('/reset-trial/{id}', 'AdminController@reset_trial');
 
+    Route::get('/get-all-admins', 'AdminController@get_admins');
     Route::post('/add-admin', 'AdminController@add_admin')->name('admin.add-admin');
     Route::post('/activate-deactivate-admin', 'AdminController@activate_deactivate_admin');
 
     Route::get('/get-admin/{id}', 'AdminController@get_admin');
     Route::post('/update-admin', 'AdminController@update_admin')->name('admin.update-admin');
 
+    Route::get('/get-all-roles', 'AdminController@get_roles');
     Route::get('/get-role/{id}', 'AdminController@get_role');
     Route::post('/update-role', 'AdminController@update_role');
 
