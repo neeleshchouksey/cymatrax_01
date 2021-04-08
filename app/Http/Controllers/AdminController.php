@@ -102,7 +102,7 @@ class AdminController extends Controller
                 $v->last_login_at = date("d-m-Y h:i A",strtotime($v->created_at));;
             }
 
-            $updateButton = "<button class='btn btn-sm btn-primary' onclick='resetTrial($v->id)'>Reset Trial</button><br>";
+            $updateButton = "<button class='btn btn-sm btn-primary mb-2' onclick='resetTrial($v->id)'>Reset Trial</button><br>";
 
             if($v->deleted_at){
                 // activate Button
