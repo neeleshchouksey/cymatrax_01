@@ -124,6 +124,11 @@
                             </td>
                         </tr>
                         <tr>
+                            <td colspan="2">
+                            <input required="required" type="checkbox" name="term_conditions" value="1"/> <a style="font-size: 15px;" download href="{{URL::to('/')}}/public/terms_and_conditions/terms_and_conditions.pdf">Terms and Conditions</a>
+                            </td>
+                        </tr>
+                        <tr>
                             <td></td>
                             <td>
                                 <button type="submit">Create Account</button>
