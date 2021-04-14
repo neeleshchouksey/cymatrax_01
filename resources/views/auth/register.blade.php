@@ -125,7 +125,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                            <input required="required" type="checkbox" name="term_conditions" value="1"/> <a style="font-size: 15px;" download href="{{URL::to('/')}}/public/terms_and_conditions/terms_and_conditions.pdf">Terms and Conditions</a>
+                            <input required="required" type="checkbox" name="term_conditions" value="1"/> <span style="font-size: 15px;">I understand and agree to</span> <a style="font-size: 15px;" download href="{{URL::to('/')}}/public/terms_and_conditions/Privacy Policy and Terms of Service.pdf">Privacy Policy and Terms of service</a>
                             </td>
                         </tr>
                         <tr>
