@@ -295,6 +295,7 @@ function fileFilter(value){
             url: url,
             success: function (response) {
                 var data = response.res;
+                if(data.length > 0){
                 for (var i = 0; i < data.length; i++) {
                     aud_id = data[i].id;
                     var html = '';
@@ -370,10 +371,12 @@ function fileFilter(value){
 
                     getDuration1(APP_URL + '/public/upload/' + data[i].file_name,aud_id);
                     // $('#overlay').fadeOut();
+                }}else{
+                    $("#audio-list").html('<h4>No Data Found</h4>');
                 }
             },
             error: function (error) {
-
+                
             }
         });
     }    
