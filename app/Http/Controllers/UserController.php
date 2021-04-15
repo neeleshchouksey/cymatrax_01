@@ -165,8 +165,19 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'res' => $getData],200);
     }
 
-    public function getAccountAudio(){
-        $getData = Upload::join("users","users.id","uploads.user_id")->select('uploads.*','users.is_admin','users.trial_expiry_date',DB::Raw('DATE_FORMAT(uploads.created_at, "%d-%b-%Y %H:%i %p") as created'))->where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+    public function getAccountAudio($value) {
+        $query = Upload::join("users","users.id","uploads.user_id")
+        ->select('uploads.*','users.is_admin','users.trial_expiry_date',DB::Raw('DATE_FORMAT(uploads.created_at, "%d-%b-%Y %H:%i %p") as created'))
+        ->where('user_id', '=', auth()->user()->id)
+        ->orderBy('created_at', 'desc');
+
+        if($value == 0){
+            $query->where('cleaned', '=', $value);
+        }if($value == 1){
+            $query->where('cleaned', '!=', 0);
+        }
+        
+        $getData = $query->get();
         return response()->json(['status' => 'success', 'res' => $getData],200);
 
     }

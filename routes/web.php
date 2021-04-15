@@ -40,7 +40,7 @@ Route::get('/checkout-single/{id}', 'PaymentController@checkout_single');
 Route::get('/clean-files/{id}', 'PaymentController@clean_files');
 Route::get('/clean-files-with-free-trial/{id}', 'PaymentController@clean_files_with_free_trial');
 Route::get('/clean-file/{id}', 'PaymentController@clean_file');
-Route::get('/get-account-audio','UserController@getAccountAudio');
+Route::get('/get-account-audio/{value}','UserController@getAccountAudio');
 Route::get('/get-transaction-audio/{id}','UserController@getTransactionAudio');
 Route::get('/get-uploaded-audio/{id}','UserController@getUploadedAudio');
 Route::get('/free-subscription','UserController@free_subscription');

@@ -271,14 +271,15 @@ function redirectUrl(url) {
     window.location = url;
 }
 
-$(document).ready(function () {
+function fileFilter(value){ 
+    $("#audio-list").html('');
     // $('#overlay').fadeIn();
     var currentUrl = document.URL.split('/');
     var segment1 = currentUrl[currentUrl.length - 1];
     var segment2 = currentUrl[currentUrl.length - 2];
 
     if (segment1 == "account") {
-        var url = APP_URL + "/get-account-audio";
+        var url = APP_URL + "/get-account-audio/" + value;
     }
     if (segment2 == "upload-summary" || segment2 == "checkout" || segment2 == "checkout-single") {
         var url = APP_URL + "/get-uploaded-audio/" + segment1;
@@ -375,8 +376,13 @@ $(document).ready(function () {
 
             }
         });
-    }
-})
+    }    
+};
+
+$(document).ready(function () {
+    fileFilter(2);
+});
+
 var total_min = 0;
 var total_sec = 0;
 var total_duration = 0;

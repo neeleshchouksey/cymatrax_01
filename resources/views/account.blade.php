@@ -15,6 +15,16 @@
             @endif
         </span>
         </h1>
+        
+        <div class="relative">
+        <select style="margin-bottom: 15px;" class="input" name="file_filter" id="file_filter" onchange="fileFilter(this.value);">  
+            <option value="2">Filter By</option>
+            <option value="0">Cleaned</option>
+            <option value="1">Uncleaned</option>
+            <option value="2">All</option>
+            
+        </select>
+        </div>
         <div class="checkouttotal">
           @include('common-uploaded-files')
         </div>

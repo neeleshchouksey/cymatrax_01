@@ -107,7 +107,7 @@
                         <tr>
                             <td>Country:</td>
                             <td>
-                                <select name="country" id="country" class="input" style="max-width:165px;">
+                                <select name="country" id="country" class="input" style="max-width:188px;">
                                     <option value="" selected="">Select Country</option>
                                     @foreach($countries as $c)
                                         <option value="{{$c->code}}">{{$c->name}}</option>
