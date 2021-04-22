@@ -11,7 +11,7 @@
             @elseif(Auth::user()->trial_expiry_date<time())
                 Your trial period is expired
             @else
-                Your trial period expire on {{ date("d/m/Y",Auth::user()->trial_expiry_date) }}
+                Your trial period expire on {{ date("m/d/Y",Auth::user()->trial_expiry_date) }}
             @endif
         </span>
         </h1>

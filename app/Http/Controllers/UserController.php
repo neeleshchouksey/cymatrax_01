@@ -155,19 +155,19 @@ class UserController extends Controller
     }
 
     public function getUploadedAudio($id){
-        $getData = Upload::select('*',DB::Raw('DATE_FORMAT(created_at, "%d-%b-%Y %H:%i %p") as created'))->where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
+        $getData = Upload::select('*',DB::Raw('DATE_FORMAT(created_at, "%m-%d-%Y %H:%i %p") as created'))->where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
         return response()->json(['status' => 'success', 'res' => $getData],200);
 
     }
 
     public function getTransactionAudio($id){
-        $getData = Upload::select('*',DB::Raw('DATE_FORMAT(created_at, "%d-%b-%Y %H:%i %p") as created'))->where('paymentdetails_id', '=', $id)->get();
+        $getData = Upload::select('*',DB::Raw('DATE_FORMAT(created_at, "%m-%d-%Y %H:%i %p") as created'))->where('paymentdetails_id', '=', $id)->get();
         return response()->json(['status' => 'success', 'res' => $getData],200);
     }
 
     public function getAccountAudio($value) {
         $query = Upload::join("users","users.id","uploads.user_id")
-        ->select('uploads.*','users.is_admin','users.trial_expiry_date',DB::Raw('DATE_FORMAT(uploads.created_at, "%d-%b-%Y %H:%i %p") as created'))
+        ->select('uploads.*','users.is_admin','users.trial_expiry_date',DB::Raw('DATE_FORMAT(uploads.created_at, "%m-%d-%Y %H:%i %p") as created'))
         ->where('user_id', '=', auth()->user()->id)
         ->orderBy('created_at', 'desc');
 
