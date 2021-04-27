@@ -120,10 +120,20 @@
                             </a>
                         </li>
                     @endif
+                    @if(checkRoleFeature('file-delete-setting'))
+                        <li class="nav-item menu-open">
+                            <a href="{{URL::to('/admin/')}}/file-delete-setting"
+                               class="nav-link  @if(Request::segment(2) == "file-delete-setting") active @endif">
+                                <p>
+                                    File Setting
+                                </p>
+                            </a>
+                        </li>
+                    @endif
                     @if(checkRoleFeature('users'))
                         <li class="nav-item menu-open">
                             <a href="{{URL::to('/admin/')}}/users"
-                               class="nav-link  @if(Request::segment(2) == "users") active @endif">
+                               class="nav-link  @if(Request::segment(2) == "users" || Request::segment(2) == "user-files") active @endif">
                                 <p>
                                     Users
                                 </p>

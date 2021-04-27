@@ -47,6 +47,7 @@ Route::get('/free-subscription','UserController@free_subscription');
 Route::get('/confirm-subscription','UserController@confirm_subscription');
 
 
+
 ###################### Admin Routes ##########################
 
 Route::get('/admin', 'AdminController@login')->name('admin.login');
@@ -57,13 +58,16 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/logout', 'AdminController@logout');
     Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard')->middleware('role:dashboard');
     Route::get('/free-subscription', 'AdminController@free_subscription')->middleware('role:free-subscription');
+    Route::get('/file-delete-setting','AdminController@file_delete_setting');
     Route::get('/users', 'AdminController@users')->name('admin.users')->middleware('role:users');
-
+    Route::get('/user-files/{id}','AdminController@user_files');
+    Route::get('/get-user-files/{id}','AdminController@get_user_files');
     Route::get('/admins', 'AdminController@admins')->name('admin.admins')->middleware('role:admins');
     Route::get('/roles', 'AdminController@roles')->name('admin.roles')->middleware('role:roles');
 
     Route::post('/update-free-subscription-days', 'AdminController@update_free_subscription_days');
-
+    Route::post('/update-file-delete-days', 'AdminController@update_file_delete_days');
+    Route::get('/delete-file/{id}', 'AdminController@delete_file');
     Route::get('/get-all-users', 'AdminController@get_users');
     Route::post('/activate-deactivate-user', 'AdminController@activate_deactivate_user');
     Route::get('/reset-trial/{id}', 'AdminController@reset_trial');

@@ -359,3 +359,72 @@ function get_users() {
 
     }).buttons().container().appendTo('#user-datatable_wrapper .col-md-6:eq(0)');
 }
+
+$(document).ready(function () {
+    get_user_files();
+});
+
+function get_user_files(){
+    var currentUrl = document.URL.split('/');
+    var segment1 = currentUrl[currentUrl.length - 1];
+    var segment2 = currentUrl[currentUrl.length - 2];
+
+    $("#files-dt").DataTable({
+        // "responsive": false,
+        "lengthChange": false,
+        "autoWidth": false,
+        "scrollX": true,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "bDestroy": true,
+        "ordering":false,
+        ajax: {
+            url:APP_URL+"/admin/get-user-files/" + segment1,
+            type:"GET",
+        },
+        "columns": [
+            { mData: 'sno' } ,
+            { mData: 'name' },
+            { mData: 'file_name' },
+            //{ mData: 'created_at' },
+            { mData: 'action' }
+        ]
+
+    }).buttons().container().appendTo('#files-dt_wrapper .col-md-6:eq(0)');
+}
+
+function deleteFile(id){
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to delete this file ?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "get",
+                url: APP_URL + "/admin/delete-file/" + id,
+                success: function (response) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.msg,
+                        icon: 'success',
+                        showCancelButton: false,
+                    }).then((result) => {
+                        get_user_files();
+                    })
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.responseJSON.msg,
+                        icon: "error",
+                    });
+                }
+            });
+        }
+    });
+}
+

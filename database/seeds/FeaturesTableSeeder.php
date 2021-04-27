@@ -11,7 +11,7 @@ class FeaturesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table("features")->insert([["feature"=>"Dashboard"],["feature"=>"free-subscription"],["feature"=>"users"],["feature"=>"admins"],["feature"=>"roles"]]);
+        DB::table("features")->insert([["feature"=>"Dashboard"],["feature"=>"free-subscription"],["feature"=>"users"],["feature"=>"admins"],["feature"=>"roles"],["feature"=>"file-delete-setting"]]);
 
     }
 }

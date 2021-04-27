@@ -7,6 +7,7 @@ use App\AdminRole;
 use App\AdminRoleFeature;
 use App\Feature;
 use App\FreeSubscription;
+use App\FileDeleteSetting;
 use App\User;
 use App\UserCard;
 use Illuminate\Http\Request;
@@ -68,6 +69,12 @@ class AdminController extends Controller
         return view('admin.free-subscription', compact('data'));
     }
 
+    public function file_delete_setting()
+    {
+        $data = FileDeleteSetting::first();
+        return view('admin.file-delete-setting', compact('data'));
+    }
+
     public function update_free_subscription_days(Request $request)
     {
         $fs = FreeSubscription::first();
@@ -76,6 +83,16 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Updated Successfully');
 
     }
+
+    public function update_file_delete_days(Request $request)
+    {
+        $fds = FileDeleteSetting::first();
+        $fds->days = $request->days;
+        $fds->save();
+        return redirect()->back()->with('success', 'Updated Successfully');
+
+    }
+
 
     public function users()
     {
@@ -87,6 +104,7 @@ class AdminController extends Controller
         $data = User::withTrashed()->withCount(['uploadedFiles','cleanedFiles','paidFiles'=>function($q){
             $q->join("paymentdetails","paymentdetails.id","uploads.paymentdetails_id");
         }])->orderBy('id','desc')->get();
+
         foreach ($data as $k=>$v){
             $v->sno = $k+1;
 
@@ -103,7 +121,8 @@ class AdminController extends Controller
             }
 
             $updateButton = "<button class='btn btn-sm btn-primary mb-2' onclick='resetTrial($v->id)'>Reset Trial</button><br>";
-
+            //view user all files button
+            $viewFilesButton = "<button class='btn btn-sm btn-primary mt-2'><a style='color: #fff;' href='".url('/admin/user-files/')."/$v->id'>View Files</a></button><br>";
             if($v->deleted_at){
                 // activate Button
                 $deleteButton = "<button class='btn btn-sm btn-success' onclick='activateDeactivateUser($v->id,1)'>Activate</button>";
@@ -113,7 +132,7 @@ class AdminController extends Controller
                 $deleteButton = "<button class='btn btn-sm btn-danger' onclick='activateDeactivateUser($v->id,0)'>Deactivate</button>";
             }
 
-            $action = $updateButton." ".$deleteButton;
+            $action = $updateButton." ".$deleteButton." ".$viewFilesButton;
             $v->action = $action;
 
         }
@@ -127,6 +146,47 @@ class AdminController extends Controller
         return response()->json($results);
     }
 
+    public function user_files($id){
+        return view('admin.user-files');
+    }
+
+    public function get_user_files($id) {
+        $days = FileDeleteSetting::first()->days;
+        $fifteendaysago = date_format(date_create($days.'days ago'), 'Y-m-d 00:00:00');
+
+        $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id')
+            ->join("users","users.id","uploads.user_id")
+            ->where('uploads.user_id', '=', $id)
+            ->get();
+
+        foreach ($files as $key => $value) {
+            $files[$key]->sno = $key+1;
+            $files[$key]->action = '';
+            $d = date('Y-m-d h:i:s', strtotime($value->created_at));
+
+            if($d < $fifteendaysago){
+                $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteFile($value->id)'>Delete</button>";
+            }
+        }
+
+        $results = array (
+            "sEcho" => 1,
+            "iTotalRecords" => count($files),
+            "iTotalDisplayRecords" => count($files),
+            "aaData" => $files
+        );
+        return response()->json($results);
+    }
+
+    public function delete_file($id) {
+        $upload = Upload::find($id);
+        $filename = $upload->file_name;
+        if(file_exists(public_path('upload/'.$filename))){
+            unlink(public_path('upload/'.$filename));
+        }
+        $upload->delete();
+        return response(["status" => "success", "msg" => "File deleted successfully"], 200);
+    }
 
     public function activate_deactivate_user(Request $request)
     {

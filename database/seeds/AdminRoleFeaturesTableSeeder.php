@@ -16,7 +16,8 @@ class AdminRoleFeaturesTableSeeder extends Seeder
             ["role_id"=>1,"feature_id"=>2],
             ["role_id"=>1,"feature_id"=>3],
             ["role_id"=>1,"feature_id"=>4],
-            ["role_id"=>1,"feature_id"=>5]]);
+            ["role_id"=>1,"feature_id"=>5],
+            ["role_id"=>1,"feature_id"=>6]]);
 
     }
 }
