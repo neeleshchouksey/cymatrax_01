@@ -385,7 +385,7 @@ function get_user_files(){
             { mData: 'sno' } ,
             { mData: 'name' },
             { mData: 'file_name' },
-            //{ mData: 'created_at' },
+            { mData: 'created' },
             { mData: 'action' }
         ]
 

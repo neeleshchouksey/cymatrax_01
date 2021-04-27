@@ -31,6 +31,7 @@
                                         <th>S.No.</th>
                                         <th>Name</th>
                                         <th>File Name</th>
+                                        <th>Created</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -42,6 +43,7 @@
                                         <th>S. No.</th>
                                         <th>Name</th>
                                         <th>File Name</th>
+                                        <th>Created</th>
                                         <th>Action</th>
                                     </tr>
                                     </tfoot>

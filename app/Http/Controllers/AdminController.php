@@ -167,6 +167,8 @@ class AdminController extends Controller
             if($d < $fifteendaysago){
                 $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteFile($value->id)'>Delete</button>";
             }
+            $files[$key]->created = date("d-m-Y h:i:s A", strtotime($value->created_at));
+
         }
 
         $results = array (
