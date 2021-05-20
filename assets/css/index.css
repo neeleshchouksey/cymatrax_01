@@ -7,7 +7,25 @@ font-family: 'Cairo', sans-serif;
 font-family: 'Russo One', sans-serif;
 
 */
-
+.hr-html{
+    padding-bottom: 50px !important;
+}
+.main-div{
+    width: 500px; float: left;
+}
+.hr-line{
+    border-bottom: solid 1px #ccc;
+    margin-right: 50px;
+}
+.file-pointer{
+    cursor: pointer;
+}
+.req{
+    color: red;
+}
+.mt-248{
+    margin-top: 248px;
+}
 :root {
   --body-background-color: #fff;
   --link-color: #6fb4b7;
@@ -912,6 +930,7 @@ tr td {
 	#spectrum-preview.loaded:after{
 		displpay:none;
 	}
+
 }
 /* height restrictions */
 

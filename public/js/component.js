@@ -271,7 +271,7 @@ function redirectUrl(url) {
     window.location = url;
 }
 
-function fileFilter(value){ 
+function fileFilter(value){
     $("#audio-list").html('');
     // $('#overlay').fadeIn();
     var currentUrl = document.URL.split('/');
@@ -299,6 +299,18 @@ function fileFilter(value){
                 for (var i = 0; i < data.length; i++) {
                     aud_id = data[i].id;
                     var html = '';
+
+                    var hrhtmlclass = '';
+                    if((data.length) % 2 != 0){
+                        $('#file_count').addClass('mt-248');
+                        if(i == data.length-1 )
+                        hrhtmlclass = 'hr-html';
+                    }
+
+                    var hr_html = '';
+                    if((i+1) % 2 == 0){
+                        hr_html = '<hr class="hr-line">';
+                    }
 
                     if (segment2 != 'upload-summary') {
                         var current_time = Math.floor(Date.now() / 1000);
@@ -338,7 +350,7 @@ function fileFilter(value){
                         }
                     }
 
-                    $("#audio-list").append('  <div class="row">' +
+                    $("#audio-list").append(' <div class="main-div"> <div class="row">' +
                         '                <div>' +
                         '                    <b>Upload Date:</b>' +
                         '                    <span>' + data[i].created + '</span>\n' +
@@ -348,7 +360,7 @@ function fileFilter(value){
                         '                <div>' +
                         '                    <b>File Name:</b>' +
 
-                        '                        <span>' + data[i].file_name + '</span>' +
+                        '                        <span class="file-pointer" title="'+data[i].file_name+'">' + data[i].file_name.substring(0,40) + (data[i].file_name.length > 40 ? "..." : "")+'</span>' +
 
                         '                </div>' +
                         '            </div>' +
@@ -358,16 +370,16 @@ function fileFilter(value){
                         '                    <span id="duration' + aud_id + '"></span>' +
                         '                </div>' +
                         '            </div>' +
-                        '            <div class="half-row">' +
-                        '                <div>' +
+                        '            <div class="row">' +
                         '                    <input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
                         '                    <audio id="audio' + aud_id + '" controls="" style="vertical-align: middle"' +
                         '                           src="' + APP_URL + '/public/upload/' + data[i].file_name + '" type="audio/mp3"' +
                         '                           controlslist="nodownload">' +
                         '                        Your browser does not support the audio element.' +
                         '                    </audio>' +
-                        '                </div>' + html +
-                        '            </div>')
+                        '            </div>' +
+                        '             <div class="row '+hrhtmlclass+'">'+html+'</div>'+
+                        '             </div>'+hr_html)
 
                     getDuration1(APP_URL + '/public/upload/' + data[i].file_name,aud_id);
                     // $('#overlay').fadeOut();
@@ -376,10 +388,10 @@ function fileFilter(value){
                 }
             },
             error: function (error) {
-                
+
             }
         });
-    }    
+    }
 };
 
 $(document).ready(function () {

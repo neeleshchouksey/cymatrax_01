@@ -38,21 +38,21 @@
                             <td colspan="2"><h3>Registration</h3></td>
                         </tr>
                         <tr>
-                            <td>Name:</td>
+                            <td>Name<span class="req">*</span> :</td>
                             <td>
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
                                        name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                             </td>
                         </tr>
                         <tr>
-                            <td>Email Address:</td>
+                            <td>Email Address<span class="req">*</span> :</td>
                             <td>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                        name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                             </td>
                         </tr>
                         <tr>
-                            <td>Password:</td>
+                            <td>Password<span class="req">*</span> :</td>
                             <td>
                                 <input id="password" type="password"
                                        class="form-control @error('password') is-invalid @enderror" name="password"
@@ -61,14 +61,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Confirm Password:</td>
+                            <td>Confirm <br>Password<span class="req">*</span> :</td>
                             <td>
                                 <input id="password-confirm" type="password" class="form-control"
                                        name="password_confirmation" required autocomplete="new-password">
                             </td>
                         </tr>
                         <tr>
-                            <td>User Type</td>
+                            <td>User Type<span class="req">*</span> :</td>
                             <td>
                                 <input type="radio" name="user" value="1" checked>
                                 Single User
@@ -79,7 +79,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Address:</td>
+                            <td>Address<span class="req">*</span> :</td>
                             <td>
                                 <input id="streetaddress" type="text" name="streetaddress" required="required"
                                        value="{{ old('streetaddress') }}" autocomplete="on" maxlength="45" placeholder="Street Address"/>
@@ -87,7 +87,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>City:</td>
+                            <td>City<span class="req">*</span> :</td>
                             <td>
                                 <input id="city" type="text" name="city" required="required"
                                        autocomplete="on" value="{{ old('city') }}"
@@ -96,7 +96,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>State:</td>
+                            <td>State<span class="req">*</span> :</td>
                             <td>
                                 <input id="state" type="text" name="state" required="required"
                                        autocomplete="on" value="{{ old('state') }}"
@@ -105,7 +105,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Country:</td>
+                            <td>Country<span class="req">*</span> :</td>
                             <td>
                                 <select name="country" id="country" class="input" style="max-width:188px;">
                                     <option value="" selected="">Select Country</option>
@@ -116,7 +116,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Zip Code:</td>
+                            <td>Zip Code<span class="req">*</span> :</td>
                             <td>
                                 <input id="zipcode" type="text" name="zipcode" required="required"
                                        value="{{ old('zipcode') }}" autocomplete="on" pattern="[0-9]*" maxlength="6"
