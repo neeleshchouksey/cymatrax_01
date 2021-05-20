@@ -26,11 +26,11 @@
                     </button>
                 @elseif(Auth::user()->trial_expiry_date<time())
                     <button class="c-btn" onclick="document.location = '{{URL::to('/')}}/checkout/{{$id}}'"
-                            style="margin-top: 1rem">Proceed to Checkout
+                            style="margin-top: 1rem; margin-bottom: 20px;">Proceed to Checkout
                     </button>
                 @else
                     <button id="clean-btn" class="c-btn" onclick="clean_files({{$id}})"
-                            style="margin-top: 1rem">Clean File(s)
+                            style="margin-top: 1rem; margin-bottom: 20px;">Clean File(s)
                     </button>
                 @endif
             @endif
