@@ -300,17 +300,17 @@ function fileFilter(value){
                     aud_id = data[i].id;
                     var html = '';
 
-                    var hrhtmlclass = '';
+                    /*var hrhtmlclass = '';
                     if((data.length) % 2 != 0){
                         $('#file_count').addClass('mt-248');
                         if(i == data.length-1 )
                         hrhtmlclass = 'hr-html';
-                    }
+                    }*/
 
-                    var hr_html = '';
+                    /*var hr_html = '';
                     if((i+1) % 2 == 0){
                         hr_html = '<hr class="hr-line">';
-                    }
+                    }*/
 
                     if (segment2 != 'upload-summary') {
                         var current_time = Math.floor(Date.now() / 1000);
@@ -350,7 +350,7 @@ function fileFilter(value){
                         }
                     }
 
-                    $("#audio-list").append(' <div class="main-div"> <div class="row">' +
+                    /*$("#audio-list").append(' <div class="main-div"> <div class="row">' +
                         '                <div>' +
                         '                    <b>Upload Date:</b>' +
                         '                    <span>' + data[i].created + '</span>\n' +
@@ -379,11 +379,89 @@ function fileFilter(value){
                         '                    </audio>' +
                         '            </div>' +
                         '             <div class="row '+hrhtmlclass+'">'+html+'</div>'+
-                        '             </div>'+hr_html)
+                        '             </div>'+hr_html)*/
+                    if (segment1 == "account"){
+                        var cleanText = '';
+                        if(data[i].cleaned == 0){
+                            var cleanText = 'Cleaned';
+                        }else{
+                            var cleanText = 'Uncleaned';
+                        }
 
+                        $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
+                            '                    <td title="'+data[i].file_name+'">' + data[i].file_name.substring(0,15) + (data[i].file_name.length > 15 ? "..." : "") + '</td>\n' +
+                            '                    <td><span id="duration' + aud_id + '"></span></td>\n' +
+                            '                    <td>' + data[i].created + '</td>\n' +
+                            '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
+                            '                    <audio id="audio' + aud_id + '" controls="" style="vertical-align: middle"' +
+                            '                           src="' + APP_URL + '/public/upload/' + data[i].file_name + '" type="audio/mp3"' +
+                            '                           controlslist="nodownload">' +
+                            '                        Your browser does not support the audio element.' +
+                            '                    </audio></td>\n' +
+                            '                    <td>' + cleanText + '</td>\n' +
+                            '                    <td style="width: 5px"><input type="checkbox"> </td>\n' +
+                            '                </tr>');
+
+                    }else {
+                        $("#audio-list").append('  <div class="row">' +
+                            '                <div>' +
+                            '                    <b>Upload Date:</b>' +
+                            '                    <span>' + data[i].created + '</span>\n' +
+                            '                </div>' +
+                            '            </div>' +
+                            '            <div class="row">' +
+                            '                <div>' +
+                            '                    <b>File Name:</b>' +
+
+                            '                        <span>' + data[i].file_name + '</span>' +
+
+                            '                </div>' +
+                            '            </div>' +
+                            '            <div class="row">' +
+                            '                <div>' +
+                            '                    <b> File duration :</b>' +
+                            '                    <span id="duration' + aud_id + '"></span>' +
+                            '                </div>' +
+                            '            </div>' +
+                            '            <div class="half-row">' +
+                            '                <div>' +
+                            '                    <input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
+                            '                    <audio id="audio' + aud_id + '" controls="" style="vertical-align: middle"' +
+                            '                           src="' + APP_URL + '/public/upload/' + data[i].file_name + '" type="audio/mp3"' +
+                            '                           controlslist="nodownload">' +
+                            '                        Your browser does not support the audio element.' +
+                            '                    </audio>' +
+                            '                </div>' + html +
+                            '            </div>')
+                    }
                     getDuration1(APP_URL + '/public/upload/' + data[i].file_name,aud_id);
                     // $('#overlay').fadeOut();
-                }}else{
+                }
+                    if (segment1 == "account"){
+                        $(document).ready(function() {
+                            var table = $('#example').DataTable( {
+                                pagingType:'simple',
+                                "order": [[ 1, "desc" ]]
+                                /*"oLanguage": {
+                                    "oPaginate": {
+                                        "sNext": '<button type="button" class="c-btn"">Next</button>',
+                                        "sPrevious": '<button type="button" class="c-btn"">Previous</button>'
+                                    }
+                                }*/
+                            } )
+                            $('#selectAll').click(function(e) {
+                                if($(this).hasClass('checkedAll')) {
+                                    $('input').prop('checked', false);
+                                    $(this).removeClass('checkedAll');
+                                } else {
+                                    $('input').prop('checked', true);
+                                    $(this).addClass('checkedAll');
+                                }
+                            });
+
+                        } );
+                    }
+                }else{
                     $("#audio-list").html('<h4>No Data Found</h4>');
                 }
             },

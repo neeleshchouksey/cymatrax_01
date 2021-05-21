@@ -7,16 +7,22 @@ font-family: 'Cairo', sans-serif;
 font-family: 'Russo One', sans-serif;
 
 */
-.hr-html{
+#example_paginate{
+    margin-bottom: 30px;
+}
+/*.hr-html{
     padding-bottom: 50px !important;
 }
 .main-div{
     width: 500px; float: left;
+}*/
+tr.border_bottom td {
+    border-bottom: 1px solid #ccc;
 }
 .hr-line{
     border-bottom: solid 1px #ccc;
     margin-right: 50px;
-}
+}/*
 .file-pointer{
     cursor: pointer;
 }
@@ -25,7 +31,7 @@ font-family: 'Russo One', sans-serif;
 }
 .mt-248{
     margin-top: 248px;
-}
+}*/
 :root {
   --body-background-color: #fff;
   --link-color: #6fb4b7;
@@ -216,6 +222,13 @@ form.register label{
     letter-spacing: 3px;
     cursor: pointer;
     transition: all 0.4s;
+}
+.paginate_button {
+    background-color: #44908d !important;
+    color: #fff !important;
+}
+#example_paginate a:hover{
+    background: #44908d !important;
 }
 .c-btn {
     display: block !important;
@@ -643,7 +656,7 @@ footer nav a:hover{
     background-color: #75aba9;
 }
 audio{
-    width: 400px!important;
+    width: 250px!important;
 }
 /*table {*/
 /*    margin-left: 10px;*/

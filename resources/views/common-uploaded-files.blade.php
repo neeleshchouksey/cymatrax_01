@@ -1,6 +1,5 @@
 @if(count($getData))
         <div class="tr-border" id="audio-list">
-
         </div>
 @else
     @if(Request::segment(1) == "account")

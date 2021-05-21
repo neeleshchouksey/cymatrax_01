@@ -10,6 +10,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" href="{{URL::to('/')}}/assets/images/favicon.png">
     <link rel="stylesheet" href="{{asset('public/dropzone/dist/dropzone.css')}}"/>
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
     <link href="{{URL::to('/')}}/assets/css/index.css" rel="stylesheet"/>
     <script>
         var APP_URL = '{{URL::to("/")}}';
@@ -91,22 +94,28 @@
 </footer>
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script src="{{asset('public/dropzone/dist/dropzone.js')}}"></script>
 {{--<script src="{{ asset('public/js/app.js') }}" defer></script>--}}
+{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--}}
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
 <script src="{{ asset('public/js/component.js') }}"></script>
 <!-- sweet aleart -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Include a polyfill for ES6 Promises (optional) for IE11 -->
 <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
 <!-- paypal pro scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>--}}
 <script src="https://unpkg.com/wavesurfer.js"></script>
 {{--<script src="{{ asset('public/js/jquery.card.js') }}"></script>--}}
 {{--<script src="{{ asset('public/js/card.js') }}"></script>--}}
 <!-- paypal pro scripts end-->
 
 @if(session()->has('message'))
+
     <script>
         Swal.fire({
             title: 'Success!',
