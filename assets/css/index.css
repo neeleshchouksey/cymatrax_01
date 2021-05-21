@@ -10,6 +10,9 @@ font-family: 'Russo One', sans-serif;
 #example_paginate{
     margin-bottom: 30px;
 }
+table.dataTable thead th, table.dataTable thead td {
+    padding: 10px 10px !important;
+}
 /*.hr-html{
     padding-bottom: 50px !important;
 }
