@@ -36,6 +36,7 @@
         left: 45%;
     }
 </style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGRTB9YSNS"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
