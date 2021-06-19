@@ -46,6 +46,20 @@ class PaymentController extends Controller
         return view('payment');
     }
 
+    public function multiple_checkout(Request $request){
+        $ids = $request->input('ids');
+        $ids_arr = explode(',',$ids);
+        $title = "Process Payment";
+        $user = User::find(Auth::user()->id);
+        $countries = DB::table("countries")->get();
+        $getData = Upload::where('user_id','=',auth()->user()->id)->whereIn('id', $ids_arr)->get();
+        $Audio_ids=array();
+        foreach($getData  as $item){
+            $Audio_ids[]=$item->id;
+        }
+        $audioids=(implode(',',$Audio_ids));
+        return view('multiple-checkout',compact('getData','title','audioids','user','countries'));
+    }
     public function checkout($id){
         $title = "Process Payment";
         $user = User::find(Auth::user()->id);
@@ -97,7 +111,7 @@ class PaymentController extends Controller
         return 'new_' . $coreName . ".mp3";
     }
 
-    public function store(Request $request){
+    public function store(Request $request){ 
         $checkout_id = $request->checkout_id;
         $email = $request->input('email');
         $first_name = $request->input('firstName');

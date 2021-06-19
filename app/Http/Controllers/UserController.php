@@ -7,12 +7,15 @@ use App\UserCard;
 use App\User;
 use Illuminate\Http\Request;
 use App\Upload;
+use Facade\FlareClient\Stacktrace\File;
 use FFMpeg;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Omnipay\Omnipay;
 use Omnipay\Common\CreditCard;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -90,7 +93,75 @@ class UserController extends Controller
         }
         return response()->json(['success' => $imageName, 'count' => $count]);
     }
+    
+    public function sendCsvEmail(Request $request) {         
+        $fileName = 'users.csv';
+        $lastWeek = date("Y-m-d 00:00:00", strtotime("-7 days"));        
+        $users = User::where('is_admin', '=', 0)->where('created_at', '>', $lastWeek)->get();
+        if(count($users)) {
+            $headers = array(
+                "Content-type"        => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma"              => "no-cache",
+                "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+                "Expires"             => "0"
+            );
 
+            $columns = array('S.No', 'Name', 'Email', 'Address', 'City', 'State', 'Country', 'Zip Code', 'Created At');
+
+            $file = fopen(storage_path($fileName), 'w');
+            fputcsv($file, $columns);
+            
+            foreach ($users as $key => $user) {
+                $sno = $key + 1;
+                $row['sno']  = $sno;
+                $row['name']  = $user->name;
+                $row['email']  = $user->email;
+                $row['address']  = $user->address;
+                $row['city']  = $user->city;
+                $row['state']  = $user->state;
+                $row['country']  = $user->country;
+                $row['zip_code']  = $user->zip_code;
+                $row['created_at']  = $user->created_at;
+                
+
+                fputcsv($file, array(
+                    $row['sno'],
+                    $row['name'],
+                    $row['email'],
+                    $row['address'],
+                    $row['city'],
+                    $row['state'],
+                    $row['country'],
+                    $row['zip_code'],
+                    $row['created_at'],
+                ));
+            }
+            
+            fclose($file);
+            
+            
+            //$data = array('message'=>"Hi, user");
+            Mail::raw('Hi, user',function($message) {
+                $message->to('neelesh@manifestinfotech.com', env('APP_NAME'))->subject
+                    ('Weekly New Registered Users');
+                $message->from(env('MAIL_FROM_ADDRESS'),env('APP_NAME'));
+                $message->attach(storage_path('users.csv'));
+            });
+            echo "Email Sent";
+
+        }else {
+            //$data = array('message'=>"Users not registered this week");
+            Mail::raw('Hi, Users not registered this week',function($message) {
+                $message->to('neelesh@manifestinfotech.com', env('APP_NAME'))->subject
+                    ('Weekly New Registered Users');
+                $message->from(env('MAIL_FROM_ADDRESS'),env('APP_NAME'));
+            });
+            echo "Email Sent";
+        }
+
+      
+    }
     public function account()
     {
         $title = "My Account";
@@ -160,6 +231,12 @@ class UserController extends Controller
 
     }
 
+    public function getAudio($id){
+        $getData = Upload::find($id);
+        return response()->json(['status' => 'success', 'res' => $getData],200);
+
+    }
+
     public function getTransactionAudio($id){
         $getData = Upload::select('*',DB::Raw('DATE_FORMAT(created_at, "%m-%d-%Y %H:%i %p") as created'))->where('paymentdetails_id', '=', $id)->get();
         return response()->json(['status' => 'success', 'res' => $getData],200);
@@ -200,5 +277,8 @@ class UserController extends Controller
             return redirect(url('/dashboard'))->with('error', 'You have already subscribed free trial!');
         }
     }
+
+    
+    
 
 }

@@ -29,12 +29,14 @@ Route::get('/profile', 'UserController@profile');
 Route::post('/update-profile', 'UserController@update_profile')->name("update-profile");
 Route::post('file/upload', 'UserController@upload')->name('file.upload');
 Route::get('account', 'UserController@account');
+Route::get('send-csv-email', 'UserController@sendCsvEmail');
 Route::get('/upload-summary/{id}', 'UserController@upload_summary');
 Route::get('/transactions', 'UserController@transactions');
 Route::get('/transaction-details/{id}','UserController@transaction_details');
 Route::get('/audio-analysis/{id}','UserController@audio_analysis');
 Route::get('/download-file/{file}','UserController@download_file');
 Route::get('/checkout/{id}', 'PaymentController@checkout');
+Route::post('/multiple-checkout', 'PaymentController@multiple_checkout');
 Route::post('/payment/store', 'PaymentController@store');
 Route::get('/checkout-single/{id}', 'PaymentController@checkout_single');
 Route::get('/clean-files/{id}', 'PaymentController@clean_files');
@@ -43,10 +45,9 @@ Route::get('/clean-file/{id}', 'PaymentController@clean_file');
 Route::get('/get-account-audio/{value}','UserController@getAccountAudio');
 Route::get('/get-transaction-audio/{id}','UserController@getTransactionAudio');
 Route::get('/get-uploaded-audio/{id}','UserController@getUploadedAudio');
+Route::get('/get-audio/{id}','UserController@getAudio');
 Route::get('/free-subscription','UserController@free_subscription');
 Route::get('/confirm-subscription','UserController@confirm_subscription');
-
-
 
 ###################### Admin Routes ##########################
 

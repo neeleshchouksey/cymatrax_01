@@ -16,9 +16,14 @@
 
         </span>
             <div class="">
-                <button style="float: right;margin-bottom: 16px;
+                <form id="multiple-checkout-frm" action="{{ url('multiple-checkout') }}" method="post">
+                    {{ csrf_field() }}   
+                    <input type="hidden" value="" name="ids" id="allCheckoutIds">
+                    <button onclick="allCheckout();" id="btnCheckout" disabled style="float: right;margin-bottom: 16px;
     margin-top: 34px;" type="button" class="c-btn">Checkout</button>
-                <button style="float: right; margin-right: 10px;
+                </form>
+                
+                <button onclick="allDownload();" id="btnDownload" disabled style="float: right; margin-right: 10px;
     margin-top: 35px;" type="button" class="c-btn">Download</button>
             </div>
         </h1>

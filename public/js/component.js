@@ -277,7 +277,9 @@ function fileFilter(value){
     var currentUrl = document.URL.split('/');
     var segment1 = currentUrl[currentUrl.length - 1];
     var segment2 = currentUrl[currentUrl.length - 2];
-
+    if(segment1 == 'multiple-checkout'){
+        getMultiCheckoutDuration($('#fileids').val());
+    }
     if (segment1 == "account") {
         var url = APP_URL + "/get-account-audio/" + value;
     }
@@ -382,14 +384,18 @@ function fileFilter(value){
                         '             </div>'+hr_html)*/
                     if (segment1 == "account"){
                         var cleanText = '';
+                        var idd = '';
                         if(data[i].cleaned == 0){
-                            var cleanText = 'Cleaned';
-                        }else{
                             var cleanText = 'Uncleaned';
+                            var idd = data[i].id;
+                        }else{
+                            var cleanText = 'Cleaned';
                         }
-
+                        
+                        var dlink = APP_URL + '/public/upload/' + data[i].file_name;
+                        
                         $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
-                            '                    <td title="'+data[i].file_name+'">' + data[i].file_name.substring(0,15) + (data[i].file_name.length > 15 ? "..." : "") + '</td>\n' +
+                            '                    <td style="cursor:pointer;" title="'+data[i].file_name+'">' + data[i].file_name.substring(0,15) + (data[i].file_name.length > 15 ? "..." : "") + '</td>\n' +
                             '                    <td><span id="duration' + aud_id + '"></span></td>\n' +
                             '                    <td>' + data[i].created + '</td>\n' +
                             '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
@@ -399,7 +405,7 @@ function fileFilter(value){
                             '                        Your browser does not support the audio element.' +
                             '                    </audio></td>\n' +
                             '                    <td>' + cleanText + '</td>\n' +
-                            '                    <td style="width: 5px"><input type="checkbox"> </td>\n' +
+                            '                    <td style="width: 5px"><input onchange="checkboxCount();" class="testCheckbox" link="'+dlink+'" idd="'+idd+'" type="checkbox"> </td>\n' +
                             '                </tr>');
 
                     }else {
@@ -453,7 +459,11 @@ function fileFilter(value){
                                 if($(this).hasClass('checkedAll')) {
                                     $('input').prop('checked', false);
                                     $(this).removeClass('checkedAll');
+                                    $('#btnDownload').attr('disabled','disabled');
+                                    $('#btnCheckout').attr('disabled','disabled');
                                 } else {
+                                    $('#btnDownload').removeAttr('disabled');
+                                    $('#btnCheckout').removeAttr('disabled');
                                     $('input').prop('checked', true);
                                     $(this).addClass('checkedAll');
                                 }
@@ -462,6 +472,12 @@ function fileFilter(value){
                         } );
                     }
                 }else{
+                    if (segment1 == "account"){
+                        var table = $('#example').DataTable( {
+                            pagingType:'simple',
+                            "order": [[ 1, "desc" ]]
+                        })
+                    }
                     $("#audio-list").html('<h4>No Data Found</h4>');
                 }
             },
@@ -471,6 +487,64 @@ function fileFilter(value){
         });
     }
 };
+
+function checkboxCount(){ 
+    setInterval(function(){ 
+        var links = [];
+        $('input.testCheckbox[type="checkbox"]:checked').each(function() {
+            links.push($(this).attr("link"));
+        });
+        if(links.length > 0){
+            $('#btnDownload').removeAttr('disabled');
+            $('#btnCheckout').removeAttr('disabled');
+        }else{
+            $('#btnDownload').attr('disabled','disabled');
+            $('#btnCheckout').attr('disabled','disabled');
+        }
+    }, 1000);
+}
+
+function allDownload(){
+    
+    var links = [];
+    $('input.testCheckbox[type="checkbox"]:checked').each(function() {
+        links.push($(this).attr("link"));
+    });
+
+        
+    for(var i = 0; i < links.length; i++) {
+        var url = links[i];
+        var name = url.split('/')[url.split('/').length-1];
+        var a = document.createElement("a");
+        a.setAttribute('href', url);
+        a.setAttribute('download', name);
+        a.setAttribute('target', '_blank');
+        a.click();
+    }
+}
+
+function allCheckout(){
+    var ids = [];
+    $('input.testCheckbox[type="checkbox"]:checked').each(function() {
+        if($(this).attr("idd") > 0){
+            ids.push($(this).attr("idd"));
+        }
+    });
+    console.log(ids);
+    var value = ids.toString();
+    if(ids.length > 0){
+        $('#allCheckoutIds').val(value);
+        $('#multiple-checkout-frm').submit();
+    }/*else{
+        Swal.fire({
+            title: 'Error',
+            text: 'You can checkout for uncleaned files only',
+            icon: 'error',
+            showCancelButton: true,
+        });
+    }*/
+}
+
 
 $(document).ready(function () {
     fileFilter(2);
@@ -553,4 +627,94 @@ function getTotalDuration() {
 
 }
 
+function getMultiCheckoutDuration(str) {
+    var arr = str.split(',');
+    
+    var tot_min = 0;
+    var tot_sec = 0;
+    var total_duration = 0;
+    var tot_cost = 0;
+    for(var i = 0; i < arr.length; i++) {
+        var url = APP_URL + "/get-audio/" + arr[i];
+        $.ajax({
+            method: "get",
+            url: url,
+            success: function (response) {
+                var data = response.res;
+                    
+                var aud_id = data.id;
+                var path = APP_URL + '/public/upload/' + data.file_name;
 
+
+                // Create a non-dom allocated Audio element
+                var au = document.createElement('audio');
+
+                // Define the URL of the MP3 audio file
+                au.src = path;
+
+                // Once the metadata has been loaded, display the duration in the console
+                au.addEventListener('loadedmetadata', function () {
+                    // Obtain the duration in seconds of the audio file (with milliseconds as well, a float value)
+                    var duration = au.duration;
+                    var duration_in_sec = au.duration;
+                    var minutes = Math.floor(duration / 60);
+                    var seconds = Math.floor(duration % 60);
+
+                    total_duration = total_duration + duration_in_sec;
+
+                    total_min = Math.floor(total_duration / 60);
+                    total_sec = Math.floor(total_duration % 60);
+                    //$("#duration" + aud_id).html(minutes + "." + seconds);
+                    //$("#duration_in_sec" + aud_id).val(duration_in_sec);
+
+
+                    var per_sec_cost = 1 / 60;
+                    total_cost = per_sec_cost * total_duration;
+                    //$("#total-duration").html(total_min + ' min ' + total_sec + ' sec')
+                    //$("#total-cost").html('$' + total_cost.toFixed(2))
+
+                    total_cost = total_cost.toFixed(2);
+                    
+                    
+                    tot_cost = parseFloat(tot_cost) + parseFloat(total_cost);
+                    tot_min = tot_min + total_min;
+                    tot_sec = tot_sec + total_sec;
+                    
+                    
+
+                    //$("#paypal_total_cost").val(total_cost)
+                    //$("#span_paypal_total_cost").html("$ " + total_cost);
+                    //$("#paypal_total_duration").val(total_min + '.' + total_sec)
+
+
+                    // example 12.3234 seconds
+                    console.log("The duration of the song is of: " + duration + " seconds");
+                    // Alternatively, just display the integer value with
+                    // parseInt(duration)
+                    // 12 seconds
+                }, false);
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+
+    setTimeout(function(){ 
+        $("#paypal_total_cost").val(tot_cost.toFixed(2));
+        $("#span_paypal_total_cost").html("$ " + tot_cost.toFixed(2));
+        $("#paypal_total_duration").val(tot_min + '.' + tot_sec);
+     }, 1000);
+
+    
+
+
+
+
+
+   
+    
+        
+        
+
+}
