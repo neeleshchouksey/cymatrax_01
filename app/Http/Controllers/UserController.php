@@ -143,7 +143,7 @@ class UserController extends Controller
             
             //$data = array('message'=>"Hi, user");
             Mail::raw('Hi, user',function($message) {
-                $message->to('manifest.devendra@gmail.com', env('APP_NAME'))->subject
+                $message->to('neelesh@manifestinfotech.com', env('APP_NAME'))->subject
                     ('Weekly New Registered Users');
                 $message->from(env('MAIL_FROM_ADDRESS'),env('APP_NAME'));
                 $message->attach(storage_path('users.csv'));
@@ -153,7 +153,7 @@ class UserController extends Controller
         }else {
             //$data = array('message'=>"Users not registered this week");
             Mail::raw('Hi, Users not registered this week',function($message) {
-                $message->to('manifest.devendra@gmail.com', env('APP_NAME'))->subject
+                $message->to('neelesh@manifestinfotech.com', env('APP_NAME'))->subject
                     ('Weekly New Registered Users');
                 $message->from(env('MAIL_FROM_ADDRESS'),env('APP_NAME'));
             });
