@@ -93,11 +93,14 @@ class UserController extends Controller
         }
         return response()->json(['success' => $imageName, 'count' => $count]);
     }
-    
-    public function sendCsvEmail(Request $request) {         
+
+    public function sendCsvEmail(Request $request) {
         $fileName = 'users.csv';
-        $lastWeek = date("Y-m-d 00:00:00", strtotime("-7 days"));        
-        $users = User::where('is_admin', '=', 0)->where('created_at', '>', $lastWeek)->get();
+        $lastWeek = date("Y-m-d 00:00:00", strtotime("-7 days"));
+        $users = User::where('is_admin', '=', 0)->where('created_at', '>', $lastWeek)->withCount(['uploadedFiles','cleanedFiles','paidFiles'=>function($q){
+            $q->join("paymentdetails","paymentdetails.id","uploads.paymentdetails_id");
+        }])->orderBy('id','desc')->get();
+
         if(count($users)) {
             $headers = array(
                 "Content-type"        => "text/csv",
@@ -107,11 +110,11 @@ class UserController extends Controller
                 "Expires"             => "0"
             );
 
-            $columns = array('S.No', 'Name', 'Email', 'Address', 'City', 'State', 'Country', 'Zip Code', 'Created At');
+            $columns = array('S.No', 'Name', 'Email', 'Address', 'City', 'State', 'Country', 'Zip Code', 'Created At','Uploaded Files','Cleaned Files','Paid Files');
 
             $file = fopen(storage_path($fileName), 'w');
             fputcsv($file, $columns);
-            
+
             foreach ($users as $key => $user) {
                 $sno = $key + 1;
                 $row['sno']  = $sno;
@@ -123,7 +126,10 @@ class UserController extends Controller
                 $row['country']  = $user->country;
                 $row['zip_code']  = $user->zip_code;
                 $row['created_at']  = $user->created_at;
-                
+                $row['uploaded_files']  = $user->uploaded_files;
+                $row['cleaned_files']  = $user->cleaned_files;
+                $row['paid_files']  = $user->paid_files;
+
 
                 fputcsv($file, array(
                     $row['sno'],
@@ -135,12 +141,15 @@ class UserController extends Controller
                     $row['country'],
                     $row['zip_code'],
                     $row['created_at'],
+                    $row['uploaded_files'],
+                    $row['cleaned_files'],
+                    $row['paid_files'],
                 ));
             }
-            
+
             fclose($file);
-            
-            
+
+
             //$data = array('message'=>"Hi, user");
             Mail::raw('Hi, user',function($message) {
                 $message->to('neelesh@manifestinfotech.com', env('APP_NAME'))->subject
@@ -160,7 +169,7 @@ class UserController extends Controller
             echo "Email Sent";
         }
 
-      
+
     }
     public function account()
     {
@@ -253,7 +262,7 @@ class UserController extends Controller
         }if($value == 1){
             $query->where('cleaned', '!=', 0);
         }
-        
+
         $getData = $query->get();
         return response()->json(['status' => 'success', 'res' => $getData],200);
 
@@ -278,7 +287,7 @@ class UserController extends Controller
         }
     }
 
-    
-    
+
+
 
 }
