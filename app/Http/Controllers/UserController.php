@@ -97,10 +97,11 @@ class UserController extends Controller
     public function sendCsvEmail(Request $request) {
         $fileName = 'users.csv';
         $lastWeek = date("Y-m-d 00:00:00", strtotime("-7 days"));
-        $users = User::where('is_admin', '=', 0)->where('created_at', '>', $lastWeek)->withCount(['uploadedFiles','cleanedFiles','paidFiles'=>function($q){
+        $users = User::where('is_admin', '=', 0)
+            ->where('created_at', '>', $lastWeek)
+            ->withCount(['uploadedFiles','cleanedFiles','paidFiles'=>function($q){
             $q->join("paymentdetails","paymentdetails.id","uploads.paymentdetails_id");
         }])->orderBy('id','desc')->get();
-
         if(count($users)) {
             $headers = array(
                 "Content-type"        => "text/csv",
@@ -126,9 +127,9 @@ class UserController extends Controller
                 $row['country']  = $user->country;
                 $row['zip_code']  = $user->zip_code;
                 $row['created_at']  = $user->created_at;
-                $row['uploaded_files']  = $user->uploaded_files;
-                $row['cleaned_files']  = $user->cleaned_files;
-                $row['paid_files']  = $user->paid_files;
+                $row['uploaded_files']  = $user->uploaded_files_count;
+                $row['cleaned_files']  = $user->cleaned_files_count;
+                $row['paid_files']  = $user->paid_files_count;
 
 
                 fputcsv($file, array(
@@ -152,7 +153,7 @@ class UserController extends Controller
 
             //$data = array('message'=>"Hi, user");
             Mail::raw('Hi, user',function($message) {
-                $message->to('neelesh@manifestinfotech.com', env('APP_NAME'))->subject
+                $message->to('manifest.deepika@gmail.com', env('APP_NAME'))->subject
                     ('Weekly New Registered Users');
                 $message->from(env('MAIL_FROM_ADDRESS'),env('APP_NAME'));
                 $message->attach(storage_path('users.csv'));
@@ -162,7 +163,7 @@ class UserController extends Controller
         }else {
             //$data = array('message'=>"Users not registered this week");
             Mail::raw('Hi, Users not registered this week',function($message) {
-                $message->to('neelesh@manifestinfotech.com', env('APP_NAME'))->subject
+                $message->to('manifest.deepika@gmail.com', env('APP_NAME'))->subject
                     ('Weekly New Registered Users');
                 $message->from(env('MAIL_FROM_ADDRESS'),env('APP_NAME'));
             });
