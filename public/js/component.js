@@ -2,7 +2,7 @@ Dropzone.options.dropzoneForm = {
     autoProcessQueue: false,
     uploadMultiple: true,
     parallelUploads: 100,
-    acceptedFiles: ".mp3",
+    acceptedFiles: ".mp3,.wav",
     maxFiles: 25,
     maxFilesize: 500, // MB
     addRemoveLinks: true,
@@ -391,9 +391,9 @@ function fileFilter(value){
                         }else{
                             var cleanText = 'Cleaned';
                         }
-                        
+
                         var dlink = APP_URL + '/public/upload/' + data[i].file_name;
-                        
+
                         $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                             '                    <td style="cursor:pointer;" title="'+data[i].file_name+'">' + data[i].file_name.substring(0,15) + (data[i].file_name.length > 15 ? "..." : "") + '</td>\n' +
                             '                    <td><span id="duration' + aud_id + '"></span></td>\n' +
@@ -488,8 +488,8 @@ function fileFilter(value){
     }
 };
 
-function checkboxCount(){ 
-    setInterval(function(){ 
+function checkboxCount(){
+    setInterval(function(){
         var links = [];
         $('input.testCheckbox[type="checkbox"]:checked').each(function() {
             links.push($(this).attr("link"));
@@ -505,13 +505,13 @@ function checkboxCount(){
 }
 
 function allDownload(){
-    
+
     var links = [];
     $('input.testCheckbox[type="checkbox"]:checked').each(function() {
         links.push($(this).attr("link"));
     });
 
-        
+
     for(var i = 0; i < links.length; i++) {
         var url = links[i];
         var name = url.split('/')[url.split('/').length-1];
@@ -629,7 +629,7 @@ function getTotalDuration() {
 
 function getMultiCheckoutDuration(str) {
     var arr = str.split(',');
-    
+
     var tot_min = 0;
     var tot_sec = 0;
     var total_duration = 0;
@@ -641,7 +641,7 @@ function getMultiCheckoutDuration(str) {
             url: url,
             success: function (response) {
                 var data = response.res;
-                    
+
                 var aud_id = data.id;
                 var path = APP_URL + '/public/upload/' + data.file_name;
 
@@ -674,13 +674,13 @@ function getMultiCheckoutDuration(str) {
                     //$("#total-cost").html('$' + total_cost.toFixed(2))
 
                     total_cost = total_cost.toFixed(2);
-                    
-                    
+
+
                     tot_cost = parseFloat(tot_cost) + parseFloat(total_cost);
                     tot_min = tot_min + total_min;
                     tot_sec = tot_sec + total_sec;
-                    
-                    
+
+
 
                     //$("#paypal_total_cost").val(total_cost)
                     //$("#span_paypal_total_cost").html("$ " + total_cost);
@@ -700,21 +700,21 @@ function getMultiCheckoutDuration(str) {
         });
     }
 
-    setTimeout(function(){ 
+    setTimeout(function(){
         $("#paypal_total_cost").val(tot_cost.toFixed(2));
         $("#span_paypal_total_cost").html("$ " + tot_cost.toFixed(2));
         $("#paypal_total_duration").val(tot_min + '.' + tot_sec);
      }, 1000);
 
-    
 
 
 
 
 
-   
-    
-        
-        
+
+
+
+
+
 
 }

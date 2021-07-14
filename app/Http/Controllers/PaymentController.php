@@ -25,13 +25,13 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-        if(env('PAYPAL_MODE') == 'sandbox') {
+        if (env('PAYPAL_MODE') == 'sandbox') {
             $this->gateway = Omnipay::create('PayPal_Pro');
             $this->gateway->setUsername(env('PAYPAL_API_USERNAME'));
             $this->gateway->setPassword(env('PAYPAL_API_PASSWORD'));
             $this->gateway->setSignature(env('PAYPAL_API_SIGNATURE'));
             $this->gateway->setTestMode(true); // here 'true' is for sandbox. Pass 'false' when go live
-        }else {
+        } else {
             $this->gateway = Omnipay::create('Payflow_Pro');
             $this->gateway->setUsername(env('PAYPAL_API_USERNAME'));
             $this->gateway->setPassword(env('PAYPAL_API_PASSWORD'));
@@ -46,32 +46,35 @@ class PaymentController extends Controller
         return view('payment');
     }
 
-    public function multiple_checkout(Request $request){
+    public function multiple_checkout(Request $request)
+    {
         $ids = $request->input('ids');
-        $ids_arr = explode(',',$ids);
+        $ids_arr = explode(',', $ids);
         $title = "Process Payment";
         $user = User::find(Auth::user()->id);
         $countries = DB::table("countries")->get();
-        $getData = Upload::where('user_id','=',auth()->user()->id)->whereIn('id', $ids_arr)->get();
-        $Audio_ids=array();
-        foreach($getData  as $item){
-            $Audio_ids[]=$item->id;
+        $getData = Upload::where('user_id', '=', auth()->user()->id)->whereIn('id', $ids_arr)->get();
+        $Audio_ids = array();
+        foreach ($getData as $item) {
+            $Audio_ids[] = $item->id;
         }
-        $audioids=(implode(',',$Audio_ids));
-        return view('multiple-checkout',compact('getData','title','audioids','user','countries'));
+        $audioids = (implode(',', $Audio_ids));
+        return view('multiple-checkout', compact('getData', 'title', 'audioids', 'user', 'countries'));
     }
-    public function checkout($id){
+
+    public function checkout($id)
+    {
         $title = "Process Payment";
         $user = User::find(Auth::user()->id);
         $countries = DB::table("countries")->get();
-        $getData = Upload::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
-        $Audio_ids=array();
-        foreach($getData  as $item){
-            $Audio_ids[]=$item->id;
+        $getData = Upload::where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->get();
+        $Audio_ids = array();
+        foreach ($getData as $item) {
+            $Audio_ids[] = $item->id;
         }
-        $audioids=(implode(',',$Audio_ids));
+        $audioids = (implode(',', $Audio_ids));
 
-        return view('checkout',compact('getData','title','audioids','user','countries'));
+        return view('checkout', compact('getData', 'title', 'audioids', 'user', 'countries'));
     }
 
     public function checkout_single($id)
@@ -89,7 +92,7 @@ class PaymentController extends Controller
         $audioids = (implode(',', $Audio_ids));
 
 
-        return view('checkout', compact('getData', 'audioids','user','title','countries'));
+        return view('checkout', compact('getData', 'audioids', 'user', 'title', 'countries'));
 
     }
 
@@ -101,17 +104,28 @@ class PaymentController extends Controller
         $inName = $dir . $fName;
 
         $coreName = explode('.', $fName);
+        $ext = strtolower($coreName[1]);
 
         $coreName = $coreName[0];
         $outName1 = $dir . $coreName . '.WAV';
         $outName2 = $dir . $coreName . 'B.WAV';
-        $outName = $dir . 'new_' . $coreName . ".mp3";
-        $res = exec("lame --quiet --decode $inName $outName1 2>&1; sox $outName1 -C6 $outName2 --effects-file public/sox/ce.fkt 2>&1; lame --quiet -V 2 $outName2 $outName");
+        if ($ext == "wav") {
+            $outName = $dir . 'new_' . $coreName . ".wav";
+            $res = exec("sox $inName -C6 $outName --effects-file public/sox/ce.fkt 2>&1");
+        }else{
+            $outName = $dir . 'new_' . $coreName . ".mp3";
+            $res = exec("lame --quiet --decode $inName $outName1 2>&1; sox $outName1 -C6 $outName2 --effects-file public/sox/ce.fkt 2>&1; lame --quiet -V 2 $outName2 $outName");
+        }
 
-        return 'new_' . $coreName . ".mp3";
+        if ($ext == "wav") {
+            return 'new_' . $coreName . ".wav";
+        } else {
+            return 'new_' . $coreName . ".mp3";
+        }
     }
 
-    public function store(Request $request){ 
+    public function store(Request $request)
+    {
         $checkout_id = $request->checkout_id;
         $email = $request->input('email');
         $first_name = $request->input('firstName');
@@ -120,10 +134,10 @@ class PaymentController extends Controller
         $arr_expiry = explode("/", $request->input('expiry'));
         $month = "";
         $year = "";
-        if(isset($arr_expiry[0])){
+        if (isset($arr_expiry[0])) {
             $month = $arr_expiry[0];
         }
-        if(isset($arr_expiry[1])){
+        if (isset($arr_expiry[1])) {
             $year = $arr_expiry[1];
         }
         $cvv = $request->input('cvc');
@@ -144,15 +158,15 @@ class PaymentController extends Controller
             'email' => 'required|max:255',
             'firstName' => 'required|max:255',
             'lastName' => 'required|max:255',
-            'streetaddress'=>'required',
-            'city'=>'required',
-            'state'=>'required',
-            'country'=>'required',
-            'zipcode'=>'required',
+            'streetaddress' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'country' => 'required',
+            'zipcode' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(['status' => 'error', 'msg' => $validator->errors()->first()], 400);
-        }else {
+        } else {
             $formData = array(
                 'firstName' => $first_name,
                 'lastName' => $last_name,
@@ -183,11 +197,11 @@ class PaymentController extends Controller
                     try {
                         $date = time();;
                         $arr_body = $response->getData();
-                        if(env('PAYPAL_MODE') == 'sandbox') {
+                        if (env('PAYPAL_MODE') == 'sandbox') {
                             $amount = $arr_body['AMT'];
                             $currency = $arr_body['CURRENCYCODE'];
                             $transaction_id = $arr_body['TRANSACTIONID'];
-                        }else {
+                        } else {
                             $amount = $amt; ##$arr_body['AMT'];
                             $currency = 'USD';## $arr_body['CURRENCYCODE'];
                             $transaction_id = $arr_body['PPREF']; ##$arr_body['TRANSACTIONID'];
@@ -199,7 +213,7 @@ class PaymentController extends Controller
                         $paymentdetails->email = $email;
                         $paymentdetails->currencycode = $currency;
                         $paymentdetails->totalprice = $amount;
-                        $paymentdetails->timestamp = date("Y-m-d",$date); ##$arr_body['TIMESTAMP'];
+                        $paymentdetails->timestamp = date("Y-m-d", $date); ##$arr_body['TIMESTAMP'];
                         $paymentdetails->transationId = $transaction_id;
                         $paymentdetails->user_id = auth()->user()->id;
                         $paymentdetails->payment_status = 'Approved'; ##$arr_body['ACK'];
@@ -225,15 +239,15 @@ class PaymentController extends Controller
                                 ->where('id', $item)  //update uploads
                                 ->update(['paymentdetails_id' => $paymentid->id, 'processed_file' => $filename_new, 'cleaned' => 1]);
                         }
-                    }catch (Exce $e) {
+                    } catch (Exce $e) {
                         //return response()->json(["status" => "error", "msg" => $e->getMessage()], 400);
                     }
 
-                    return response()->json(["status" => "success", "msg" => "Payment Completed Successfully","payment_id"=>$paymentid->id], 200);
+                    return response()->json(["status" => "success", "msg" => "Payment Completed Successfully", "payment_id" => $paymentid->id], 200);
 
                 } else {
                     // Payment failed
-                    return response()->json(["status" => "error", "msg" =>  $response->getMessage()], 400);
+                    return response()->json(["status" => "error", "msg" => $response->getMessage()], 400);
                 }
             } catch (InvalidCreditCardException $ce) {
                 return response()->json(["status" => "error", "msg" => $ce->getMessage()], 400);
@@ -245,8 +259,9 @@ class PaymentController extends Controller
         }
     }
 
-    public function clean_file($id){
-        $ids_in_array = Upload::where("id",$id)->pluck('id');
+    public function clean_file($id)
+    {
+        $ids_in_array = Upload::where("id", $id)->pluck('id');
         foreach ($ids_in_array as $item) {
             $getfilename = DB::table('uploads')
                 ->where('id', $item)
@@ -264,7 +279,8 @@ class PaymentController extends Controller
 
     }
 
-    public function clean_files($id){
+    public function clean_files($id)
+    {
         $ids_in_array = Upload::where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->take($id)->pluck('id');
         foreach ($ids_in_array as $item) {
             $getfilename = DB::table('uploads')
@@ -282,7 +298,8 @@ class PaymentController extends Controller
 
     }
 
-    public function clean_files_with_free_trial($id){
+    public function clean_files_with_free_trial($id)
+    {
         $user = User::find(Auth::user()->id);
         if (!$user->trial_expiry_date) {
             $days = FreeSubscription::first()->days;

@@ -208,7 +208,28 @@ class UserController extends Controller
     public function audio_analysis($id){
         $title = "Audio Analysis";
         $file = Upload::find($id);
-        return view('audio-analysis', compact('title','file'));
+        $path = public_path()."/upload/$file->file_name";
+        $ppath = public_path()."/upload/$file->processed_file";
+
+        $ext = explode(".",$file->file_name)[1];
+        if($ext == "wav"){
+            $res = shell_exec("soxi $path");
+            $res = explode("\n",$res);
+            $res = explode(":",$res[6]);
+            $size = $res[1];
+        }else{
+            $size = convertToReadableSize(filesize(public_path().'/upload/'.$file->file_name));
+        }
+        $ext1 = explode(".",$file->processed_file)[1];
+        if($ext1 == "wav"){
+            $res1 = shell_exec("soxi $ppath");
+            $res1 = explode("\n",$res1);
+            $res1 = explode(":",$res1[6]);
+            $psize = $res1[1];
+        }else{
+            $psize = convertToReadableSize(filesize(public_path().'/upload/'.$file->processed_file));
+        }
+        return view('audio-analysis', compact('title','file','size','psize'));
 
     }
 
