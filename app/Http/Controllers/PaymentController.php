@@ -225,7 +225,7 @@ class PaymentController extends Controller
                         $paymentdetails->zip_code = $zipcode;
                         $paymentdetails->save();
 
-                        $paymentid = db::table('paymentdetails')->where('id', '=', $paymentdetails->id)->first();
+                        $paymentid = DB::table('paymentdetails')->where('id', '=', $paymentdetails->id)->first();
                         $ids_in_array = (explode(",", $Audio_Ids)); //convert into array
                         foreach ($ids_in_array as $item) {
                             $getfilename = DB::table('uploads')
@@ -239,7 +239,7 @@ class PaymentController extends Controller
                                 ->where('id', $item)  //update uploads
                                 ->update(['paymentdetails_id' => $paymentid->id, 'processed_file' => $filename_new, 'cleaned' => 1]);
                         }
-                    } catch (Exce $e) {
+                    } catch (\Exception $e) {
                         //return response()->json(["status" => "error", "msg" => $e->getMessage()], 400);
                     }
 
@@ -278,6 +278,27 @@ class PaymentController extends Controller
         return response()->json(["status" => "success", "msg" => "File Cleaned Successfully!"], 200);
 
     }
+    public function clean_multiple_file(Request $request)
+    {
+        $ids_in_array = $request->id;
+        foreach ($ids_in_array as $item) {
+            $getfilename = DB::table('uploads')
+                ->where('id', $item)
+                ->where('cleaned',0)
+                ->select('file_name')  //get file name
+                ->first();
+            if($getfilename) {
+                $filename_new = $this->soxProcessFile($getfilename->file_name); //call function for file cleaning
+
+                $uploads = DB::table('uploads')
+                    ->where('id', $item)  //update uploads
+                    ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
+            }
+        }
+
+        return response()->json(["status" => "success", "msg" => "Files Cleaned Successfully!"], 200);
+
+    }
 
     public function clean_files($id)
     {
@@ -314,6 +335,34 @@ class PaymentController extends Controller
                 ->where('id', $item)
                 ->select('file_name')  //get file name
                 ->first();
+            if($getfilename) {
+                $filename_new = $this->soxProcessFile($getfilename->file_name); //call function for file cleaning
+
+                $uploads = DB::table('uploads')
+                    ->where('id', $item)  //update uploads
+                    ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
+            }
+        }
+        return response()->json(["status" => "success", "msg" => "File Cleaned Successfully!"], 200);
+
+    }
+    public function clean_multiple_files_with_free_trial(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+        if (!$user->trial_expiry_date) {
+            $days = FreeSubscription::first()->days;
+            $trial_expiry_date = strtotime("+$days days ", time());
+            $user->trial_expiry_date = $trial_expiry_date;
+            $user->save();
+        }
+
+        $ids_in_array = $request->id;
+        foreach ($ids_in_array as $item) {
+            $getfilename = DB::table('uploads')
+                ->where('id', $item)
+                ->where('cleaned',0)
+                ->select('file_name')  //get file name
+                ->first();
 
             $filename_new = $this->soxProcessFile($getfilename->file_name); //call function for file cleaning
 
@@ -321,7 +370,7 @@ class PaymentController extends Controller
                 ->where('id', $item)  //update uploads
                 ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
         }
-        return response()->json(["status" => "success", "msg" => "File Cleaned Successfully!"], 200);
+        return response()->json(["status" => "success", "msg" => "Files Cleaned Successfully!"], 200);
 
     }
 

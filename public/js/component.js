@@ -267,6 +267,93 @@ function clean_file(id) {
     });
 }
 
+function clean_multiple_files_with_free_trial() {
+    var ids = [];
+    $('input.testCheckbox[type="checkbox"]:checked').each(function () {
+        if ($(this).attr("idd") > 0) {
+            ids.push($(this).attr("idd"));
+        }
+    });
+    if (ids.length > 0) {
+        $("#clean-btn").html("Loading...");
+        $("#clean-btn").prop("disabled", true);
+        $.ajax({
+            method: "post",
+            url: APP_URL + "/clean-multiple-files-with-free-trial",
+            data: {
+                "_token": CSRF_TOKEN,
+                "id": ids
+            },
+            success: function (response) {
+                $("#clean-btn").html("Clean File(s)");
+                $("#clean-btn").prop("disabled", false);
+                console.log(response);
+                Swal.fire({
+                    title: 'Success!',
+                    text: response.msg,
+                    icon: 'success',
+                    showCancelButton: false,
+                }).then((result) => {
+                    window.location = APP_URL + '/account';
+                })
+            },
+            error: function (error) {
+                $("#clean-btn").html("Loading...");
+                $("#clean-btn").prop("disabled", true);
+                console.log(error);
+                Swal.fire({
+                    title: "Error",
+                    text: error.responseJSON.msg,
+                    icon: "error",
+                });
+            }
+        });
+    }
+}
+function clean_multiple_files() {
+    var ids = [];
+    $('input.testCheckbox[type="checkbox"]:checked').each(function() {
+        if($(this).attr("idd") > 0){
+            ids.push($(this).attr("idd"));
+        }
+    });
+    if(ids.length > 0) {
+        $("#clean-btn").html("Loading...");
+        $("#clean-btn").prop("disabled", true);
+        $.ajax({
+            method: "post",
+            url: APP_URL + "/clean-multiple-file",
+            data: {
+                "_token": CSRF_TOKEN,
+                "id": ids
+            },
+            success: function (response) {
+                $("#clean-btn").html("Clean File(s)");
+                $("#clean-btn").prop("disabled", false);
+                console.log(response);
+                Swal.fire({
+                    title: 'Success!',
+                    text: response.msg,
+                    icon: 'success',
+                    showCancelButton: false,
+                }).then((result) => {
+                    window.location = APP_URL + '/account';
+                })
+            },
+            error: function (error) {
+                $("#clean-btn").html("Loading...");
+                $("#clean-btn").prop("disabled", true);
+                console.log(error);
+                Swal.fire({
+                    title: "Error",
+                    text: error.responseJSON.msg,
+                    icon: "error",
+                });
+            }
+        });
+    }
+}
+
 function redirectUrl(url) {
     window.location = url;
 }
@@ -461,9 +548,11 @@ function fileFilter(value){
                                     $(this).removeClass('checkedAll');
                                     $('#btnDownload').attr('disabled','disabled');
                                     $('#btnCheckout').attr('disabled','disabled');
+                                    $('#clean-btn').attr('disabled','disabled');
                                 } else {
                                     $('#btnDownload').removeAttr('disabled');
                                     $('#btnCheckout').removeAttr('disabled');
+                                    $('#clean-btn').removeAttr('disabled');
                                     $('input').prop('checked', true);
                                     $(this).addClass('checkedAll');
                                 }

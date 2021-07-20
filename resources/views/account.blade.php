@@ -15,16 +15,40 @@
             @endif
 
         </span>
-            <div class="">
-                <form id="multiple-checkout-frm" action="{{ url('multiple-checkout') }}" method="post">
-                    {{ csrf_field() }}   
-                    <input type="hidden" value="" name="ids" id="allCheckoutIds">
-                    <button onclick="allCheckout();" id="btnCheckout" disabled style="float: right;margin-bottom: 16px;
-    margin-top: 34px;" type="button" class="c-btn">Checkout</button>
-                </form>
-                
-                <button onclick="allDownload();" id="btnDownload" disabled style="float: right; margin-right: 10px;
-    margin-top: 35px;" type="button" class="c-btn">Download</button>
+            <div class="mb-3">
+{{--                <form id="multiple-checkout-frm" action="{{ url('multiple-checkout') }}" method="post">--}}
+{{--                    {{ csrf_field() }}--}}
+{{--                    <input type="hidden" value="" name="ids" id="allCheckoutIds">--}}
+{{--                    <button onclick="allCheckout();" id="btnCheckout" disabled style="float: right;margin-bottom: 16px;--}}
+{{--    margin-top: 34px;" type="button" class="c-btn">Checkout</button>--}}
+{{--                </form>--}}
+
+                @if(Auth::user()->is_admin)
+                    <button id="clean-btn" class="c-btn  float-right" onclick="clean_multiple_files()">Clean File(s)
+                    </button>
+                @else
+                    @if(!Auth::user()->trial_expiry_date)
+                        <button id="clean-btn" class="c-btn float-right ml-2" style="width: 275px !important;" disabled onclick="clean_multiple_files_with_free_trial()">Clean File(s) With free trial
+                        </button>
+
+                        <form id="multiple-checkout-frm" action="{{ url('multiple-checkout') }}" method="post">
+                            {{ csrf_field() }}
+                            <input type="hidden" value="" name="ids" id="allCheckoutIds">
+                            <button onclick="allCheckout();" id="btnCheckout" disabled type="button" class="c-btn float-right">Checkout</button>
+                        </form>
+                    @elseif(Auth::user()->trial_expiry_date<time())
+                        <form id="multiple-checkout-frm" action="{{ url('multiple-checkout') }}" method="post">
+                            {{ csrf_field() }}
+                            <input type="hidden" value="" name="ids" id="allCheckoutIds">
+                            <button onclick="allCheckout();" id="btnCheckout" disabled type="button" class="c-btn  float-right mr-2">Checkout</button>
+                        </form>
+                    @else
+                        <button id="clean-btn" class="c-btn float-right" disabled onclick="clean_multiple_files()">Clean File(s)
+                        </button>
+                    @endif
+                @endif
+
+                <button onclick="allDownload();" id="btnDownload" disabled type="button" class="c-btn float-right mr-2">Download</button>
             </div>
         </h1>
 
