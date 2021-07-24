@@ -63,6 +63,9 @@
         </div>--}}
 
         <div class="checkouttotal">
+            <div id="alert-info">
+
+            </div>
           {{--@include('common-uploaded-files')--}}
             <table id="example" class="stripe hover" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                 <thead>

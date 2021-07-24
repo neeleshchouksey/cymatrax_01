@@ -173,12 +173,16 @@ function checkout() {
     });
 }
 function clean_files(id) {
+    $("#alert-info").html('<div class="alert">' +
+        'Processing Files! Please DO NOT close your browser, this may take several minutes' +
+        '</div>');
     $("#clean-btn").html("Loading...");
     $("#clean-btn").prop("disabled", true);
     $.ajax({
         method: "get",
         url: APP_URL + "/clean-files/"+id,
         success: function (response) {
+            $("#alert-info").hide();
             $("#clean-btn").html("Clean File(s)");
             $("#clean-btn").prop("disabled", false);
             console.log(response);
@@ -205,6 +209,9 @@ function clean_files(id) {
 }
 
 function clean_files_with_free_trial(id) {
+    $("#alert-info").html('<div class="alert">' +
+        'Processing Files! Please DO NOT close your browser, this may take several minutes' +
+        '</div>')
     $("#clean-btn").html("Loading...");
     $("#clean-btn").prop("disabled", true);
     $.ajax({
@@ -236,6 +243,9 @@ function clean_files_with_free_trial(id) {
     });
 }
 function clean_file(id) {
+    $("#alert-info").html('<div class="alert">' +
+        'Processing Files! Please DO NOT close your browser, this may take several minutes' +
+        '</div>')
     $("#clean-btn"+id).html("Loading...");
     $("#clean-btn"+id).prop("disabled", true);
     $.ajax({
@@ -268,6 +278,7 @@ function clean_file(id) {
 }
 
 function clean_multiple_files_with_free_trial() {
+
     var ids = [];
     $('input.testCheckbox[type="checkbox"]:checked').each(function () {
         if ($(this).attr("idd") > 0) {
@@ -275,6 +286,9 @@ function clean_multiple_files_with_free_trial() {
         }
     });
     if (ids.length > 0) {
+        $("#alert-info").html('<div class="alert">' +
+            'Processing Files! Please DO NOT close your browser, this may take several minutes' +
+            '</div>')
         $("#clean-btn").html("Loading...");
         $("#clean-btn").prop("disabled", true);
         $.ajax({
@@ -311,6 +325,7 @@ function clean_multiple_files_with_free_trial() {
     }
 }
 function clean_multiple_files() {
+
     var ids = [];
     $('input.testCheckbox[type="checkbox"]:checked').each(function() {
         if($(this).attr("idd") > 0){
@@ -318,6 +333,9 @@ function clean_multiple_files() {
         }
     });
     if(ids.length > 0) {
+        $("#alert-info").append('<div class="alert">' +
+            'Processing Files! Please DO NOT close your browser, this may take several minutes' +
+            '</div>')
         $("#clean-btn").html("Loading...");
         $("#clean-btn").prop("disabled", true);
         $.ajax({
@@ -439,36 +457,6 @@ function fileFilter(value){
                         }
                     }
 
-                    /*$("#audio-list").append(' <div class="main-div"> <div class="row">' +
-                        '                <div>' +
-                        '                    <b>Upload Date:</b>' +
-                        '                    <span>' + data[i].created + '</span>\n' +
-                        '                </div>' +
-                        '            </div>' +
-                        '            <div class="row">' +
-                        '                <div>' +
-                        '                    <b>File Name:</b>' +
-
-                        '                        <span class="file-pointer" title="'+data[i].file_name+'">' + data[i].file_name.substring(0,40) + (data[i].file_name.length > 40 ? "..." : "")+'</span>' +
-
-                        '                </div>' +
-                        '            </div>' +
-                        '            <div class="row">' +
-                        '                <div>' +
-                        '                    <b> File duration :</b>' +
-                        '                    <span id="duration' + aud_id + '"></span>' +
-                        '                </div>' +
-                        '            </div>' +
-                        '            <div class="row">' +
-                        '                    <input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
-                        '                    <audio id="audio' + aud_id + '" controls="" style="vertical-align: middle"' +
-                        '                           src="' + APP_URL + '/public/upload/' + data[i].file_name + '" type="audio/mp3"' +
-                        '                           controlslist="nodownload">' +
-                        '                        Your browser does not support the audio element.' +
-                        '                    </audio>' +
-                        '            </div>' +
-                        '             <div class="row '+hrhtmlclass+'">'+html+'</div>'+
-                        '             </div>'+hr_html)*/
                     if (segment1 == "account"){
                         var cleanText = '';
                         var idd = '';
@@ -495,7 +483,34 @@ function fileFilter(value){
                             '                    <td style="width: 5px"><input onchange="checkboxCount();" class="testCheckbox" link="'+dlink+'" idd="'+idd+'" type="checkbox"> </td>\n' +
                             '                </tr>');
 
-                    }else {
+                    }
+                    else if (segment2 == "upload-summary"){
+                        var cleanText = '';
+                        var idd = '';
+                        if(data[i].cleaned == 0){
+                            var cleanText = 'Uncleaned';
+                            var idd = data[i].id;
+                        }else{
+                            var cleanText = 'Cleaned';
+                        }
+
+                        var dlink = APP_URL + '/public/upload/' + data[i].file_name;
+
+                        $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
+                            '                    <td style="cursor:pointer;" title="'+data[i].file_name+'">' + data[i].file_name.substring(0,15) + (data[i].file_name.length > 15 ? "..." : "") + '</td>\n' +
+                            '                    <td><span id="duration' + aud_id + '"></span></td>\n' +
+                            '                    <td>' + data[i].created + '</td>\n' +
+                            '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
+                            '                    <audio id="audio' + aud_id + '" controls="" style="vertical-align: middle"' +
+                            '                           src="' + APP_URL + '/public/upload/' + data[i].file_name + '" type="audio/mp3"' +
+                            '                           controlslist="nodownload">' +
+                            '                        Your browser does not support the audio element.' +
+                            '                    </audio></td>\n' +
+                            '                    <td>' + cleanText + '</td>\n' +
+                            '                </tr>');
+
+                    }
+                    else {
                         $("#audio-list").append('  <div class="row">' +
                             '                <div>' +
                             '                    <b>Upload Date:</b>' +
@@ -586,9 +601,11 @@ function checkboxCount(){
         if(links.length > 0){
             $('#btnDownload').removeAttr('disabled');
             $('#btnCheckout').removeAttr('disabled');
+            $('#clean-btn').removeAttr('disabled');
         }else{
             $('#btnDownload').attr('disabled','disabled');
             $('#btnCheckout').attr('disabled','disabled');
+            $('#clean-btn').attr('disabled','disabled');
         }
     }, 1000);
 }
