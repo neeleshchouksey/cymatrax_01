@@ -405,6 +405,16 @@ function fileFilter(value){
                 if(data.length > 0){
                 for (var i = 0; i < data.length; i++) {
                     aud_id = data[i].id;
+
+                    $new_array = data[i].file_name.split('_');
+                    console.log($new_array);
+                    $new_array.shift();
+                    console.log($new_array);
+                    $new_array = $new_array.join('_');
+                    console.log($new_array);
+                    // data[i].file_name.toString();
+                    // console.log(data[i].file_name);
+
                     var html = '';
 
                     /*var hrhtmlclass = '';
@@ -470,7 +480,7 @@ function fileFilter(value){
                         var dlink = APP_URL + '/public/upload/' + data[i].file_name;
 
                         $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
-                            '                    <td style="cursor:pointer;" title="'+data[i].file_name+'">' + data[i].file_name.substring(0,15) + (data[i].file_name.length > 15 ? "..." : "") + '</td>\n' +
+                            '                    <td style="cursor:pointer;" title="'+data[i].file_name+'">' + $new_array.substring(0,15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
                             '                    <td><span id="duration' + aud_id + '"></span></td>\n' +
                             '                    <td>' + data[i].created + '</td>\n' +
                             '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
@@ -497,7 +507,7 @@ function fileFilter(value){
                         var dlink = APP_URL + '/public/upload/' + data[i].file_name;
 
                         $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
-                            '                    <td style="cursor:pointer;" title="'+data[i].file_name+'">' + data[i].file_name.substring(0,15) + (data[i].file_name.length > 15 ? "..." : "") + '</td>\n' +
+                            '                    <td style="cursor:pointer;" title="'+data[i].file_name+'">' + $new_array.substring(0,15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
                             '                    <td><span id="duration' + aud_id + '"></span></td>\n' +
                             '                    <td>' + data[i].created + '</td>\n' +
                             '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
@@ -521,7 +531,7 @@ function fileFilter(value){
                             '                <div>' +
                             '                    <b>File Name:</b>' +
 
-                            '                        <span>' + data[i].file_name + '</span>' +
+                            '                        <span>' + $new_array + '</span>' +
 
                             '                </div>' +
                             '            </div>' +

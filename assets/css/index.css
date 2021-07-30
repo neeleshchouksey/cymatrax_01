@@ -13,6 +13,9 @@ font-family: 'Russo One', sans-serif;
 #example_paginate{
     margin-bottom: 30px;
 }
+table {
+    font-size: 14px;
+}
 table.dataTable thead th, table.dataTable thead td {
     padding: 10px 10px !important;
 }
@@ -961,6 +964,7 @@ tr td {
 	#spectrum-preview.loaded:after{
 		displpay:none;
 	}
+
 
 }
 /* height restrictions */
