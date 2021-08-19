@@ -96,43 +96,43 @@ class AdminController extends Controller
 
     public function users()
     {
-
         return view('admin.users');
     }
 
-    public function get_users(){
-        $data = User::withTrashed()->withCount(['uploadedFiles','cleanedFiles','paidFiles'=>function($q){
-            $q->join("paymentdetails","paymentdetails.id","uploads.paymentdetails_id");
-        }])->orderBy('id','desc')->get();
+    public function get_users()
+    {
+        $data = User::withTrashed()->withCount(['uploadedFiles', 'cleanedFiles', 'paidFiles' => function ($q) {
+            $q->join("paymentdetails", "paymentdetails.id", "uploads.paymentdetails_id");
+        }])->orderBy('id', 'desc')->get();
 
-        foreach ($data as $k=>$v){
-            $v->sno = $k+1;
+        foreach ($data as $k => $v) {
+            $v->sno = $k + 1;
 
-            if($v->trial_expiry_date){
-                $v->trial_expiry_date = date("d-m-Y",$v->trial_expiry_date);
-            }else{
+            if ($v->trial_expiry_date) {
+                $v->trial_expiry_date = date("d-m-Y", $v->trial_expiry_date);
+            } else {
                 $v->trial_expiry_date = "Trial Not Started";
             }
 
-            if($v->last_login_at){
-                $v->last_login_at = date("d-m-Y h:i A",$v->last_login_at);
-            }else {
-                $v->last_login_at = date("d-m-Y h:i A",strtotime($v->created_at));;
+            if ($v->last_login_at) {
+                $v->last_login_at = date("d-m-Y h:i A", $v->last_login_at);
+            } else {
+                $v->last_login_at = date("d-m-Y h:i A", strtotime($v->created_at));;
             }
 
             $updateButton = "<button class='btn btn-sm btn-primary mb-2' onclick='resetTrial($v->id)'>Reset Trial</button><br>";
             //view user all files button
-            $viewFilesButton = "<button class='btn btn-sm btn-primary mt-2'><a style='color: #fff;' href='".url('/admin/user-files/')."/$v->id'>View Files</a></button><br>";
-            if($v->deleted_at){
+            $viewFilesButton = "<button class='btn btn-sm btn-primary mt-2'><a style='color: #fff;' href='" . url('/admin/user-files/') . "/$v->id'>View Files</a></button><br>";
+            if ($v->deleted_at) {
                 // activate Button
                 $deleteButton = "<button class='btn btn-sm btn-success' onclick='activateDeactivateUser($v->id,1)'>Activate</button>";
 
-            }else{
+            } else {
                 // Deactivate Button
                 $deleteButton = "<button class='btn btn-sm btn-danger' onclick='activateDeactivateUser($v->id,0)'>Deactivate</button>";
             }
 
-            $action = $updateButton." ".$deleteButton." ".$viewFilesButton;
+            $action = $updateButton . " " . $deleteButton . " " . $viewFilesButton;
             $v->action = $action;
 
         }
@@ -146,32 +146,71 @@ class AdminController extends Controller
         return response()->json($results);
     }
 
-    public function user_files($id){
+    public function reports()
+    {
+        return view('admin.reports');
+    }
+
+    public function get_reports()
+    {
+        $data = User::withTrashed()->withCount(['uploadedFiles', 'cleanedFiles', 'paidFiles' => function ($q) {
+            $q->join("paymentdetails", "paymentdetails.id", "uploads.paymentdetails_id");
+        }])->orderBy('id', 'desc')->get();
+
+        foreach ($data as $k => $v) {
+            $v->sno = $k + 1;
+
+            if ($v->trial_expiry_date) {
+                $v->trial_expiry_date = date("d-m-Y", $v->trial_expiry_date);
+            } else {
+                $v->trial_expiry_date = "Trial Not Started";
+            }
+
+            if ($v->last_login_at) {
+                $v->last_login_at = date("d-m-Y h:i A", $v->last_login_at);
+            } else {
+                $v->last_login_at = date("d-m-Y h:i A", strtotime($v->created_at));;
+            }
+
+        }
+
+        $results = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($data),
+            "iTotalDisplayRecords" => count($data),
+            "aaData" => $data
+        );
+        return response()->json($results);
+    }
+
+    public function user_files($id)
+    {
         return view('admin.user-files');
     }
 
-    public function get_user_files($id) {
+    public function get_user_files($id)
+    {
         $days = FileDeleteSetting::first()->days;
-        $fifteendaysago = date_format(date_create($days.'days ago'), 'Y-m-d 00:00:00');
+        $fifteendaysago = date_format(date_create($days . 'days ago'), 'Y-m-d 00:00:00');
 
         $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id')
-            ->join("users","users.id","uploads.user_id")
+            ->join("users", "users.id", "uploads.user_id")
             ->where('uploads.user_id', '=', $id)
             ->get();
 
         foreach ($files as $key => $value) {
-            $files[$key]->sno = $key+1;
+            $files[$key]->sno = $key + 1;
             $files[$key]->action = '';
             $d = date('Y-m-d h:i:s', strtotime($value->created_at));
 
-            if($d < $fifteendaysago){
+            if ($d < $fifteendaysago) {
                 $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteFile($value->id)'>Delete</button>";
             }
             $files[$key]->created = date("d-m-Y h:i:s A", strtotime($value->created_at));
 
         }
 
-        $results = array (
+        $results = array(
             "sEcho" => 1,
             "iTotalRecords" => count($files),
             "iTotalDisplayRecords" => count($files),
@@ -180,11 +219,12 @@ class AdminController extends Controller
         return response()->json($results);
     }
 
-    public function delete_file($id) {
+    public function delete_file($id)
+    {
         $upload = Upload::find($id);
         $filename = $upload->file_name;
-        if(file_exists(public_path('upload/'.$filename))){
-            unlink(public_path('upload/'.$filename));
+        if (file_exists(public_path('upload/' . $filename))) {
+            unlink(public_path('upload/' . $filename));
         }
         $upload->delete();
         return response(["status" => "success", "msg" => "File deleted successfully"], 200);
@@ -216,14 +256,15 @@ class AdminController extends Controller
     {
 //        $admins = Admin::withTrashed()->get();
         $roles = AdminRole::all();
-        return view('admin.admins', compact( "roles"));
+        return view('admin.admins', compact("roles"));
     }
 
-    public function get_admins(){
-        $data = Admin::withTrashed()->orderBy('id','desc')->get();
-        foreach ($data as $k=>$v){
+    public function get_admins()
+    {
+        $data = Admin::withTrashed()->orderBy('id', 'desc')->get();
+        foreach ($data as $k => $v) {
 
-            $v->sno = $k+1;
+            $v->sno = $k + 1;
 
 //            $v->created = date("d-m-Y h:i A",strtotime($v->created_at));
 //            $v->updated = date("d-m-Y h:i A",strtotime($v->updated_at));
@@ -231,15 +272,15 @@ class AdminController extends Controller
             // Update Button
             $updateButton = "<button class='btn btn-sm btn-primary' onclick='getSingleAdmin($v->id)'>Edit</button>";
 
-            if($v->deleted_at){
+            if ($v->deleted_at) {
                 // activate Button
                 $deleteButton = "<button class='btn btn-sm btn-success' onclick='activateDeactivateAdmin($v->id,1)'>Activate</button>";
 
-            }else{
+            } else {
                 // Deactivate Button
                 $deleteButton = "<button class='btn btn-sm btn-danger' onclick='activateDeactivateAdmin($v->id,0)'>Deactivate</button>";
             }
-            $action = $updateButton." ".$deleteButton;
+            $action = $updateButton . " " . $deleteButton;
             $v->action = $action;
 
         }
@@ -332,7 +373,7 @@ class AdminController extends Controller
             $a->role_id = $request->role;
             $a->save();
 
-            if($a->role_id!=1) {
+            if ($a->role_id != 1) {
                 $u = User::where("email", $request->email)->first();
                 if (!$u) {
                     $u = new User();
@@ -355,13 +396,14 @@ class AdminController extends Controller
     {
 //        $roles = AdminRole::where("id","!=",1)->get();
         $features = Feature::all();
-        return view('admin.roles', compact( "features"));
+        return view('admin.roles', compact("features"));
     }
 
-    public function get_roles(){
-        $data = AdminRole::where("id","!=",1)->get();
-        foreach ($data as $k=>$v){
-            $v->sno = $k+1;
+    public function get_roles()
+    {
+        $data = AdminRole::where("id", "!=", 1)->get();
+        foreach ($data as $k => $v) {
+            $v->sno = $k + 1;
 
             // Update Button
             $updateButton = "<button class='btn btn-sm btn-primary' onclick='getSingleRole($v->id)'>Edit</button>";
@@ -383,20 +425,21 @@ class AdminController extends Controller
     public function get_role(Request $request)
     {
         $features = Feature::all();
-        $role_features = AdminRoleFeature::where("role_id",$request->id)->pluck('feature_id')->toArray();
-        foreach ($features as $f){
-            if(in_array($f->id,$role_features)){
+        $role_features = AdminRoleFeature::where("role_id", $request->id)->pluck('feature_id')->toArray();
+        foreach ($features as $f) {
+            if (in_array($f->id, $role_features)) {
                 $f->selected = true;
-            }else{
+            } else {
                 $f->selected = false;
             }
         }
 
         $role = AdminRole::find($request->id);
-        return response(["status" => "success", "res" => $role,"features"=>$features], 200);
+        return response(["status" => "success", "res" => $role, "features" => $features], 200);
     }
 
-    public function update_role(Request $request){
+    public function update_role(Request $request)
+    {
         $role_id = $request->id;
         $role = $request->role;
         $features = $request->features;
@@ -404,9 +447,9 @@ class AdminController extends Controller
         $ar->role = $role;
         $ar->save();
 
-        if(!empty($features)){
-            AdminRoleFeature::where("role_id",$role_id)->delete();
-            foreach ($features as $f){
+        if (!empty($features)) {
+            AdminRoleFeature::where("role_id", $role_id)->delete();
+            foreach ($features as $f) {
                 $arf = new AdminRoleFeature();
                 $arf->role_id = $role_id;
                 $arf->feature_id = $f;
@@ -414,11 +457,12 @@ class AdminController extends Controller
             }
         }
 
-        return response(["status" => "success","msg"=>"Role updated successfully", "res" => $ar], 200);
+        return response(["status" => "success", "msg" => "Role updated successfully", "res" => $ar], 200);
 
     }
 
-    public function unauthorize_access(){
+    public function unauthorize_access()
+    {
         return view("admin/unauthorize-access");
     }
 

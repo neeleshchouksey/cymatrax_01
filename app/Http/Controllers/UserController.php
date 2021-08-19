@@ -280,9 +280,10 @@ class UserController extends Controller
         ->orderBy('created_at', 'desc');
 
         if($value == 0){
-            $query->where('cleaned', '=', $value);
-        }if($value == 1){
-            $query->where('cleaned', '!=', 0);
+            $query->where('cleaned', '=', 1);
+        }
+        if($value == 1){
+            $query->where('cleaned', '=', 0);
         }
 
         $getData = $query->get();

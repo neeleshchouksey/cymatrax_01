@@ -1,17 +1,21 @@
 $(function () {
 
-    var uri_segment = document.URL.split('/')[document.URL.split('/').length-1];
+    var uri_segment = document.URL.split('/')[document.URL.split('/').length - 1];
 
-    if(uri_segment == 'admins'){
+    if (uri_segment == 'admins') {
         get_admins();
     }
-    if(uri_segment == 'roles'){
+    if (uri_segment == 'roles') {
         get_roles();
     }
-    if(uri_segment == 'users'){
+    if (uri_segment == 'users') {
         get_users();
     }
+    if (uri_segment == 'reports') {
+        get_reports();
+    }
 });
+
 function activateDeactivateUser(id, status) {
     if (status) {
         st = "Activate";
@@ -60,22 +64,22 @@ function activateDeactivateUser(id, status) {
 
 function get_admins() {
 
-    var admin_datatable =  $("#admin-datatable").DataTable({
+    var admin_datatable = $("#admin-datatable").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "bDestroy": true,
-        "ordering":false,
+        "ordering": false,
         ajax: {
-            url:APP_URL+"/admin/get-all-admins",
-            type:"GET",
+            url: APP_URL + "/admin/get-all-admins",
+            type: "GET",
         },
         "columns": [
-            { mData: 'sno' } ,
-            { mData: 'name' },
-            { mData: 'email' },
-            { mData: 'action' }
+            {mData: 'sno'},
+            {mData: 'name'},
+            {mData: 'email'},
+            {mData: 'action'}
         ]
 
     }).buttons().container().appendTo('#admin-datatable_wrapper .col-md-6:eq(0)');
@@ -207,10 +211,10 @@ function getSingleAdmin(id) {
             $("#edit_name").val(response.res.name);
             $("#edit_password").val('');
             $("#edit_role").val(response.res.role_id);
-            if(response.res.role_id == 1){
-                $("#edit_role").prop("disabled",true);
-            }else{
-                $("#edit_role").prop("disabled",false);
+            if (response.res.role_id == 1) {
+                $("#edit_role").prop("disabled", true);
+            } else {
+                $("#edit_role").prop("disabled", false);
             }
         },
     });
@@ -261,11 +265,11 @@ function getSingleRole(id) {
             $("#edit_role").val(response.res.role);
             let features = response.features;
             $("#edit_features").empty();
-            $.each(features,function (key,value){
-                if(value.selected){
-                    $("#edit_features").append(`<option value="`+value.id+`" selected="`+value.selected+`">`+value.feature+`</option>`)
-                }else{
-                    $("#edit_features").append(`<option value="`+value.id+`">`+value.feature+`</option>`)
+            $.each(features, function (key, value) {
+                if (value.selected) {
+                    $("#edit_features").append(`<option value="` + value.id + `" selected="` + value.selected + `">` + value.feature + `</option>`)
+                } else {
+                    $("#edit_features").append(`<option value="` + value.id + `">` + value.feature + `</option>`)
 
                 }
             })
@@ -313,58 +317,108 @@ function get_roles() {
         "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "bDestroy": true,
-        "ordering":false,
+        "ordering": false,
         ajax: {
-            url:APP_URL+"/admin/get-all-roles",
-            type:"GET",
+            url: APP_URL + "/admin/get-all-roles",
+            type: "GET",
         },
         "columns": [
-            { mData: 'sno' } ,
-            { mData: 'role' },
-            { mData: 'action' }
+            {mData: 'sno'},
+            {mData: 'role'},
+            {mData: 'action'}
         ]
 
     }).buttons().container().appendTo('#role-datatable_wrapper .col-md-6:eq(0)');
 }
+
 function get_users() {
 
     $("#user-datatable").DataTable({
         // "responsive": false,
+        // "dom": 'Bfrtip',
         "lengthChange": false,
         "autoWidth": false,
         "scrollX": true,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "bDestroy": true,
-        "ordering":false,
+        "ordering": false,
         ajax: {
-            url:APP_URL+"/admin/get-all-users",
-            type:"GET",
+            url: APP_URL + "/admin/get-all-users",
+            type: "GET",
         },
         "columns": [
-            { mData: 'sno' } ,
-            { mData: 'name' },
-            { mData: 'email' },
-            { mData: 'address' },
-            { mData: 'city' },
-            { mData: 'state' },
-            { mData: 'country' },
-            { mData: 'zip_code' },
-            { mData: 'trial_expiry_date' },
-            { mData: 'uploaded_files_count' },
-            { mData: 'cleaned_files_count' },
-            { mData: 'paid_files_count' },
-            { mData: 'last_login_at' },
-            { mData: 'action' }
+            {mData: 'sno'},
+            {mData: 'name'},
+            {mData: 'email'},
+            {mData: 'address'},
+            {mData: 'city'},
+            {mData: 'state'},
+            {mData: 'country'},
+            {mData: 'zip_code'},
+            {mData: 'trial_expiry_date'},
+            {mData: 'uploaded_files_count'},
+            {mData: 'cleaned_files_count'},
+            {mData: 'paid_files_count'},
+            {mData: 'last_login_at'},
+            {mData: 'action'}
         ]
 
     }).buttons().container().appendTo('#user-datatable_wrapper .col-md-6:eq(0)');
+}
+
+function get_reports() {
+
+    $("#report-datatable").DataTable({
+        // "responsive": false,
+        "dom": 'Bfrtip',
+        "lengthChange": false,
+        "autoWidth": false,
+        "scrollX": true,
+        "buttons": [
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'csvHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            "colvis",
+        ],
+        "bDestroy": true,
+        "ordering": false,
+        ajax: {
+            url: APP_URL + "/admin/get-all-reports",
+            type: "GET",
+        },
+        "columns": [
+            {mData: 'sno'},
+            {mData: 'name'},
+            {mData: 'email'},
+            {mData: 'address'},
+            {mData: 'city'},
+            {mData: 'state'},
+            {mData: 'country'},
+            {mData: 'zip_code'},
+            {mData: 'trial_expiry_date'},
+            {mData: 'uploaded_files_count'},
+            {mData: 'cleaned_files_count'},
+            {mData: 'paid_files_count'},
+            {mData: 'last_login_at'},
+        ]
+
+    }).buttons().container().appendTo('#report-datatable_wrapper .col-md-6:eq(0)');
 }
 
 $(document).ready(function () {
     get_user_files();
 });
 
-function get_user_files(){
+function get_user_files() {
     var currentUrl = document.URL.split('/');
     var segment1 = currentUrl[currentUrl.length - 1];
     var segment2 = currentUrl[currentUrl.length - 2];
@@ -376,23 +430,23 @@ function get_user_files(){
         "scrollX": true,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "bDestroy": true,
-        "ordering":false,
+        "ordering": false,
         ajax: {
-            url:APP_URL+"/admin/get-user-files/" + segment1,
-            type:"GET",
+            url: APP_URL + "/admin/get-user-files/" + segment1,
+            type: "GET",
         },
         "columns": [
-            { mData: 'sno' } ,
-            { mData: 'name' },
-            { mData: 'file_name' },
-            { mData: 'created' },
-            { mData: 'action' }
+            {mData: 'sno'},
+            {mData: 'name'},
+            {mData: 'file_name'},
+            {mData: 'created'},
+            {mData: 'action'}
         ]
 
     }).buttons().container().appendTo('#files-dt_wrapper .col-md-6:eq(0)');
 }
 
-function deleteFile(id){
+function deleteFile(id) {
     Swal.fire({
         title: 'Are you sure?',
         text: "You want to delete this file ?",

@@ -67,11 +67,13 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/get-user-files/{id}','AdminController@get_user_files');
     Route::get('/admins', 'AdminController@admins')->name('admin.admins')->middleware('role:admins');
     Route::get('/roles', 'AdminController@roles')->name('admin.roles')->middleware('role:roles');
+    Route::get('/reports', 'AdminController@reports')->name('admin.reports')->middleware('role:reports');
 
     Route::post('/update-free-subscription-days', 'AdminController@update_free_subscription_days');
     Route::post('/update-file-delete-days', 'AdminController@update_file_delete_days');
     Route::get('/delete-file/{id}', 'AdminController@delete_file');
     Route::get('/get-all-users', 'AdminController@get_users');
+    Route::get('/get-all-reports', 'AdminController@get_reports');
     Route::post('/activate-deactivate-user', 'AdminController@activate_deactivate_user');
     Route::get('/reset-trial/{id}', 'AdminController@reset_trial');
 

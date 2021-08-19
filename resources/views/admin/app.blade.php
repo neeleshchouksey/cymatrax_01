@@ -160,6 +160,16 @@
                             </a>
                         </li>
                     @endif
+                   @if(checkRoleFeature('reports'))
+                        <li class="nav-item menu-open">
+                            <a href="{{URL::to('/admin/')}}/reports"
+                               class="nav-link  @if(Request::segment(2) == "reports") active @endif">
+                                <p>
+                                    Reports
+                                </p>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -197,14 +207,14 @@
 <script src="{{asset('/assets/admin/')}}/plugins/select2/js/select2.full.min.js"></script>
 
 <!-- ChartJS -->
-<script src="{{asset('/assets/admin/')}}/plugins/chart.js/Chart.min.js"></script>
+{{--<script src="{{asset('/assets/admin/')}}/plugins/chart.js/Chart.min.js"></script>--}}
 <!-- Sparkline -->
-<script src="{{asset('/assets/admin/')}}/plugins/sparklines/sparkline.js"></script>
+{{--<script src="{{asset('/assets/admin/')}}/plugins/sparklines/sparkline.js"></script>--}}
 <!-- JQVMap -->
-<script src="{{asset('/assets/admin/')}}/plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="{{asset('/assets/admin/')}}/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+{{--<script src="{{asset('/assets/admin/')}}/plugins/jqvmap/jquery.vmap.min.js"></script>--}}
+{{--<script src="{{asset('/assets/admin/')}}/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>--}}
 <!-- jQuery Knob Chart -->
-<script src="{{asset('/assets/admin/')}}/plugins/jquery-knob/jquery.knob.min.js"></script>
+{{--<script src="{{asset('/assets/admin/')}}/plugins/jquery-knob/jquery.knob.min.js"></script>--}}
 <!-- daterangepicker -->
 <script src="{{asset('/assets/admin/')}}/plugins/moment/moment.min.js"></script>
 <script src="{{asset('/assets/admin/')}}/plugins/daterangepicker/daterangepicker.js"></script>
@@ -236,7 +246,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('/assets/admin/')}}/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{asset('/assets/admin/')}}/dist/js/pages/dashboard.js"></script>
+{{--<script src="{{asset('/assets/admin/')}}/dist/js/pages/dashboard.js"></script>--}}
 <script src="{{asset('/assets/admin/')}}/dist/js/custom.js"></script>
 
 <script>
