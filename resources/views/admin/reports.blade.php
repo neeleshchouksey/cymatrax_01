@@ -12,7 +12,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{URL::to('/')}}/admin/dashboard">Home</a></li>
-                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">Reports</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
