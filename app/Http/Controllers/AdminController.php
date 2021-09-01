@@ -172,6 +172,9 @@ class AdminController extends Controller
                 $v->last_login_at = date("d-m-Y h:i A", strtotime($v->created_at));;
             }
 
+            $viewFilesButton = "<button class='btn btn-sm btn-primary mt-2'><a style='color: #fff;' href='" . url('/admin/view/') . "/$v->id'>View</a></button><br>";
+            $v->action = $viewFilesButton;
+
         }
 
         $results = array(
@@ -181,6 +184,11 @@ class AdminController extends Controller
             "aaData" => $data
         );
         return response()->json($results);
+    }
+
+    public function view_user_files($id)
+    {
+        return view('admin.view-user-files');
     }
 
     public function user_files($id)
@@ -208,6 +216,55 @@ class AdminController extends Controller
             }
             $files[$key]->created = date("d-m-Y h:i:s A", strtotime($value->created_at));
 
+        }
+
+        $results = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($files),
+            "iTotalDisplayRecords" => count($files),
+            "aaData" => $files
+        );
+        return response()->json($results);
+    }
+
+    public function view_get_user_files($id, Request $request)
+    {
+        $date = $request->date;
+
+        $days = FileDeleteSetting::first()->days;
+        $fifteendaysago = date_format(date_create($days . 'days ago'), 'Y-m-d 00:00:00');
+
+        DB::enableQueryLog();
+
+        $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id', 'uploads.cleaned')
+            ->join("users", "users.id", "uploads.user_id")
+            ->where('uploads.user_id', '=', $id);
+
+        if($date != 'undefined'){
+            $date = explode('-',$date);
+             $fromDate = date('Y-m-d',strtotime($date[0]));
+             $toDate = date('Y-m-d',strtotime($date[1]));
+            $files = $files->whereBetween('uploads.created_at', [$fromDate, $toDate]);
+        }
+
+        $files = $files->get();
+
+//        dd(DB::getQueryLog());
+
+        foreach ($files as $key => $value) {
+            $files[$key]->sno = $key + 1;
+            $files[$key]->action = '';
+            $d = date('Y-m-d h:i:s', strtotime($value->created_at));
+
+            if ($d < $fifteendaysago) {
+                $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteUserFile($value->id)'>Delete</button>";
+            }
+            $files[$key]->created = date("d-m-Y h:i:s A", strtotime($value->created_at));
+            if ($files[$key]->cleaned) {
+                $files[$key]->cleaned = "Yes";
+            } else {
+                $files[$key]->cleaned = "No";
+            }
         }
 
         $results = array(

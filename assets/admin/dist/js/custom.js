@@ -1,6 +1,7 @@
 $(function () {
 
     var uri_segment = document.URL.split('/')[document.URL.split('/').length - 1];
+    var uri_segment2 = document.URL.split('/')[document.URL.split('/').length - 2];
 
     if (uri_segment == 'admins') {
         get_admins();
@@ -13,6 +14,12 @@ $(function () {
     }
     if (uri_segment == 'reports') {
         get_reports();
+    }
+    if (uri_segment2 == 'user-files') {
+        get_user_files();
+    }
+    if (uri_segment2 == 'view') {
+        view_user_files();
     }
 });
 
@@ -409,14 +416,11 @@ function get_reports() {
             {mData: 'cleaned_files_count'},
             {mData: 'paid_files_count'},
             {mData: 'last_login_at'},
+            {mData: 'action'}
         ]
 
     }).buttons().container().appendTo('#report-datatable_wrapper .col-md-6:eq(0)');
 }
-
-$(document).ready(function () {
-    get_user_files();
-});
 
 function get_user_files() {
     var currentUrl = document.URL.split('/');
@@ -444,6 +448,46 @@ function get_user_files() {
         ]
 
     }).buttons().container().appendTo('#files-dt_wrapper .col-md-6:eq(0)');
+}
+
+var date, fromDate, toDate;
+
+function clear_filter() {
+    $('#fromDate').val('');
+    date = undefined;
+    view_user_files();
+}
+
+function view_user_files() {
+    var currentUrl = document.URL.split('/');
+    var segment1 = currentUrl[currentUrl.length - 1];
+    var segment2 = currentUrl[currentUrl.length - 2];
+
+    $("#user-files-dt").DataTable({
+        // "responsive": false,
+        "dom": 'Bfrtip',
+        "lengthChange": false,
+        "autoWidth": false,
+        "scrollX": true,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "bDestroy": true,
+        "ordering": false,
+        ajax: {
+            url: APP_URL + "/admin/view-user-files/" + segment1 + "?date=" + date,
+            type: "GET",
+        },
+        "columns": [
+            {mData: 'sno'},
+            {mData: 'name'},
+            {mData: 'file_name'},
+            {mData: 'created'},
+            {mData: 'cleaned'},
+            {mData: 'action'}
+        ]
+
+    }).buttons().container().appendTo('#user-files-dt_wrapper .col-md-6:eq(0)');
+    // Custom filtering function which will search data in column four between two values
+
 }
 
 function deleteFile(id) {
@@ -482,3 +526,55 @@ function deleteFile(id) {
     });
 }
 
+function deleteUserFile(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to delete this file ?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "get",
+                url: APP_URL + "/admin/delete-file/" + id,
+                success: function (response) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.msg,
+                        icon: 'success',
+                        showCancelButton: false,
+                    }).then((result) => {
+                        view_user_files();
+                    })
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.responseJSON.msg,
+                        icon: "error",
+                    });
+                }
+            });
+        }
+    });
+}
+
+$(document).ready(function () {
+    // Create date inputs
+    minDate = $('#fromDate').daterangepicker({
+        startDate: moment().startOf('hour'),
+        endDate: moment().startOf('hour').add(32, 'hour'),
+        locale: {
+            format: 'MM/DD/YYYY'
+        }
+    });
+
+    // Refilter the table
+    $('#fromDate').on('change', function () {
+        date = minDate[0].value;
+        view_user_files();
+    });
+});

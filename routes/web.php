@@ -64,7 +64,9 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/file-delete-setting','AdminController@file_delete_setting');
     Route::get('/users', 'AdminController@users')->name('admin.users')->middleware('role:users');
     Route::get('/user-files/{id}','AdminController@user_files');
+    Route::get('/view/{id}','AdminController@view_user_files');
     Route::get('/get-user-files/{id}','AdminController@get_user_files');
+    Route::get('/view-user-files/{id}','AdminController@view_get_user_files');
     Route::get('/admins', 'AdminController@admins')->name('admin.admins')->middleware('role:admins');
     Route::get('/roles', 'AdminController@roles')->name('admin.roles')->middleware('role:roles');
     Route::get('/reports', 'AdminController@reports')->name('admin.reports')->middleware('role:reports');
