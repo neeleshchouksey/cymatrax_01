@@ -254,11 +254,15 @@ class AdminController extends Controller
         foreach ($files as $key => $value) {
             $files[$key]->sno = $key + 1;
             $files[$key]->action = '';
+            $files[$key]->duration = '';
             $d = date('Y-m-d h:i:s', strtotime($value->created_at));
 
             if ($d < $fifteendaysago) {
                 $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteUserFile($value->id)'>Delete</button>";
             }
+            $onclick = "getDuration1('$value->file_name',$value->sno)";
+            $files[$key]->action = $files[$key]->action."<button class='btn btn-sm btn-danger gd' style='opacity: 0' onclick=$onclick>Get Duration</button>";
+
             $files[$key]->created = date("d-m-Y h:i:s A", strtotime($value->created_at));
             if ($files[$key]->cleaned) {
                 $files[$key]->cleaned = "Yes";

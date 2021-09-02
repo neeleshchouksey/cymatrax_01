@@ -463,7 +463,7 @@ function view_user_files() {
     var segment1 = currentUrl[currentUrl.length - 1];
     var segment2 = currentUrl[currentUrl.length - 2];
 
-    $("#user-files-dt").DataTable({
+    var table = $("#user-files-dt").DataTable({
         // "responsive": false,
         "dom": 'Bfrtip',
         "lengthChange": false,
@@ -474,7 +474,7 @@ function view_user_files() {
         "ordering": false,
         ajax: {
             url: APP_URL + "/admin/view-user-files/" + segment1 + "?date=" + date,
-            type: "GET",
+            type: "GET"
         },
         "columns": [
             {mData: 'sno'},
@@ -482,12 +482,28 @@ function view_user_files() {
             {mData: 'file_name'},
             {mData: 'created'},
             {mData: 'cleaned'},
+            {mData: 'duration'},
             {mData: 'action'}
+        ],
+        "aoColumnDefs": [
+            {
+                "aTargets": [5],
+                "mData": "duration",
+                "mRender": function (data, type, full) {
+                    // console.log(data);
+                    console.log(full.sno);
+                    // console.log(type);
+                    return "<span id='duration"+full.sno+"'></span>";
+
+                }
+            }
         ]
 
     }).buttons().container().appendTo('#user-files-dt_wrapper .col-md-6:eq(0)');
-    // Custom filtering function which will search data in column four between two values
 
+    setTimeout(function () {
+        $(".gd").click();
+    }, 5000);
 }
 
 function deleteFile(id) {
@@ -577,4 +593,38 @@ $(document).ready(function () {
         date = minDate[0].value;
         view_user_files();
     });
+
 });
+
+var total_min = 0;
+var total_sec = 0;
+var total_duration = 0;
+var total_cost = 0;
+
+function getDuration1(path, aud_id) {
+    path = APP_URL + '/public/upload/' + path;
+    // console.log("duration1 calling");
+    // Create a non-dom allocated Audio element
+    var au = document.createElement('audio');
+
+    // Define the URL of the MP3 audio file
+    au.src = path;
+
+    // Once the metadata has been loaded, display the duration in the console
+    au.addEventListener('loadedmetadata', function () {
+        // Obtain the duration in seconds of the audio file (with milliseconds as well, a float value)
+        var duration = au.duration;
+        var duration_in_sec = au.duration;
+        var minutes = Math.floor(duration / 60);
+        var seconds = Math.floor(duration % 60);
+
+        total_duration = total_duration + duration_in_sec;
+
+        total_min = Math.floor(total_duration / 60);
+        total_sec = Math.floor(total_duration % 60);
+
+        $("#duration" + aud_id).html(minutes + "." + seconds);
+
+    }, false);
+
+}

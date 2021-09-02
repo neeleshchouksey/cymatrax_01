@@ -47,6 +47,7 @@
                                         <th>File Name</th>
                                         <th>Created</th>
                                         <th>Cleaned</th>
+                                        <th>Duration</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -60,6 +61,7 @@
                                         <th>File Name</th>
                                         <th>Created</th>
                                         <th>Cleaned</th>
+                                        <th>Duration</th>
                                         <th>Action</th>
                                     </tr>
                                     </tfoot>
