@@ -230,7 +230,7 @@ class AdminController extends Controller
     public function view_get_user_files($id, Request $request)
     {
         $date = $request->date;
-
+        $keyword = $request->keyword;
         $days = FileDeleteSetting::first()->days;
         $fifteendaysago = date_format(date_create($days . 'days ago'), 'Y-m-d 00:00:00');
 
@@ -247,21 +247,18 @@ class AdminController extends Controller
             $files = $files->whereBetween('uploads.created_at', [$fromDate, $toDate]);
         }
 
-        $files = $files->get();
 
-//        dd(DB::getQueryLog());
+        $files = $files->get();
 
         foreach ($files as $key => $value) {
             $files[$key]->sno = $key + 1;
             $files[$key]->action = '';
             $files[$key]->duration = '';
-            $d = date('Y-m-d h:i:s', strtotime($value->created_at));
+//            $d = date('Y-m-d h:i:s', strtotime($value->created_at));
 
-            if ($d < $fifteendaysago) {
-                $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteUserFile($value->id)'>Delete</button>";
-            }
-            $onclick = "getDuration1('$value->file_name',$value->sno)";
-            $files[$key]->action = $files[$key]->action."<button class='btn btn-sm btn-danger gd' style='opacity: 0' onclick=$onclick>Get Duration</button>";
+//            if ($d < $fifteendaysago) {
+//                $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteUserFile($value->id)'>Delete</button>";
+//            }
 
             $files[$key]->created = date("d-m-Y h:i:s A", strtotime($value->created_at));
             if ($files[$key]->cleaned) {
@@ -270,15 +267,10 @@ class AdminController extends Controller
                 $files[$key]->cleaned = "No";
             }
         }
-
-        $results = array(
-            "sEcho" => 1,
-            "iTotalRecords" => count($files),
-            "iTotalDisplayRecords" => count($files),
-            "aaData" => $files
-        );
-        return response()->json($results);
+        return response()->json($files,200);
     }
+
+
 
     public function delete_file($id)
     {

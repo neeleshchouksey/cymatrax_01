@@ -30,12 +30,14 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table class="float-right">
+                                <div class="float-left"><button class="btn btn-secondary" onclick="htmlToCSV()">Export</button></div>
+
+                                <table class="mt-3 float-right">
                                     <tbody>
                                     <tr>
                                         <td>Filter by created at:</td>
-                                        <td><input class="form-control" type="text" id="fromDate" name="fromDate"></td>
-                                        <td><button class="btn btn-primary" onclick="clear_filter()">Clear</button></td>
+                                        <td class="float-left"><input class="form-control" type="text" id="fromDate" name="fromDate"></td>
+                                        <td class="float-right"><button class="btn btn-primary" onclick="clear_filter()">Clear</button></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -51,20 +53,11 @@
                                         <th>Action</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="files-body">
 
                                     </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th>S. No.</th>
-                                        <th>Name</th>
-                                        <th>File Name</th>
-                                        <th>Created</th>
-                                        <th>Cleaned</th>
-                                        <th>Duration</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </tfoot>
+                                   <tr><td colspan="5">Total Duration:  </td>
+                                   <td colspan="2"><span id="total-duration-full"></span></td></tr>
                                 </table>
                             </div>
                             <!-- /.card-body -->

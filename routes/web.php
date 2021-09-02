@@ -89,5 +89,4 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/get-all-roles', 'AdminController@get_roles');
     Route::get('/get-role/{id}', 'AdminController@get_role');
     Route::post('/update-role', 'AdminController@update_role');
-
 });

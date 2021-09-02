@@ -461,49 +461,45 @@ function clear_filter() {
 function view_user_files() {
     var currentUrl = document.URL.split('/');
     var segment1 = currentUrl[currentUrl.length - 1];
-    var segment2 = currentUrl[currentUrl.length - 2];
+    $.ajax({
+        url: APP_URL + "/admin/view-user-files/" + segment1 + "?date=" + date,
+        type: "GET",
+        success: function (response) {
+            console.log(response);
+            var data = response;
+            if(response.length>0){
+                $(document).ready(function () {
+                    var table = $('#user-files-dt').DataTable();
 
-    var table = $("#user-files-dt").DataTable({
-        // "responsive": false,
-        "dom": 'Bfrtip',
-        "lengthChange": false,
-        "autoWidth": false,
-        "scrollX": true,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        "bDestroy": true,
-        "ordering": false,
-        ajax: {
-            url: APP_URL + "/admin/view-user-files/" + segment1 + "?date=" + date,
-            type: "GET"
-        },
-        "columns": [
-            {mData: 'sno'},
-            {mData: 'name'},
-            {mData: 'file_name'},
-            {mData: 'created'},
-            {mData: 'cleaned'},
-            {mData: 'duration'},
-            {mData: 'action'}
-        ],
-        "aoColumnDefs": [
-            {
-                "aTargets": [5],
-                "mData": "duration",
-                "mRender": function (data, type, full) {
-                    // console.log(data);
-                    console.log(full.sno);
-                    // console.log(type);
-                    return "<span id='duration"+full.sno+"'></span>";
+                    table.destroy();
 
-                }
+                    var table = $('#user-files-dt').DataTable({
+                        "lengthChange": false,
+                        "autoWidth": false,
+                        "scrollX": true,
+                        "bDestroy": true,
+                        "ordering": false,
+                    })
+                });
+                $("#files-body").empty();
+                $.each(data,function (key,val){
+                    $("#files-body").append(`<tr><td>`+val.sno+`</td><td>`+val.name+`</td><td>`+val.file_name+`</td><td>`+val.created+`</td><td>`+val.cleaned+`</td><td><span id="duration`+key+`"></span></td><td><button class='btn btn-sm btn-danger' onclick='deleteUserFile(`+val.id+`)'>Delete</button></td></tr>`)
+                    setTimeout(function (){
+                        getDuration1(val.file_name,key);
+                    },200);
+                });
+                setTimeout(function (){
+                    getTotalDuration();
+                },1000)
+            }else{
+                $("#files-body").html('<tr><td colspan="7">No Data Found</td></tr>')
             }
-        ]
 
-    }).buttons().container().appendTo('#user-files-dt_wrapper .col-md-6:eq(0)');
+        },
+        error: function (error) {
 
-    setTimeout(function () {
-        $(".gd").click();
-    }, 5000);
+        }
+    })
 }
 
 function deleteFile(id) {
@@ -627,4 +623,47 @@ function getDuration1(path, aud_id) {
 
     }, false);
 
+}
+
+function getTotalDuration(){
+    console.log(total_min+"."+total_sec);
+    $("#total-duration-full").html(total_min+"."+total_sec);
+
+}
+
+function htmlToCSV() {
+    var html = document.querySelector("#user-files-dt").outerHTML;
+    var filename = "files.csv";
+    var data = [];
+    var rows = document.querySelectorAll("#user-files-dt tr");
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+
+        for (var j = 0; j < cols.length; j++) {
+            row.push(cols[j].innerText);
+        }
+
+        data.push(row.join(","));
+    }
+
+    downloadCSVFile(data.join("\n"), filename);
+}
+
+function downloadCSVFile(csv, filename) {
+    var csv_file, download_link;
+
+    csv_file = new Blob([csv], {type: "text/csv"});
+
+    download_link = document.createElement("a");
+
+    download_link.download = filename;
+
+    download_link.href = window.URL.createObjectURL(csv_file);
+
+    download_link.style.display = "none";
+
+    document.body.appendChild(download_link);
+
+    download_link.click();
 }
