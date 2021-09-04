@@ -521,6 +521,11 @@ function fileFilter(value) {
 
                         // $('#overlay').fadeOut();
                     }
+                    setTimeout(function (){
+                        if(segment2 == "upload-summary" ){
+                            saveDuration();
+                        }
+                    },3000);
                 }
                 else {
                     if (segment1 == "account") {
@@ -531,7 +536,6 @@ function fileFilter(value) {
                     }
                     $("#audio-list").html('<h4>No Data Found</h4>');
                 }
-
             },
             error: function (error) {
 
@@ -669,9 +673,9 @@ function getDuration1(path, aud_id) {
         var du = $("#duration"+aud_id).text();
         var du_sec = $("#duration_in_sec"+aud_id).val();
         audio_duartion_arr.push({"id":aud_id,"duration":du,"duration_in_sec":du_sec});
-        saveDuration();
+        console.log(audio_duartion_arr);
 
-    },500);
+    },1500);
 
 }
 
@@ -795,4 +799,5 @@ $(document).ready(function (){
             "order": [[1, "desc"]]
         });
     }
+
 })
