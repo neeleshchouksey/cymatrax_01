@@ -525,7 +525,7 @@ function fileFilter(value) {
                         if(segment2 == "upload-summary" ){
                             saveDuration();
                         }
-                    },3000);
+                    },5000);
                 }
                 else {
                     if (segment1 == "account") {
@@ -675,7 +675,7 @@ function getDuration1(path, aud_id) {
         audio_duartion_arr.push({"id":aud_id,"duration":du,"duration_in_sec":du_sec});
         console.log(audio_duartion_arr);
 
-    },1500);
+    },3000);
 
 }
 
