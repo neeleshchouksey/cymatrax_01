@@ -525,7 +525,7 @@ function fileFilter(value) {
                         if(segment2 == "upload-summary" ){
                             saveDuration();
                         }
-                    },1000);
+                    },3000);
                 }
                 else {
                     if (segment1 == "account") {

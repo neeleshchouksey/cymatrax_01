@@ -460,6 +460,7 @@ function clear_filter() {
     view_user_files();
 }
 
+
 function view_user_files() {
     var currentUrl = document.URL.split('/');
     var segment1 = currentUrl[currentUrl.length - 1];
