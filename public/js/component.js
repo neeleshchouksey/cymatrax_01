@@ -378,7 +378,7 @@ function clean_multiple_files() {
 function redirectUrl(url) {
     window.location = url;
 }
-
+var audio_duartion_arr = [];
 function fileFilter(value) {
     console.log("file filter called");
     $("#audio-list").html('');
@@ -460,9 +460,9 @@ function fileFilter(value) {
 
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
-                                '                    <td><span id="duration' + aud_id + '"></span></td>\n' +
+                                '                    <td><span id="duration' + aud_id + '">'+data[i].duration+'</span></td>\n' +
                                 '                    <td>' + data[i].created + '</td>\n' +
-                                '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
+                                '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue" value="'+data[i].duration_in_sec+'"/>' +
                                 '                    <audio id="audio' + aud_id + '" controls="" style="vertical-align: middle"' +
                                 '                           src="' + APP_URL + '/public/upload/' + data[i].file_name + '" type="audio/mp3"' +
                                 '                           controlslist="nodownload">' +
@@ -498,42 +498,34 @@ function fileFilter(value) {
                                 '                    <td>' + cleanText + '</td>\n' +
                                 '                </tr>');
 
+                            getDuration1(APP_URL + '/public/upload/' + data[i].file_name, aud_id);
+
                         }
                         else {
-                            $("#audio-list").append('  <div class="row">' +
-                                '                <div>' +
-                                '                    <b>Upload Date:</b>' +
-                                '                    <span>' + data[i].created + '</span>\n' +
-                                '                </div>' +
-                                '            </div>' +
-                                '            <div class="row">' +
-                                '                <div>' +
-                                '                    <b>File Name:</b>' +
 
-                                '                        <span>' + $new_array + '</span>' +
-
-                                '                </div>' +
-                                '            </div>' +
-                                '            <div class="row">' +
-                                '                <div>' +
-                                '                    <b> File duration :</b>' +
-                                '                    <span id="duration' + aud_id + '"></span>' +
-                                '                </div>' +
-                                '            </div>' +
-                                '            <div class="half-row">' +
-                                '                <div>' +
-                                '                    <input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
+                            $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
+                                '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
+                                '                    <td><span id="duration' + aud_id + '">'+data[i].duration+'</span></td>\n' +
+                                '                    <td>' + data[i].created + '</td>\n' +
+                                '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
                                 '                    <audio id="audio' + aud_id + '" controls="" style="vertical-align: middle"' +
                                 '                           src="' + APP_URL + '/public/upload/' + data[i].file_name + '" type="audio/mp3"' +
                                 '                           controlslist="nodownload">' +
                                 '                        Your browser does not support the audio element.' +
-                                '                    </audio>' +
-                                '                </div>' + html +
-                                '            </div>')
+                                '                    </audio></td>\n' +
+                                '                </tr>');
+
+                            getDuration1(APP_URL + '/public/upload/' + data[i].file_name, aud_id);
+
                         }
-                        getDuration1(APP_URL + '/public/upload/' + data[i].file_name, aud_id);
+
                         // $('#overlay').fadeOut();
                     }
+                    setTimeout(function (){
+                        if(segment2 == "upload-summary" ){
+                            saveDuration();
+                        }
+                    },1000);
                 }
                 else {
                     if (segment1 == "account") {
@@ -551,6 +543,21 @@ function fileFilter(value) {
         });
     }
 };
+
+function saveDuration(){
+    $.ajax({
+        method: "post",
+        url: APP_URL + "/save-duration",
+        data: {
+            "_token": CSRF_TOKEN,
+            "duration_arr": audio_duartion_arr
+        },
+        success: function (response) {
+        },
+        error: function (error) {
+        }
+    });
+}
 
 function checkboxCount() {
     setInterval(function () {
@@ -662,6 +669,13 @@ function getDuration1(path, aud_id) {
         // parseInt(duration)
         // 12 seconds
     }, false);
+    setTimeout(function(){
+        var du = $("#duration"+aud_id).text();
+        var du_sec = $("#duration_in_sec"+aud_id).val();
+        audio_duartion_arr.push({"id":aud_id,"duration":du,"duration_in_sec":du_sec});
+        console.log(audio_duartion_arr);
+
+    },500);
 
 }
 
@@ -774,3 +788,16 @@ function getMultiCheckoutDuration(str) {
 
 
 }
+
+$(document).ready(function (){
+    var currentUrl = document.URL.split('/');
+
+    var segment1 = currentUrl[currentUrl.length - 1];
+    if(segment1 == "transactions"){
+        var table = $('#example').DataTable({
+            pagingType: 'simple',
+            "order": [[1, "desc"]]
+        });
+    }
+
+})

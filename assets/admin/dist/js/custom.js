@@ -451,9 +451,11 @@ function get_user_files() {
 }
 
 var date, fromDate, toDate;
-
+var total = 0;
 function clear_filter() {
     $('#fromDate').val('');
+    $('#filter-by').val('');
+    $('#keyword').val('');
     date = undefined;
     view_user_files();
 }
@@ -461,46 +463,65 @@ function clear_filter() {
 function view_user_files() {
     var currentUrl = document.URL.split('/');
     var segment1 = currentUrl[currentUrl.length - 1];
-    $.ajax({
-        url: APP_URL + "/admin/view-user-files/" + segment1 + "?date=" + date,
-        type: "GET",
-        success: function (response) {
-            console.log(response);
-            var data = response;
-            if(response.length>0){
-                $(document).ready(function () {
-                    var table = $('#user-files-dt').DataTable();
-
-                    table.destroy();
-
-                    var table = $('#user-files-dt').DataTable({
-                        "lengthChange": false,
-                        "autoWidth": false,
-                        "scrollX": true,
-                        "bDestroy": true,
-                        "ordering": false,
-                    })
-                });
-                $("#files-body").empty();
-                $.each(data,function (key,val){
-                    $("#files-body").append(`<tr><td>`+val.sno+`</td><td>`+val.name+`</td><td>`+val.file_name+`</td><td>`+val.created+`</td><td>`+val.cleaned+`</td><td><span id="duration`+key+`"></span></td><td><button class='btn btn-sm btn-danger' onclick='deleteUserFile(`+val.id+`)'>Delete</button></td></tr>`)
-                    setTimeout(function (){
-                        getDuration1(val.file_name,key);
-                    },200);
-                });
-                setTimeout(function (){
-                    getTotalDuration();
-                },1000)
-            }else{
-                $("#files-body").html('<tr><td colspan="7">No Data Found</td></tr>')
-            }
-
+    var segment2 = currentUrl[currentUrl.length - 2];
+    var filter_by = $("#filter-by").val();
+    var keyword = $("#keyword").val();
+    $("#user-files-dt").DataTable({
+        "lengthChange": false,
+        "dom": 'Bfrtip',
+        "buttons": [
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                },
+                footer: true,
+            },
+            {
+                extend: 'csvHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                },
+                footer: true,
+            },
+            "colvis",
+        ],
+        "bDestroy": true,
+        "ordering": false,
+        "autoWidth": false,
+        "scrollX": true,
+        "searching": false,
+        ajax: {
+            url: APP_URL + "/admin/view-user-files/" + segment1 + "?date="+date+"&filter_by="+filter_by+"&keyword="+keyword,
+            type: "GET",
         },
-        error: function (error) {
+        "columns": [
+            {mData: 'sno'},
+            {mData: 'name'},
+            {mData: 'file_name'},
+            {mData: 'created'},
+            {mData: 'cleaned'},
+            {mData: 'duration'},
+            {mData: 'action'}
+        ],
+        "footerCallback": function (row, data, start, end, display) {
+            var api = this.api(), data;
+
+            // computing column Total of the complete result
+            var total = api
+                .column( 5 )
+                .data()
+                .reduce( function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0 );
+            $( api.column( 4 ).footer() ).html('Total Duration');
+            $( api.column( 5 ).footer() ).html(total.toFixed(2));
 
         }
-    })
+
+    }).buttons().container().appendTo('#user-files-dt_wrapper .col-md-6:eq(0)');
 }
+
 
 function deleteFile(id) {
     Swal.fire({
@@ -583,6 +604,8 @@ $(document).ready(function () {
             format: 'MM/DD/YYYY'
         }
     });
+
+    $('#fromDate').val('');
 
     // Refilter the table
     $('#fromDate').on('change', function () {
@@ -667,3 +690,13 @@ function downloadCSVFile(csv, filename) {
 
     download_link.click();
 }
+
+
+// $(document).ready(function (){
+//     var table = $('#user-files-dt').DataTable();
+//     table.destroy();
+//     $('#user-files-dt').on( 'page.dt', function () {
+//         var info = table.page.info();
+//         $('#pageInfo').html( 'Showing page: '+info.page+' of '+info.pages );
+//     } );
+// })

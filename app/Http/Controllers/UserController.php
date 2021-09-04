@@ -310,6 +310,18 @@ class UserController extends Controller
         }
     }
 
+    public function save_duration(Request $request){
+        $arr = $request->duration_arr;
+        foreach($arr as $k=>$v){
+            $up = Upload::find($v['id']);
+            $up->duration = $v['duration'];
+            $up->duration_in_sec = $v['duration_in_sec'];
+            $up->save();
+        }
+        return response()->json(['status' => 'success'],200);
+
+    }
+
 
 
 

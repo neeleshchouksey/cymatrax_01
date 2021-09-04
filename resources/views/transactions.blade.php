@@ -5,9 +5,9 @@
         <h1 class="myaccount">{{$title}}</h1>
         <div class="relative">
             @if(count($paymentdetails))
-                <table class="transaction-table" cellspacing="0" cellpadding="0">
+                <table id="example" class="stripe hover"  style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                     <thead>
-                    <tr>
+                    <tr style="text-align: left">
                         <th>S. No.</th>
                         <th>Firstname</th>
                         <th>Lastname</th>
@@ -37,6 +37,7 @@
             @endif
         </div>
     </section>
+
 
 
 @endsection

@@ -3,6 +3,9 @@
     #user-files-dt_filter{
         margin-top:1.5rem;!important;
     }
+    .dataTables_empty{
+        display: none!important;
+    }
 </style>
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -30,11 +33,13 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <div class="float-left"><button class="btn btn-secondary" onclick="htmlToCSV()">Export</button></div>
+{{--                                <div class="float-left"><button class="btn btn-secondary" onclick="htmlToCSV()">Export</button></div>--}}
 
                                 <table class="mt-3 float-right">
                                     <tbody>
                                     <tr>
+                                        <td><input type="text" class="form-control" onkeyup="view_user_files()" id="keyword" placeholder="Search"></td>
+                                        <td><select class="form-control" id="filter-by" onchange="view_user_files()"><option value="">Filter by</option><option value="1">Cleaned</option><option value="0">Uncleaned</option></select> </td>
                                         <td>Filter by created at:</td>
                                         <td class="float-left"><input class="form-control" type="text" id="fromDate" name="fromDate"></td>
                                         <td class="float-right"><button class="btn btn-primary" onclick="clear_filter()">Clear</button></td>
@@ -56,8 +61,18 @@
                                     <tbody id="files-body">
 
                                     </tbody>
-                                   <tr><td colspan="5">Total Duration:  </td>
-                                   <td colspan="2"><span id="total-duration-full"></span></td></tr>
+                                    <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
+
                                 </table>
                             </div>
                             <!-- /.card-body -->

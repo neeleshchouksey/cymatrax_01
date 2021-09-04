@@ -159,6 +159,7 @@ class AdminController extends Controller
 
         foreach ($data as $k => $v) {
             $v->sno = $k + 1;
+            $v->name = "<a href='" . url('/admin/view/') . "/$v->id'>$v->name</a>";
 
             if ($v->trial_expiry_date) {
                 $v->trial_expiry_date = date("d-m-Y", $v->trial_expiry_date);
@@ -231,12 +232,13 @@ class AdminController extends Controller
     {
         $date = $request->date;
         $keyword = $request->keyword;
+        $filter_by = $request->filter_by;
         $days = FileDeleteSetting::first()->days;
         $fifteendaysago = date_format(date_create($days . 'days ago'), 'Y-m-d 00:00:00');
 
         DB::enableQueryLog();
 
-        $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id', 'uploads.cleaned')
+        $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id', 'uploads.cleaned','uploads.duration')
             ->join("users", "users.id", "uploads.user_id")
             ->where('uploads.user_id', '=', $id);
 
@@ -246,19 +248,26 @@ class AdminController extends Controller
              $toDate = date('Y-m-d',strtotime($date[1]));
             $files = $files->whereBetween('uploads.created_at', [$fromDate, $toDate]);
         }
+        if($filter_by!=""){
+            $files = $files->where("cleaned",$filter_by);
+        }
+        if($keyword!=""){
+            $files = $files->where("users.name","like","%$keyword%")
+                    ->orwhere("uploads.file_name","like","%$keyword%")
+                    ->orwhere("uploads.duration","like","%$keyword%");
 
+        }
 
         $files = $files->get();
 
         foreach ($files as $key => $value) {
             $files[$key]->sno = $key + 1;
             $files[$key]->action = '';
-            $files[$key]->duration = '';
-//            $d = date('Y-m-d h:i:s', strtotime($value->created_at));
+            $d = date('Y-m-d h:i:s', strtotime($value->created_at));
 
-//            if ($d < $fifteendaysago) {
-//                $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteUserFile($value->id)'>Delete</button>";
-//            }
+            if ($d < $fifteendaysago) {
+                $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteUserFile($value->id)'>Delete</button>";
+            }
 
             $files[$key]->created = date("d-m-Y h:i:s A", strtotime($value->created_at));
             if ($files[$key]->cleaned) {
@@ -267,7 +276,14 @@ class AdminController extends Controller
                 $files[$key]->cleaned = "No";
             }
         }
-        return response()->json($files,200);
+//        return response()->json($files,200);
+        $results = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($files),
+            "iTotalDisplayRecords" => count($files),
+            "aaData" => $files
+        );
+        return response()->json($results);
     }
 
 
