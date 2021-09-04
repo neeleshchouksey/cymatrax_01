@@ -258,7 +258,7 @@ class UserController extends Controller
 
     public function getUploadedAudio($id){
         $getData = Upload::select('*',DB::Raw('DATE_FORMAT(created_at, "%m-%d-%Y %H:%i %p") as created'))
-//        ->where('user_id', '=', auth()->user()->id)
+        ->where('user_id', '=', auth()->user()->id)
         ->orderBy('created_at', 'desc')->take($id)->get();
         return response()->json(['status' => 'success', 'res' => $getData],200);
 
