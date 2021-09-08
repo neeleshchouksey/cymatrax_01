@@ -6,6 +6,15 @@
     .dataTables_empty{
         display: none!important;
     }
+    .w-90{
+        width: 90%!important;
+    }
+    .w-10{
+        width: 10%!important;
+    }
+    .w-15{
+        width: 15%!important;
+    }
 </style>
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -35,13 +44,13 @@
                             <div class="card-body">
 {{--                                <div class="float-left"><button class="btn btn-secondary" onclick="htmlToCSV()">Export</button></div>--}}
 
-                                <table class="mt-3 float-right">
+                                <table class="float-right w-75">
                                     <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" onkeyup="view_user_files()" id="keyword" placeholder="Search"></td>
-                                        <td><select class="form-control" id="filter-by" onchange="view_user_files()"><option value="">Filter by</option><option value="1">Cleaned</option><option value="0">Uncleaned</option></select> </td>
-                                        <td>Filter by created at:</td>
-                                        <td class="float-left"><input class="form-control" type="text" id="fromDate" name="fromDate"></td>
+                                        <td class="w-25"><input type="text" class="form-control w-90" onkeyup="view_user_files()" id="keyword" placeholder="Search"></td>
+                                        <td class="w-25"><select class="form-control w-90" id="filter-by" onchange="view_user_files()"><option value="">All</option><option value="1">Cleaned</option><option value="0">Uncleaned</option></select> </td>
+                                        <td class="w-10">Created at:</td>
+                                        <td class="w-25" class="float-left"><input class="form-control w-90" type="text" id="fromDate" name="fromDate"></td>
                                         <td class="float-right"><button class="btn btn-primary" onclick="clear_filter()">Clear</button></td>
                                     </tr>
                                     </tbody>
