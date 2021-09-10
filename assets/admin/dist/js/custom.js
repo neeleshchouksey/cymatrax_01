@@ -455,7 +455,7 @@ var total = 0;
 function clear_filter() {
     $('#fromDate').val('');
     $('#filter-by').val('');
-    $('#filter-by-date').val('');
+    $('#date-filter-by').val('');
     $('#keyword').val('');
     date = undefined;
     view_user_files();
