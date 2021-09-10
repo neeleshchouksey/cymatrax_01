@@ -217,6 +217,10 @@ class AdminController extends Controller
                 $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteFile($value->id)'>Delete</button>";
             }
 
+            $new_array = explode('_',$files[$key]->file_name);
+            array_shift($new_array);
+            $files[$key]->file_name = implode('_',$new_array);
+
         }
 
         $results = array(
