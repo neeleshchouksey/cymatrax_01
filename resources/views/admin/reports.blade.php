@@ -1,4 +1,9 @@
 @extends('admin.app')
+<style>
+    .dataTables_filter{
+        margin-top:-30px;
+    }
+</style>
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

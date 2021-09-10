@@ -237,7 +237,7 @@ class PaymentController extends Controller
 
                             $uploads = DB::table('uploads')
                                 ->where('id', $item)  //update uploads
-                                ->update(['paymentdetails_id' => $paymentid->id, 'processed_file' => $filename_new, 'cleaned' => 1]);
+                                ->update(['paymentdetails_id' => $paymentid->id, 'processed_file' => $filename_new, 'cleaned' => 1,'cleaned_at'=>date('Y-m-d h:i:s')]);
                         }
                     } catch (\Exception $e) {
                         //return response()->json(["status" => "error", "msg" => $e->getMessage()], 400);
@@ -272,7 +272,7 @@ class PaymentController extends Controller
 
             $uploads = DB::table('uploads')
                 ->where('id', $item)  //update uploads
-                ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
+                ->update(['processed_file' => $filename_new, 'cleaned' => 1,'cleaned_at'=>date('Y-m-d h:i:s')]);
         }
 
         return response()->json(["status" => "success", "msg" => "File Cleaned Successfully!"], 200);
@@ -292,7 +292,7 @@ class PaymentController extends Controller
 
                 $uploads = DB::table('uploads')
                     ->where('id', $item)  //update uploads
-                    ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
+                    ->update(['processed_file' => $filename_new, 'cleaned' => 1,'cleaned_at'=>date('Y-m-d h:i:s')]);
             }
         }
 
@@ -313,7 +313,7 @@ class PaymentController extends Controller
 
             $uploads = DB::table('uploads')
                 ->where('id', $item)  //update uploads
-                ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
+                ->update(['processed_file' => $filename_new, 'cleaned' => 1,'cleaned_at'=>date('Y-m-d h:i:s')]);
         }
         return response()->json(["status" => "success", "msg" => "File Cleaned Successfully!"], 200);
 
@@ -340,7 +340,7 @@ class PaymentController extends Controller
 
                 $uploads = DB::table('uploads')
                     ->where('id', $item)  //update uploads
-                    ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
+                    ->update(['processed_file' => $filename_new, 'cleaned' => 1,'cleaned_at'=>date('Y-m-d h:i:s')]);
             }
         }
         return response()->json(["status" => "success", "msg" => "File Cleaned Successfully!"], 200);
@@ -368,7 +368,7 @@ class PaymentController extends Controller
 
             $uploads = DB::table('uploads')
                 ->where('id', $item)  //update uploads
-                ->update(['processed_file' => $filename_new, 'cleaned' => 1]);
+                ->update(['processed_file' => $filename_new, 'cleaned' => 1,'cleaned_at'=>date('Y-m-d h:i:s')]);
         }
         return response()->json(["status" => "success", "msg" => "Files Cleaned Successfully!"], 200);
 

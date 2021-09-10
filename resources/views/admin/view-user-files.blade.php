@@ -49,7 +49,7 @@
                                     <tr>
                                         <td class="w-25"><input type="text" class="form-control w-90" onkeyup="view_user_files()" id="keyword" placeholder="Search"></td>
                                         <td class="w-25"><select class="form-control w-90" id="filter-by" onchange="view_user_files()"><option value="">All</option><option value="1">Cleaned</option><option value="0">Uncleaned</option></select> </td>
-                                        <td class="w-10">Created at:</td>
+                                        <td class="w-10"><select class="form-control w-90" id="date-filter-by"><option value="">All</option><option value="created_at">Created At</option><option value="cleaned_at">Cleaned At</option></select> </td>
                                         <td class="w-25" class="float-left"><input class="form-control w-90" type="text" id="fromDate" name="fromDate"></td>
                                         <td class="float-right"><button class="btn btn-primary" onclick="clear_filter()">Clear</button></td>
                                     </tr>
@@ -63,6 +63,7 @@
                                         <th>File Name</th>
                                         <th>Created</th>
                                         <th>Cleaned</th>
+                                        <th>Cleaned At</th>
                                         <th>Duration</th>
                                         <th>Action</th>
                                     </tr>
@@ -72,6 +73,7 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>

@@ -205,6 +205,7 @@ class AdminController extends Controller
         $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id')
             ->join("users", "users.id", "uploads.user_id")
             ->where('uploads.user_id', '=', $id)
+            ->orderby("id","desc")
             ->get();
 
         foreach ($files as $key => $value) {
@@ -215,7 +216,6 @@ class AdminController extends Controller
             if ($d < $fifteendaysago) {
                 $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteFile($value->id)'>Delete</button>";
             }
-            $files[$key]->created = date("d-m-Y h:i:s A", strtotime($value->created_at));
 
         }
 
@@ -233,12 +233,13 @@ class AdminController extends Controller
         $date = $request->date;
         $keyword = $request->keyword;
         $filter_by = $request->filter_by;
+        $date_filter_by = $request->date_filter_by;
         $days = FileDeleteSetting::first()->days;
         $fifteendaysago = date_format(date_create($days . 'days ago'), 'Y-m-d 00:00:00');
 
         DB::enableQueryLog();
 
-        $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id', 'uploads.cleaned','uploads.duration')
+        $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id', 'uploads.cleaned','uploads.duration','uploads.cleaned_at')
             ->join("users", "users.id", "uploads.user_id")
             ->where('uploads.user_id', '=', $id);
 
@@ -246,11 +247,14 @@ class AdminController extends Controller
             $date = explode('-',$date);
              $fromDate = date('Y-m-d',strtotime($date[0]));
              $toDate = date('Y-m-d',strtotime($date[1]));
-            $files = $files->whereBetween('uploads.created_at', [$fromDate, $toDate]);
+            if($date_filter_by !=""){
+                $files = $files->whereBetween("uploads.$date_filter_by", [$fromDate, $toDate]);
+            }
         }
         if($filter_by!=""){
             $files = $files->where("cleaned",$filter_by);
         }
+
         if($keyword!=""){
             $files = $files->where("users.name","like","%$keyword%")
                     ->orwhere("uploads.file_name","like","%$keyword%")
@@ -258,7 +262,7 @@ class AdminController extends Controller
 
         }
 
-        $files = $files->get();
+        $files = $files->orderby("id","desc")->get();
 
         foreach ($files as $key => $value) {
             $files[$key]->sno = $key + 1;
@@ -275,6 +279,16 @@ class AdminController extends Controller
             } else {
                 $files[$key]->cleaned = "No";
             }
+            if($files[$key]->cleaned_at){
+                $files[$key]->cleaned_at = date("d-m-Y h:i:s A", strtotime($value->created_at));
+            }else{
+                $files[$key]->cleaned_at = "NA";
+            }
+
+            $new_array = explode('_',$files[$key]->file_name);
+            array_shift($new_array);
+            $files[$key]->file_name = implode('_',$new_array);
+
         }
 //        return response()->json($files,200);
         $results = array(

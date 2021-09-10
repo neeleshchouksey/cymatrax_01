@@ -39,6 +39,8 @@
     <link rel="stylesheet" href="{{asset('/assets/admin/')}}/plugins/select2/css/select2.min.css">
     <link rel="stylesheet"
           href="{{asset('/assets/admin/')}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+
     <script>
         var APP_URL = '{{URL::to("/")}}';
         var CSRF_TOKEN = '{{csrf_token()}}'

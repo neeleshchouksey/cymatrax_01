@@ -455,6 +455,7 @@ var total = 0;
 function clear_filter() {
     $('#fromDate').val('');
     $('#filter-by').val('');
+    $('#filter-by-date').val('');
     $('#keyword').val('');
     date = undefined;
     view_user_files();
@@ -466,6 +467,7 @@ function view_user_files() {
     var segment1 = currentUrl[currentUrl.length - 1];
     var segment2 = currentUrl[currentUrl.length - 2];
     var filter_by = $("#filter-by").val();
+    var date_filter_by = $("#date-filter-by").val();
     var keyword = $("#keyword").val();
     $("#user-files-dt").DataTable({
         "lengthChange": false,
@@ -493,7 +495,7 @@ function view_user_files() {
         "scrollX": true,
         "searching": false,
         ajax: {
-            url: APP_URL + "/admin/view-user-files/" + segment1 + "?date="+date+"&filter_by="+filter_by+"&keyword="+keyword,
+            url: APP_URL + "/admin/view-user-files/" + segment1 + "?date="+date+"&filter_by="+filter_by+"&keyword="+keyword+"&date_filter_by="+date_filter_by,
             type: "GET",
         },
         "columns": [
@@ -502,6 +504,7 @@ function view_user_files() {
             {mData: 'file_name'},
             {mData: 'created'},
             {mData: 'cleaned'},
+            {mData: 'cleaned_at'},
             {mData: 'duration'},
             {mData: 'action'}
         ],
@@ -510,13 +513,13 @@ function view_user_files() {
 
             // computing column Total of the complete result
             var total = api
-                .column( 5 )
+                .column( 6 )
                 .data()
                 .reduce( function (a, b) {
                     return parseFloat(a) + parseFloat(b);
                 }, 0 );
-            $( api.column( 4 ).footer() ).html('Total Duration');
-            $( api.column( 5 ).footer() ).html(total.toFixed(2));
+            $( api.column( 5 ).footer() ).html('Total Duration');
+            $( api.column( 6 ).footer() ).html(total.toFixed(2));
 
         }
 
