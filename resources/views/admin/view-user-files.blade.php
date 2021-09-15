@@ -42,7 +42,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-{{--                                <div class="float-left"><button class="btn btn-secondary" onclick="htmlToCSV()">Export</button></div>--}}
+                                {{--                                <div class="float-left"><button class="btn btn-secondary" onclick="htmlToCSV()">Export</button></div>--}}
 
                                 <table class="float-right w-75">
                                     <tbody>

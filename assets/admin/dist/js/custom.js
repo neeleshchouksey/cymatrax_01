@@ -461,7 +461,7 @@ function clear_filter() {
     view_user_files();
 }
 
-
+var user_files_dt;
 function view_user_files() {
     var currentUrl = document.URL.split('/');
     var segment1 = currentUrl[currentUrl.length - 1];
@@ -469,7 +469,7 @@ function view_user_files() {
     var filter_by = $("#filter-by").val();
     var date_filter_by = $("#date-filter-by").val();
     var keyword = $("#keyword").val();
-    $("#user-files-dt").DataTable({
+    user_files_dt = $("#user-files-dt").DataTable({
         "lengthChange": false,
         "dom": 'Bfrtip',
         "buttons": [
@@ -614,7 +614,7 @@ $(document).ready(function () {
     // Refilter the table
     $('#fromDate').on('change', function () {
         date = minDate[0].value;
-        view_user_files();
+        view_user_files()
     });
 
 });

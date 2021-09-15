@@ -26,6 +26,8 @@
     <link rel="stylesheet"
           href="{{asset('/assets/admin/')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="{{asset('/assets/admin/')}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/1.4.0/css/searchPanes.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css">
     <!-- Theme style -->
 
     <!-- Theme style -->
@@ -235,6 +237,8 @@
 <script src="{{asset('/assets/admin/')}}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="{{asset('/assets/admin/')}}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="{{asset('/assets/admin/')}}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="{{asset('/assets/admin/')}}/plugins/datatables-searchpanes/js/dataTables.searchPanes.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 
 <script src="{{asset('/assets/admin/')}}/plugins/jszip/jszip.min.js"></script>
 <script src="{{asset('/assets/admin/')}}/plugins/pdfmake/pdfmake.min.js"></script>

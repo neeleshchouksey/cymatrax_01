@@ -378,7 +378,10 @@ function clean_multiple_files() {
 function redirectUrl(url) {
     window.location = url;
 }
+
 var audio_duartion_arr = [];
+
+
 function fileFilter(value) {
     console.log("file filter called");
     $("#audio-list").html('');
@@ -407,62 +410,42 @@ function fileFilter(value) {
             success: function (response) {
                 var data = response.res;
                 if (data.length > 0) {
-                    $("#audio-list-datatable").empty();
-                    for (var i = 0; i < data.length; i++) {
-                        aud_id = data[i].id;
 
-                        $new_array = data[i].file_name.split('_');
-                        $new_array.shift();
-                        $new_array = $new_array.join('_');
+                    var cleanText = '';
+                    var idd = '';
+                    var dlink = '';
+                    if (segment1 == "account") {
+                        var table = $('#example').DataTable();
 
-                        var html = '';
+                        table.destroy();
 
-                        if (segment1 == "account") {
+                        var table = $('#example').DataTable({
+                            pagingType: 'simple',
+                            "order": [[1, "desc"]],
+                            "ordering":false
+                        })
+                        $("#audio-list-datatable").empty();
 
-                            $(document).ready(function () {
-                                var table = $('#example').DataTable();
+                        for (var i = 0; i < data.length; i++) {
+                            aud_id = data[i].id;
+                            $new_array = data[i].file_name.split('_');
+                            $new_array.shift();
+                            $new_array = $new_array.join('_');
 
-                                table.destroy();
-
-                                var table = $('#example').DataTable({
-                                    pagingType: 'simple',
-                                    "order": [[1, "desc"]]
-                                })
-                                $('#selectAll').click(function (e) {
-                                    if ($(this).hasClass('checkedAll')) {
-                                        $('input').prop('checked', false);
-                                        $(this).removeClass('checkedAll');
-                                        $('#btnDownload').attr('disabled', 'disabled');
-                                        $('#btnCheckout').attr('disabled', 'disabled');
-                                        $('#clean-btn').attr('disabled', 'disabled');
-                                    } else {
-                                        $('#btnDownload').removeAttr('disabled');
-                                        $('#btnCheckout').removeAttr('disabled');
-                                        $('#clean-btn').removeAttr('disabled');
-                                        $('input').prop('checked', true);
-                                        $(this).addClass('checkedAll');
-                                    }
-                                });
-
-                            });
-
-
-                            var cleanText = '';
-                            var idd = '';
-                            if (data[i].cleaned == 0) {
-                                var cleanText = 'Uncleaned';
-                                var idd = data[i].id;
+                            if (data[i].cleaned === 0) {
+                                cleanText = 'Uncleaned';
+                                idd = data[i].id;
                             } else {
-                                var cleanText = 'Cleaned';
+                                cleanText = 'Cleaned';
                             }
 
-                            var dlink = APP_URL + '/public/upload/' + data[i].file_name;
+                            dlink = APP_URL + '/public/upload/' + data[i].file_name;
 
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
-                                '                    <td><span id="duration' + aud_id + '">'+data[i].duration+'</span></td>\n' +
+                                '                    <td><span id="duration' + aud_id + '">' + data[i].duration + '</span></td>\n' +
                                 '                    <td>' + data[i].created + '</td>\n' +
-                                '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue" value="'+data[i].duration_in_sec+'"/>' +
+                                '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue" value="' + data[i].duration_in_sec + '"/>' +
                                 '                    <audio id="audio' + aud_id + '" controls="" style="vertical-align: middle"' +
                                 '                           src="' + APP_URL + '/public/upload/' + data[i].file_name + '" type="audio/mp3"' +
                                 '                           controlslist="nodownload">' +
@@ -473,17 +456,37 @@ function fileFilter(value) {
                                 '                </tr>');
 
                         }
-                        else if (segment2 == "upload-summary") {
-                            var cleanText = '';
-                            var idd = '';
-                            if (data[i].cleaned == 0) {
-                                var cleanText = 'Uncleaned';
-                                var idd = data[i].id;
-                            } else {
-                                var cleanText = 'Cleaned';
-                            }
 
-                            var dlink = APP_URL + '/public/upload/' + data[i].file_name;
+                        $(document).ready(function (){
+                            $('#selectAll').click(function (e) {
+                                console.log("Select all calling");
+                                if ($(this).hasClass('checkedAll')) {
+                                    $('input').prop('checked', false);
+                                    $(this).removeClass('checkedAll');
+                                    $('#btnDownload').attr('disabled', 'disabled');
+                                    $('#btnCheckout').attr('disabled', 'disabled');
+                                    $('#clean-btn').attr('disabled', 'disabled');
+                                } else {
+                                    $('#btnDownload').removeAttr('disabled');
+                                    $('#btnCheckout').removeAttr('disabled');
+                                    $('#clean-btn').removeAttr('disabled');
+                                    $('input').prop('checked', true);
+                                    $(this).addClass('checkedAll');
+                                }
+                            });
+                        })
+
+
+                    } else if (segment2 == "upload-summary") {
+                        for (var i = 0; i < data.length; i++) {
+
+                            if (data[i].cleaned === 0) {
+                                cleanText = 'Uncleaned';
+                                idd = data[i].id;
+                            } else {
+                                cleanText = 'Cleaned';
+                            }
+                            dlink = APP_URL + '/public/upload/' + data[i].file_name;
 
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
@@ -499,13 +502,21 @@ function fileFilter(value) {
                                 '                </tr>');
 
                             getDuration1(APP_URL + '/public/upload/' + data[i].file_name, aud_id);
-
                         }
-                        else {
+                    } else {
+                        for (var i = 0; i < data.length; i++) {
+
+                            if (data[i].cleaned === 0) {
+                                cleanText = 'Uncleaned';
+                                idd = data[i].id;
+                            } else {
+                                cleanText = 'Cleaned';
+                            }
+                            dlink = APP_URL + '/public/upload/' + data[i].file_name;
 
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
-                                '                    <td><span id="duration' + aud_id + '">'+data[i].duration+'</span></td>\n' +
+                                '                    <td><span id="duration' + aud_id + '">' + data[i].duration + '</span></td>\n' +
                                 '                    <td>' + data[i].created + '</td>\n' +
                                 '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue"/>' +
                                 '                    <audio id="audio' + aud_id + '" controls="" style="vertical-align: middle"' +
@@ -516,18 +527,14 @@ function fileFilter(value) {
                                 '                </tr>');
 
                             getDuration1(APP_URL + '/public/upload/' + data[i].file_name, aud_id);
-
                         }
-
-                        // $('#overlay').fadeOut();
                     }
-                    setTimeout(function (){
-                        if(segment2 == "upload-summary" ){
+                    setTimeout(function () {
+                        if (segment2 == "upload-summary") {
                             saveDuration();
                         }
-                    },5000);
-                }
-                else {
+                    }, 5000);
+                } else {
                     if (segment1 == "account") {
                         $('#example').DataTable().clear();
                         $('#example').DataTable().draw();
@@ -544,7 +551,7 @@ function fileFilter(value) {
     }
 };
 
-function saveDuration(){
+function saveDuration() {
     $.ajax({
         method: "post",
         url: APP_URL + "/save-duration",
@@ -669,13 +676,13 @@ function getDuration1(path, aud_id) {
         // parseInt(duration)
         // 12 seconds
     }, false);
-    setTimeout(function(){
-        var du = $("#duration"+aud_id).text();
-        var du_sec = $("#duration_in_sec"+aud_id).val();
-        audio_duartion_arr.push({"id":aud_id,"duration":du,"duration_in_sec":du_sec});
+    setTimeout(function () {
+        var du = $("#duration" + aud_id).text();
+        var du_sec = $("#duration_in_sec" + aud_id).val();
+        audio_duartion_arr.push({"id": aud_id, "duration": du, "duration_in_sec": du_sec});
         console.log(audio_duartion_arr);
 
-    },3000);
+    }, 3000);
 
 }
 
@@ -789,11 +796,11 @@ function getMultiCheckoutDuration(str) {
 
 }
 
-$(document).ready(function (){
+$(document).ready(function () {
     var currentUrl = document.URL.split('/');
 
     var segment1 = currentUrl[currentUrl.length - 1];
-    if(segment1 == "transactions"){
+    if (segment1 == "transactions") {
         var table = $('#example').DataTable({
             pagingType: 'simple',
             "order": [[1, "desc"]]
