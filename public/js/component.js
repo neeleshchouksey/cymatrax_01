@@ -416,14 +416,7 @@ function fileFilter(value) {
                     var dlink = '';
                     if (segment1 == "account") {
                         var table = $('#example').DataTable();
-
                         table.destroy();
-
-                        var table = $('#example').DataTable({
-                            pagingType: 'simple',
-                            "order": [[1, "desc"]],
-                            "ordering":false
-                        })
                         $("#audio-list-datatable").empty();
 
                         for (var i = 0; i < data.length; i++) {
@@ -474,6 +467,11 @@ function fileFilter(value) {
                                     $(this).addClass('checkedAll');
                                 }
                             });
+                            var table = $('#example').DataTable({
+                                pagingType: 'simple',
+                                "order": [[1, "desc"]],
+                                "ordering":false
+                            })
                         })
 
 
