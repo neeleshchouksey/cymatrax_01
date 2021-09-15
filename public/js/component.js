@@ -595,6 +595,9 @@ function allDownload() {
     for (var i = 0; i < links.length; i++) {
         var url = links[i];
         var name = url.split('/')[url.split('/').length - 1];
+        name = name.split('_');
+        name.shift();
+        name = name.join('_');
         var a = document.createElement("a");
         a.setAttribute('href', url);
         a.setAttribute('download', name);
