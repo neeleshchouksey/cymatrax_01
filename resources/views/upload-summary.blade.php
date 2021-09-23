@@ -33,7 +33,7 @@
                         <span id="total-cost"></span>($1 per minute) </b>
                 @endif
             </div>
-            @if(Auth::user()->is_admin)
+            @if(Auth::user()->is_admin || Auth::user()->subscription)
                 <button id="clean-btn" class="c-btn" onclick="clean_files({{$id}})"
                         style="margin-top: 1rem; margin-bottom: 20px;">Clean File(s)
                 </button>

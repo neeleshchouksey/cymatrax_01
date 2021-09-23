@@ -79,6 +79,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/get-all-reports', 'AdminController@get_reports');
     Route::post('/activate-deactivate-user', 'AdminController@activate_deactivate_user');
     Route::get('/reset-trial/{id}', 'AdminController@reset_trial');
+    Route::get('/subscription/{id}', 'AdminController@subscription');
 
     Route::get('/get-all-admins', 'AdminController@get_admins');
     Route::post('/add-admin', 'AdminController@add_admin')->name('admin.add-admin');

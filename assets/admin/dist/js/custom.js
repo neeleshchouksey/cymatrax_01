@@ -173,6 +173,41 @@ function resetTrial(id) {
         }
     });
 }
+function subscribe(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want unlimited subscription for this user ?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Subscribe it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "get",
+                url: APP_URL + "/admin/subscription/" + id,
+                success: function (response) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.msg,
+                        icon: 'success',
+                        showCancelButton: false,
+                    }).then((result) => {
+                        get_users();
+                    })
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.responseJSON.msg,
+                        icon: "error",
+                    });
+                }
+            });
+        }
+    });
+}
 
 function addAdmin() {
     $.ajax({

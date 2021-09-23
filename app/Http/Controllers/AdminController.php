@@ -132,7 +132,14 @@ class AdminController extends Controller
                 $deleteButton = "<button class='btn btn-sm btn-danger' onclick='activateDeactivateUser($v->id,0)'>Deactivate</button>";
             }
 
-            $action = $updateButton . " " . $deleteButton . " " . $viewFilesButton;
+            if(!$v->subscription){
+                $subscription_btn =  "<button class='btn btn-sm btn-primary mt-2' onclick='subscribe($v->id)'>Subscribe</button><br>";
+            }
+            else{
+                $subscription_btn =  "<button class='btn btn-sm btn-primary mt-2' disabled>Subscribed</button><br>";
+            }
+
+            $action = $updateButton . " " . $deleteButton . " " . $viewFilesButton." ".$subscription_btn;
             $v->action = $action;
 
         }
@@ -337,6 +344,13 @@ class AdminController extends Controller
         $user->trial_expiry_date = $trial_expiry_date;
         $user->save();
         return response(["status" => "success", "msg" => "Free Trial reset successfully"], 200);
+    }
+     public function subscription($id)
+    {
+        $user = User::find($id);
+        $user->subscription = 1;
+        $user->save();
+        return response(["status" => "success", "msg" => "Unlimited subscription done successfully"], 200);
     }
 
     public function admins()

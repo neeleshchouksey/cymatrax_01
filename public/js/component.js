@@ -475,9 +475,13 @@ function fileFilter(value) {
                         })
 
 
-                    } else if (segment2 == "upload-summary") {
+                    }
+                    else if (segment2 == "upload-summary") {
                         for (var i = 0; i < data.length; i++) {
-
+                            aud_id = data[i].id;
+                            $new_array = data[i].file_name.split('_');
+                            $new_array.shift();
+                            $new_array = $new_array.join('_');
                             if (data[i].cleaned === 0) {
                                 cleanText = 'Uncleaned';
                                 idd = data[i].id;
@@ -503,7 +507,10 @@ function fileFilter(value) {
                         }
                     } else {
                         for (var i = 0; i < data.length; i++) {
-
+                            aud_id = data[i].id;
+                            $new_array = data[i].file_name.split('_');
+                            $new_array.shift();
+                            $new_array = $new_array.join('_');
                             if (data[i].cleaned === 0) {
                                 cleanText = 'Uncleaned';
                                 idd = data[i].id;
