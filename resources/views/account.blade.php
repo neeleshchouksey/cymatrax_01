@@ -57,7 +57,16 @@
                     @endif
                 @endif
 
-                <button onclick="allDownload();" id="btnDownload" disabled type="button" class="c-btn float-right mr-2">
+{{--                <form method="post" action="{{URL::to('/')}}/download-file" id="download-form">--}}
+{{--                    @csrf--}}
+{{--                    <input type="hidden" name="download_files" id="download_files">--}}
+{{--                    <button onclick="allDownload(event);" id="btnDownload" disabled type="submit"--}}
+{{--                            class="c-btn float-right mr-2">--}}
+{{--                        Download--}}
+{{--                    </button>--}}
+{{--                </form>--}}
+                <button onclick="allDownload(event);" id="btnDownload" disabled type="button"
+                        class="c-btn float-right mr-2">
                     Download
                 </button>
             </div>

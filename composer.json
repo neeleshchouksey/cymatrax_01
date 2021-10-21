@@ -18,7 +18,8 @@
         "league/omnipay": "^3",
         "omnipay/payflow": "^3.0",
         "omnipay/paypal": "^3.0",
-        "pbmedia/laravel-ffmpeg": "^7.4"
+        "pbmedia/laravel-ffmpeg": "^7.4",
+        "ext-zip": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

@@ -28,6 +28,7 @@ Route::get('/upload-audio', 'UserController@upload_audio');
 Route::get('/profile', 'UserController@profile');
 Route::post('/update-profile', 'UserController@update_profile')->name("update-profile");
 Route::post('file/upload', 'UserController@upload')->name('file.upload');
+Route::post('download-file', 'UserController@download');
 Route::post('save-duration', 'UserController@save_duration');
 Route::get('account', 'UserController@account');
 Route::get('send-csv-email', 'UserController@sendCsvEmail');

@@ -16,6 +16,7 @@ use Omnipay\Omnipay;
 use Omnipay\Common\CreditCard;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class UserController extends Controller
 {
@@ -324,7 +325,34 @@ class UserController extends Controller
 
     }
 
-
+    public function download(Request $request){
+//        dd($request->all());
+        $files = explode(',',$request->download_files);
+        $public_dir=public_path()."/download";
+        $zipFileName = time().'_all-files.zip';
+        $zip = new ZipArchive;
+        dd($zip->open($public_dir . '/' . $zipFileName, ZipArchive::CREATE));
+        if ($zip->open($public_dir . '/' . $zipFileName, ZipArchive::CREATE) === TRUE) {
+            // Add File in ZipArchive
+            foreach ($files as $f){
+                $zip->addFile($f);
+            }
+            $zip->close();
+        }else{
+            echo "file not created";
+        }
+        // Set Header
+        $headers = array(
+            'Content-Type' => 'application/octet-stream',
+        );
+        $filetopath=$public_dir.'/'.$zipFileName;
+        // Create Download Response
+        if(file_exists($filetopath)){
+            return response()->download($filetopath,$zipFileName,$headers);
+        }else{
+            echo "files not found";
+        }
+    }
 
 
 }

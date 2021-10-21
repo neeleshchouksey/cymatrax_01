@@ -3,8 +3,8 @@ Dropzone.options.dropzoneForm = {
     uploadMultiple: true,
     parallelUploads: 100,
     acceptedFiles: ".mp3,.wav",
-    maxFiles: 25,
-    maxFilesize: 500, // MB
+    maxFiles: 100,
+    maxFilesize: 1000, // MB
     addRemoveLinks: true,
 
     init: function () {
@@ -14,7 +14,7 @@ Dropzone.options.dropzoneForm = {
         myDropZone.on('maxfilesexceeded', function (file) {    // remove more than 25 files function validation
             Swal.fire({
                 title: 'Error',
-                text: 'Upto 25 files are allowed at once',
+                text: 'Upto 100 files are allowed at once',
                 icon: 'error',
                 showCancelButton: false,
             });
@@ -470,7 +470,9 @@ function fileFilter(value) {
                             var table = $('#example').DataTable({
                                 pagingType: 'simple',
                                 "order": [[1, "desc"]],
-                                "ordering":false
+                                "ordering":false,
+                                // "pageLength": 50
+
                             })
                         })
 
@@ -589,14 +591,24 @@ function checkboxCount() {
     }, 1000);
 }
 
-function allDownload() {
+function allDownload(e) {
 
-    var links = [];
-    $('input.testCheckbox[type="checkbox"]:checked').each(function () {
-        links.push($(this).attr("link"));
-    });
+    // e.preventDefault();
+    // var links = [];
+    // $('input.testCheckbox[type="checkbox"]:checked').each(function () {
+    //     links.push($(this).attr("link"));
+    //     $("input[name=download_files]").val(links.join(', '));
+    //
+    // });
+    //
+    //
+    //
+    // $("#download-form").submit();
 
 
+    // console.log(links);
+    // console.log(links.length);
+    //
     for (var i = 0; i < links.length; i++) {
         var url = links[i];
         var name = url.split('/')[url.split('/').length - 1];
