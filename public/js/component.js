@@ -433,6 +433,7 @@ function fileFilter(value) {
                             }
 
                             dlink = APP_URL + '/public/upload/' + data[i].file_name;
+                            // dlink =  data[i].file_name;
 
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
@@ -491,6 +492,7 @@ function fileFilter(value) {
                                 cleanText = 'Cleaned';
                             }
                             dlink = APP_URL + '/public/upload/' + data[i].file_name;
+                            // dlink = data[i].file_name;
 
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
@@ -520,6 +522,7 @@ function fileFilter(value) {
                                 cleanText = 'Cleaned';
                             }
                             dlink = APP_URL + '/public/upload/' + data[i].file_name;
+                            // dlink =  data[i].file_name;
 
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
@@ -594,21 +597,19 @@ function checkboxCount() {
 function allDownload(e) {
 
     // e.preventDefault();
-    // var links = [];
-    // $('input.testCheckbox[type="checkbox"]:checked').each(function () {
-    //     links.push($(this).attr("link"));
-    //     $("input[name=download_files]").val(links.join(', '));
-    //
-    // });
-    //
-    //
+     var links = [];
+    $('input.testCheckbox[type="checkbox"]:checked').each(function () {
+        links.push($(this).attr("link"));
+        // $("input[name=download_files]").val(links.join(', '));
+
+    });
     //
     // $("#download-form").submit();
 
 
     // console.log(links);
     // console.log(links.length);
-    //
+
     for (var i = 0; i < links.length; i++) {
         var url = links[i];
         var name = url.split('/')[url.split('/').length - 1];
