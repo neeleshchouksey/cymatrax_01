@@ -17,7 +17,6 @@ use Omnipay\Common\CreditCard;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
-use ZanySoft\Zip\Zip;
 
 class UserController extends Controller
 {
