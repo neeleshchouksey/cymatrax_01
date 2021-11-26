@@ -1,27 +1,22 @@
 Dropzone.options.dropzoneForm = {
     autoProcessQueue: false,
     uploadMultiple: true,
-    parallelUploads: 100,
+    parallelUploads: 15,
     acceptedFiles: ".mp3,.wav",
-    maxFiles: 100,
-    maxFilesize: 1000, // MB
+    maxFiles: 15,
+    maxFilesize: 600, // MB
     addRemoveLinks: true,
-
     init: function () {
-
-
         var myDropZone = this;
         myDropZone.on('maxfilesexceeded', function (file) {    // remove more than 25 files function validation
             Swal.fire({
                 title: 'Error',
-                text: 'Upto 100 files are allowed at once',
+                text: 'Upto 15 files are allowed at once',
                 icon: 'error',
                 showCancelButton: false,
             });
             myDropzone.removeFile(file); //remove button code
         });
-
-
         myDropZone.on("error", function (file, message) {    //max file size validation 500mb
             console.log(message);
             Swal.fire({
@@ -32,14 +27,9 @@ Dropzone.options.dropzoneForm = {
             });
             myDropzone.removeFile(file); //remove button code
         });
-
-
         var submitButton = document.querySelector("#submit-all");
         // var cancelButton = document.querySelector("#cancel-all");
         myDropzone = this;
-
-        // console.log(myDropzone.files);
-
 
         submitButton.addEventListener('click', function () {
             myDropzone.processQueue();
@@ -51,19 +41,18 @@ Dropzone.options.dropzoneForm = {
             var fileSizes = file.size;
             $('.att-filesize').html(fileSizes).append(' Bytes');
             var sizeInMB = (fileSizes / (1024 * 1024)).toFixed(2);
-            console.log((sizeInMB + 'MB'));
+
         });
+
 //end
 
 //for sending file data
         myDropzone.on("sending", function (file, xhr, data) {
-
             // First param is the variable name used server side
             // Second param is the value, you can add what you what
             // Here I added an input value
             data.append("price", '1000');
         });
-
 
         this.on("success", function (data) {
 
@@ -432,8 +421,8 @@ function fileFilter(value) {
                                 cleanText = 'Cleaned';
                             }
 
-                            dlink = APP_URL + '/public/upload/' + data[i].file_name;
-                            // dlink =  data[i].file_name;
+                            // dlink = APP_URL + '/public/upload/' + data[i].file_name;
+                            dlink = data[i].file_name;
 
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
@@ -451,7 +440,7 @@ function fileFilter(value) {
 
                         }
 
-                        $(document).ready(function (){
+                        $(document).ready(function () {
                             $('#selectAll').click(function (e) {
                                 console.log("Select all calling");
                                 if ($(this).hasClass('checkedAll')) {
@@ -471,15 +460,14 @@ function fileFilter(value) {
                             var table = $('#example').DataTable({
                                 pagingType: 'simple',
                                 "order": [[1, "desc"]],
-                                "ordering":false,
-                                // "pageLength": 50
+                                "ordering": false,
+                                "pageLength": 50
 
                             })
                         })
 
 
-                    }
-                    else if (segment2 == "upload-summary") {
+                    } else if (segment2 == "upload-summary") {
                         for (var i = 0; i < data.length; i++) {
                             aud_id = data[i].id;
                             $new_array = data[i].file_name.split('_');
@@ -491,8 +479,8 @@ function fileFilter(value) {
                             } else {
                                 cleanText = 'Cleaned';
                             }
-                            dlink = APP_URL + '/public/upload/' + data[i].file_name;
-                            // dlink = data[i].file_name;
+                            // dlink = APP_URL + '/public/upload/' + data[i].file_name;
+                            dlink = data[i].file_name;
 
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
@@ -521,8 +509,8 @@ function fileFilter(value) {
                             } else {
                                 cleanText = 'Cleaned';
                             }
-                            dlink = APP_URL + '/public/upload/' + data[i].file_name;
-                            // dlink =  data[i].file_name;
+                            // dlink = APP_URL + '/public/upload/' + data[i].file_name;
+                            dlink = data[i].file_name;
 
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
@@ -541,9 +529,9 @@ function fileFilter(value) {
                     }
                     setTimeout(function () {
                         if (segment2 == "upload-summary") {
-                            saveDuration();
+                             saveDuration();
                         }
-                    }, 5000);
+                    }, 15000);
                 } else {
                     if (segment1 == "account") {
                         $('#example').DataTable().clear();
@@ -570,6 +558,7 @@ function saveDuration() {
             "duration_arr": audio_duartion_arr
         },
         success: function (response) {
+            $("#overlay").addClass("d-none");
         },
         error: function (error) {
         }
@@ -596,32 +585,32 @@ function checkboxCount() {
 
 function allDownload(e) {
 
-    // e.preventDefault();
-     var links = [];
+    e.preventDefault();
+    var links = [];
     $('input.testCheckbox[type="checkbox"]:checked').each(function () {
         links.push($(this).attr("link"));
-        // $("input[name=download_files]").val(links.join(', '));
+        $("input[name=download_files]").val(links.join(', '));
 
     });
-    //
-    // $("#download-form").submit();
+
+    $("#download-form").submit();
 
 
     // console.log(links);
     // console.log(links.length);
 
-    for (var i = 0; i < links.length; i++) {
-        var url = links[i];
-        var name = url.split('/')[url.split('/').length - 1];
-        name = name.split('_');
-        name.shift();
-        name = name.join('_');
-        var a = document.createElement("a");
-        a.setAttribute('href', url);
-        a.setAttribute('download', name);
-        a.setAttribute('target', '_blank');
-        a.click();
-    }
+    // for (var i = 0; i < links.length; i++) {
+    //     var url = links[i];
+    //     var name = url.split('/')[url.split('/').length - 1];
+    //     name = name.split('_');
+    //     name.shift();
+    //     name = name.join('_');
+    //     var a = document.createElement("a");
+    //     a.setAttribute('href', url);
+    //     a.setAttribute('download', name);
+    //     a.setAttribute('target', '_blank');
+    //     a.click();
+    // }
 }
 
 function allCheckout() {
@@ -657,10 +646,11 @@ var total_duration = 0;
 var total_cost = 0;
 
 function getDuration1(path, aud_id) {
+    $("#overlay").removeClass("d-none");
     // console.log("duration1 calling");
     // Create a non-dom allocated Audio element
-    var au = document.createElement('audio');
-
+    // var au = document.createElement('audio');
+    var au = document.getElementById('audio'+aud_id);
     // Define the URL of the MP3 audio file
     au.src = path;
 
@@ -690,22 +680,20 @@ function getDuration1(path, aud_id) {
         $("#span_paypal_total_cost").html("$ " + total_cost);
         $("#paypal_total_duration").val(total_min + '.' + total_sec)
 
-
-        // example 12.3234 seconds
-        // console.log("The duration of the song is of: " + duration + " seconds");
-        // Alternatively, just display the integer value with
-        // parseInt(duration)
-        // 12 seconds
-    }, false);
-    setTimeout(function () {
-        var du = $("#duration" + aud_id).text();
-        var du_sec = $("#duration_in_sec" + aud_id).val();
-        audio_duartion_arr.push({"id": aud_id, "duration": du, "duration_in_sec": du_sec});
+        audio_duartion_arr.push({"id": aud_id, "duration": duration, "duration_in_sec": duration_in_sec});
         console.log(audio_duartion_arr);
+    }, false);
 
-    }, 3000);
+    // setTimeout(function () {
+    //     var du = $("#duration" + aud_id).text();
+    //     var du_sec = $("#duration_in_sec" + aud_id).val();
+    //     audio_duartion_arr.push({"id": aud_id, "duration": du, "duration_in_sec": du_sec});
+    //     console.log(audio_duartion_arr);
+    //
+    // }, 3000);
 
 }
+
 
 function getTotalDuration() {
 
@@ -829,3 +817,30 @@ $(document).ready(function () {
     }
 
 })
+
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}

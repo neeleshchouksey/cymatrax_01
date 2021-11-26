@@ -1,4 +1,16 @@
 @extends('layouts.app')
+<style>
+    table, td, th {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        padding: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-bottom: 1.5px solid rgba(0, 0, 0, 0.3);
+    }
+</style>
 @section('content')
     <section class="contained">
         <h1 class="myaccount">{{$title}}</h1>
@@ -19,8 +31,28 @@
                     <button class="dz-button" type="button"></button>
                 </div>
             </form>
-            <button type="button" class="c-btn" id="submit-all">Upload</button>
+            <div style="display: inline-flex">
+            <button type="button" class="c-btn" style="margin-right: 2rem" id="submit-all">Upload</button>
+                <p>*Only mp3 and wav files can be processed, up to 15 files no larger than 600MB may be uploaded at once. For more info
+                <a href="javascript:void(0)" id="myBtn">Click Here</a>, page</p>
+            </div>
         </div>
     </section>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Guidance on max allowed to upload at once</p>
+            <table>
+                <tr style="text-align: left"><th>Files to upload</th><th>File Size</th></tr>
+                <tr><td><15</td><td>< 40MB</td></tr>
+                <tr><td><10</td><td>< 60MB</td></tr>
+            </table>
+        </div>
+
+    </div>
 @endsection
 

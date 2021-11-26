@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="80783c2b-5eba-4d67-b6e5-7e615c2d5416" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/AdminRole.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/AdminRoleFeature.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Feature.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Middleware/AdminRole.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_13_030146_add_soft_delete_and_name_to_admins_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_16_080939_add_is_admin_to_users_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/FeaturesTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/admins.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/roles.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/unauthorize-access.blade.php" afterDir="false" />
+    <list default="true" id="80783c2b-5eba-4d67-b6e5-7e615c2d5416" name="Default Changelist" comment="filter related changes and design fixes">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/admin/dist/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/admin/dist/js/custom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/AdminTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/AdminTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/component.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/account.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/account.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/upload-summary.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/upload-summary.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/upload.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/upload.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/users.csv" beforeDir="false" afterPath="$PROJECT_DIR$/storage/users.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +39,27 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/routes/web.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/resources/views/transactions.blade.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/resources/views/upload.blade.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/resources/views/account.blade.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/resources/views/audio-analysis.blade.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/.gitignore" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/Http/Controllers/PaymentController.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/resources/views/admin/view-user-files.blade.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/config/app.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/storage/logs/laravel.log" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/composer.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/public/js/component.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/Helper.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/resources/views/admin/app.blade.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/Http/Controllers/AdminController.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/.env" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/assets/admin/dist/js/custom.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/resources/views/layouts/app.blade.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -103,7 +117,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
       <path value="$PROJECT_DIR$/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/vendor/symfony/process" />
-      <path value="$PROJECT_DIR$/vendor/dnoegel/php-xdg-base-dir" />
       <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
@@ -173,6 +186,9 @@
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/vendor/pbmedia/laravel-ffmpeg" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/vendor/zanysoft/laravel-zip" />
     </include_path>
   </component>
   <component name="ProjectId" id="1p3EPmn57VnOrq3N0CyqZs1b9Uj" />
@@ -185,7 +201,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -226,6 +242,46 @@
       <workItem from="1615790776660" duration="3430000" />
       <workItem from="1615795600246" duration="9661000" />
       <workItem from="1615878055341" duration="7109000" />
+      <workItem from="1625896995982" duration="128000" />
+      <workItem from="1625897129981" duration="786000" />
+      <workItem from="1625898042308" duration="754000" />
+      <workItem from="1626065479744" duration="1701000" />
+      <workItem from="1626249066003" duration="10100000" />
+      <workItem from="1626412070108" duration="2023000" />
+      <workItem from="1626415468956" duration="2534000" />
+      <workItem from="1626760737627" duration="6357000" />
+      <workItem from="1627111492165" duration="5364000" />
+      <workItem from="1627378665098" duration="2440000" />
+      <workItem from="1627651210377" duration="737000" />
+      <workItem from="1628068030135" duration="3500000" />
+      <workItem from="1629091570936" duration="3555000" />
+      <workItem from="1629349175538" duration="897000" />
+      <workItem from="1630324019956" duration="2839000" />
+      <workItem from="1630386225062" duration="5350000" />
+      <workItem from="1630472529652" duration="9695000" />
+      <workItem from="1630558047304" duration="12663000" />
+      <workItem from="1630579782345" duration="2569000" />
+      <workItem from="1630646194726" duration="12439000" />
+      <workItem from="1630733947279" duration="12180000" />
+      <workItem from="1631083004119" duration="1137000" />
+      <workItem from="1631258045863" duration="5347000" />
+      <workItem from="1631616459892" duration="6459000" />
+      <workItem from="1631687190994" duration="3716000" />
+      <workItem from="1631695666705" duration="228000" />
+      <workItem from="1631698315904" duration="679000" />
+      <workItem from="1632398521744" duration="3186000" />
+      <workItem from="1632465327837" duration="599000" />
+      <workItem from="1633618619768" duration="194000" />
+      <workItem from="1634791712393" duration="7723000" />
+      <workItem from="1634819452505" duration="564000" />
+      <workItem from="1634901079242" duration="4823000" />
+      <workItem from="1634906187464" duration="2153000" />
+      <workItem from="1635144990461" duration="13197000" />
+      <workItem from="1635763289849" duration="442000" />
+      <workItem from="1635767322322" duration="608000" />
+      <workItem from="1636359492463" duration="23000" />
+      <workItem from="1636700348576" duration="1367000" />
+      <workItem from="1637901410178" duration="4603000" />
     </task>
     <task id="LOCAL-00001" summary="admin implementation">
       <created>1614403459655</created>
@@ -290,7 +346,217 @@
       <option name="project" value="LOCAL" />
       <updated>1615285533521</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="file count changes in csv mail">
+      <created>1625897155414</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1625897155414</updated>
+    </task>
+    <task id="LOCAL-00011" summary="file count changes in csv mail">
+      <created>1625897886462</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1625897886462</updated>
+    </task>
+    <task id="LOCAL-00012" summary="file count changes in csv mail">
+      <created>1625898065893</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1625898065893</updated>
+    </task>
+    <task id="LOCAL-00013" summary="wav file uploading and related changes">
+      <created>1626260051074</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1626260051074</updated>
+    </task>
+    <task id="LOCAL-00014" summary="my account page - multiple file clean and clean with free trial">
+      <created>1626770633313</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1626770633313</updated>
+    </task>
+    <task id="LOCAL-00015" summary="my account page - multiple file clean and clean with free trial">
+      <created>1627120244487</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1627120244487</updated>
+    </task>
+    <task id="LOCAL-00016" summary="font size reduce in table, and remove timestamp from audio file name in table">
+      <created>1627651725940</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1627651725940</updated>
+    </task>
+    <task id="LOCAL-00017" summary="report section admin side">
+      <created>1629349370861</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1629349370861</updated>
+    </task>
+    <task id="LOCAL-00018" summary="report heading">
+      <created>1629350021746</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1629350021746</updated>
+    </task>
+    <task id="LOCAL-00019" summary="report details page and filter by date">
+      <created>1630475087783</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1630475087783</updated>
+    </task>
+    <task id="LOCAL-00020" summary="show duration column in detail page">
+      <created>1630558123242</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1630558123242</updated>
+    </task>
+    <task id="LOCAL-00021" summary="export csv along with duration and total duration">
+      <created>1630572828616</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1630572828616</updated>
+    </task>
+    <task id="LOCAL-00022" summary="user files page all filters,with pagination">
+      <created>1630739982938</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1630739982939</updated>
+    </task>
+    <task id="LOCAL-00023" summary="changes for getting uploaded audio duration">
+      <created>1630747193148</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1630747193148</updated>
+    </task>
+    <task id="LOCAL-00024" summary="duration related changes">
+      <created>1630747606601</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1630747606601</updated>
+    </task>
+    <task id="LOCAL-00025" summary="revert upload-summary related changes">
+      <created>1630750286773</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1630750286773</updated>
+    </task>
+    <task id="LOCAL-00026" summary="save duration issue">
+      <created>1630753146478</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1630753146478</updated>
+    </task>
+    <task id="LOCAL-00027" summary="save duration issue">
+      <created>1630754262773</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1630754262773</updated>
+    </task>
+    <task id="LOCAL-00028" summary="save duration issue">
+      <created>1630756050256</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1630756050256</updated>
+    </task>
+    <task id="LOCAL-00029" summary="save duration issue">
+      <created>1630756193946</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1630756193946</updated>
+    </task>
+    <task id="LOCAL-00030" summary="design fixes">
+      <created>1631083881147</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1631083881147</updated>
+    </task>
+    <task id="LOCAL-00031" summary="filter related changes and design fixes">
+      <created>1631266384717</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1631266384717</updated>
+    </task>
+    <task id="LOCAL-00032" summary="filter related changes and design fixes">
+      <created>1631266497582</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1631266497582</updated>
+    </task>
+    <task id="LOCAL-00033" summary="filter related changes and design fixes">
+      <created>1631266735308</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1631266735308</updated>
+    </task>
+    <task id="LOCAL-00034" summary="filter by issue fixed at frontend">
+      <created>1631692545013</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1631692545013</updated>
+    </task>
+    <task id="LOCAL-00035" summary="download file name changes">
+      <created>1631695694632</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1631695694632</updated>
+    </task>
+    <task id="LOCAL-00036" summary="filter issue">
+      <created>1631698356889</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1631698356889</updated>
+    </task>
+    <task id="LOCAL-00037" summary="unlimited suscription functionliaty">
+      <created>1632401095724</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1632401095724</updated>
+    </task>
+    <task id="LOCAL-00038" summary="upload files limit to 100">
+      <created>1634819488958</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1634819488958</updated>
+    </task>
+    <task id="LOCAL-00039" summary="download files issue">
+      <created>1634907740304</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1634907740304</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,14 +565,42 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="loader" />
-    <MESSAGE value="helper file" />
-    <MESSAGE value="admin implementation" />
-    <MESSAGE value="clean file using js" />
-    <MESSAGE value="ok cancel btn on subscription" />
     <MESSAGE value="free subscription already subscribed condition" />
     <MESSAGE value="testing" />
     <MESSAGE value="3. User section&#10;4. reset trial period for user&#10;6. free trial link on upload summery page" />
-    <option name="LAST_COMMIT_MESSAGE" value="3. User section&#10;4. reset trial period for user&#10;6. free trial link on upload summery page" />
+    <MESSAGE value="file count changes in csv mail" />
+    <MESSAGE value="wav file uploading and related changes" />
+    <MESSAGE value="my account page - multiple file clean and clean with free trial" />
+    <MESSAGE value="font size reduce in table, and remove timestamp from audio file name in table" />
+    <MESSAGE value="report section admin side" />
+    <MESSAGE value="report heading" />
+    <MESSAGE value="report details page and filter by date" />
+    <MESSAGE value="show duration column in detail page" />
+    <MESSAGE value="export csv along with duration and total duration" />
+    <MESSAGE value="user files page all filters,with pagination" />
+    <MESSAGE value="changes for getting uploaded audio duration" />
+    <MESSAGE value="duration related changes" />
+    <MESSAGE value="revert upload-summary related changes" />
+    <MESSAGE value="save duration issue" />
+    <MESSAGE value="design fixes" />
+    <MESSAGE value="filter related changes and design fixes" />
+    <MESSAGE value="filter by issue fixed at frontend" />
+    <MESSAGE value="download file name changes" />
+    <MESSAGE value="filter issue" />
+    <MESSAGE value="unlimited suscription functionliaty" />
+    <MESSAGE value="upload files limit to 100" />
+    <MESSAGE value="download files issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="download files issue" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/PaymentController.php</url>
+          <line>240</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

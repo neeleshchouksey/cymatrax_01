@@ -86,9 +86,9 @@
 </header>
 
 <div id="app">
-{{--    <div id="overlay">--}}
-{{--        <img src="{{asset('assets/images/loader.gif')}}" alt="Loading" />--}}
-{{--    </div>--}}
+    <div id="overlay" class="d-none">
+        <img src="{{asset('assets/images/loader.gif')}}" alt="Loading" />
+    </div>
     @yield('content')
 </div>
 <footer>

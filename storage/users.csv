@@ -1,2 +1,5 @@
-S.No,Name,Email,Address,City,State,Country,"Zip Code","Created At"
-1,"Devendra Rathore",manifest.devendra@gmail.com,add,city,MP,IN,454545,"2021-06-13 05:41:31"
+S.No,Name,Email,Address,City,State,Country,"Zip Code","Created At","Uploaded Files","Cleaned Files","Paid Files"
+1,testing1,testing1@mailinator.com,test,indore,mp,IN,420001,"2021-04-08 12:38:21",1,1,1
+2,testing,testing@mailinator.com,test,indore,mp,IN,420001,"2021-04-08 10:52:43",3,2,2
+3,shree,shree@mail.com,test,indore,mp,IN,420001,"2021-03-09 08:27:51",2,1,0
+4,Deepika,deepika@mailinator.com,test,indore,mp,IN,420001,"2021-02-26 05:39:29",8,8,1

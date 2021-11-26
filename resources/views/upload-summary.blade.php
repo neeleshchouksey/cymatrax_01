@@ -7,6 +7,8 @@
         <div class="checkouttotal">
 {{--            @include('common-uploaded-files')--}}
 
+            <input type="hidden" id="du_arr">
+
             <table id="example" class="stripe hover" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                 <thead>
                 <tr style="text-align: left">

@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "ext-zip": "*",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
@@ -19,7 +20,7 @@
         "omnipay/payflow": "^3.0",
         "omnipay/paypal": "^3.0",
         "pbmedia/laravel-ffmpeg": "^7.4",
-        "ext-zip": "*"
+        "zanysoft/laravel-zip": "master"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
