@@ -41,6 +41,7 @@
                                         <th>Total Cleaned File(s)</th>
                                         <th>Total Paid File(s)</th>
                                         <th>Last Login</th>
+                                        <th>Enterprise User</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -62,6 +63,7 @@
                                         <th>Total Cleaned File(s)</th>
                                         <th>Total Paid File(s)</th>
                                         <th>Last Login</th>
+                                        <th>Enterprise User</th>
                                         <th>Action</th>
                                     </tr>
                                     </tfoot>

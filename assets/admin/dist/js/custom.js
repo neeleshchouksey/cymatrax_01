@@ -68,6 +68,51 @@ function activateDeactivateUser(id, status) {
         }
     });
 }
+function makeRemoveEnterPriseUser(id, status) {
+    if (status) {
+        st = "Make";
+    } else {
+        st = "Remove"
+    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to " + st + " this user as enterprise user?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, ' + st + ' it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "post",
+                data: {
+                    "_token": CSRF_TOKEN,
+                    id: id,
+                    status: status
+                },
+                url: APP_URL + "/admin/make-remove-enterprise-user",
+                success: function (response) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.msg,
+                        icon: 'success',
+                        showCancelButton: false,
+                    }).then((result) => {
+                        get_users();
+                    })
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.responseJSON.msg,
+                        icon: "error",
+                    });
+                }
+            });
+        }
+    });
+}
 
 function get_admins() {
 
@@ -402,6 +447,7 @@ function get_users() {
             {mData: 'cleaned_files_count'},
             {mData: 'paid_files_count'},
             {mData: 'last_login_at'},
+            {mData: 'enterprise_user'},
             {mData: 'action'}
         ]
 

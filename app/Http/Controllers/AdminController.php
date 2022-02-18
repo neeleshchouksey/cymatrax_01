@@ -120,6 +120,12 @@ class AdminController extends Controller
                 $v->last_login_at = date("d-m-Y h:i A", strtotime($v->created_at));;
             }
 
+            if($v->enterprise_user){
+                $v->enterprise_user = "<button class='btn-sm btn-primary' onclick='makeRemoveEnterPriseUser($v->id,0)'>Remove</button>";
+            }else{
+                $v->enterprise_user = "<button class='btn-sm btn-primary' onclick='makeRemoveEnterPriseUser($v->id,1)'>Make</button>";
+            }
+
             $updateButton = "<button class='btn btn-sm btn-primary mb-2' onclick='resetTrial($v->id)'>Reset Trial</button><br>";
             //view user all files button
             $viewFilesButton = "<button class='btn btn-sm btn-primary mt-2'><a style='color: #fff;' href='" . url('/admin/user-files/') . "/$v->id'>View Files</a></button><br>";
@@ -334,6 +340,19 @@ class AdminController extends Controller
             $user = User::withTrashed()->find($request->id)->restore();
         }
         return response(["status" => "success", "msg" => "User " . $st . " successfully"], 200);
+    }
+
+    public function make_remove_enterprise_user(Request $request)
+    {
+        if (!$request->status) {
+            $st = "Removed";
+        } else {
+            $st = "Made";
+        }
+        $user = User::find($request->id);
+        $user->enterprise_user = $request->status;
+        $user->save();
+        return response(["status" => "success", "msg" => "User " . $st . " as enterprise user successfully"], 200);
     }
 
     public function reset_trial($id)

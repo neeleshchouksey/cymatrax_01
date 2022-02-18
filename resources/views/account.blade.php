@@ -5,7 +5,7 @@
     <section class="contained">
         <h1 class="">{{$title}}
             <span class="free-trial" style="margin-top: 8px;">
-         @if(Auth::user()->subscription)
+         @if(Auth::user()->subscription || Auth::user()->enterprise_user)
                     Currently have a subscription
                 @else
                     @if(!Auth::user()->trial_expiry_date)
@@ -26,7 +26,7 @@
                 {{--    margin-top: 34px;" type="button" class="c-btn">Checkout</button>--}}
                 {{--                </form>--}}
 
-                @if(Auth::user()->is_admin || Auth::user()->subscription)
+                @if(Auth::user()->is_admin || Auth::user()->subscription || Auth::user()->enterprise_user)
                     <button id="clean-btn" class="c-btn  float-right" onclick="clean_multiple_files()">Clean File(s)
                     </button>
                 @else
