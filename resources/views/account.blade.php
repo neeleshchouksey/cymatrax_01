@@ -6,7 +6,7 @@
         <h1 class="">{{$title}}
             <span class="free-trial" style="margin-top: 8px;">
          @if(Auth::user()->subscription || Auth::user()->enterprise_user)
-                    Currently have a subscription
+                    Subscription Enabled
                 @else
                     @if(!Auth::user()->trial_expiry_date)
                         <a href="{{URL::to('/')}}/free-subscription">Start <b><?php echo get_free_trial_days(); ?> Days</b> free
