@@ -343,6 +343,9 @@ class UserController extends Controller
         $zipFileName = 'all-files.zip';
 
         $zip = new ZipArchive;
+        if(file_exists($public_dir.'/download/'.$zipFileName)){
+            unlink($public_dir.'/download/'.$zipFileName);
+        }
 
         if ($zip->open($public_dir . '/download/' . $zipFileName, ZipArchive::CREATE) === TRUE) {
             // Add File in ZipArchive
@@ -354,7 +357,6 @@ class UserController extends Controller
             return redirect(url('/account'))->with('error', 'File not created');
         }
         $zip->close();
-
         // Set Header
         $headers = array(
             'Content-Type' => 'application/octet-stream',
