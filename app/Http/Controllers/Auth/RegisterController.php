@@ -66,7 +66,7 @@ class RegisterController extends Controller
             'state' => ['required'],
             'country' => ['required'],
             'zipcode' => ['required'],
-
+            'CaptchaCode'=> 'valid_captcha'
         ]);
     }
 

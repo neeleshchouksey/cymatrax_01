@@ -26,10 +26,12 @@
                     <div class="errors">{{ $error['country'][0] }}</div>
                 @elseif(isset($error['zipcode']))
                     <div class="errors">{{ $error['zipcode'][0] }}</div>
+                @elseif(isset($error['CaptchaCode']))
+                    <div class="errors">{{ $error['CaptchaCode'][0] }}</div>
                 @endif
 
                 <br>
-                <form method="POST" action="{{ route('register') }}" class="register">
+                <form method="POST" action="{{ route('register') }}" class="register" id="register-form">
                     @csrf
 
                     <table>
@@ -124,14 +126,23 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>I am not a robot</td>
+                            <td>
+                                <input id="CaptchaCode" name="CaptchaCode" required placeholder="Enter captcha code"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">  {!! captcha_image_html('CymatraxCaptcha') !!}</td>
+                        </tr>
+                        <tr>
                             <td colspan="2">
-                            <input required type="checkbox" name="term_conditions" value="1" oninvalid="this.setCustomValidity('Please accept our legal agreements before continuing.')" onchange="this.setCustomValidity('')"/> <span style="font-size: 15px;">I understand and agree to</span> <a style="text-decoration:none; font-size: 15px;" download href="{{URL::to('/')}}/public/terms_and_conditions/Privacy Policy and Terms of Service.pdf">Privacy Policy and Terms of &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; service</a>
+                            <input required type="checkbox" name="term_conditions" value="1" oninvalid="this.setCustomValidity('Please accept our legal agreements before continuing.')" onchange="this.setCustomValidity('')"/> <span style="font-size: 15px;">I understand and agree to</span> <a style="text-decoration:none; font-size: 15px;" download href="{{URL::to('/')}}/public/terms_and_conditions/Privacy Policy and Terms of Service.pdf">Privacy Policy and Terms of service</a>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td>
-                                <button type="submit">Create Account</button>
+                                <button type="submit" >Create Account</button>
                             </td>
                         </tr>
                         <tr>
