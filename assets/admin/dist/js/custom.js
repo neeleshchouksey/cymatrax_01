@@ -68,6 +68,45 @@ function activateDeactivateUser(id, status) {
         }
     });
 }
+function deleteUser(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to delete this user, you wont be able to revert this, all related data of this user will be permanently deleted.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "post",
+                data: {
+                    "_token": CSRF_TOKEN,
+                    id: id
+                },
+                url: APP_URL + "/admin/delete-user",
+                success: function (response) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.msg,
+                        icon: 'success',
+                        showCancelButton: false,
+                    }).then((result) => {
+                        get_users();
+                    })
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.responseJSON.msg,
+                        icon: "error",
+                    });
+                }
+            });
+        }
+    });
+}
 function makeRemoveEnterPriseUser(id, status) {
     if (status) {
         st = "Make";

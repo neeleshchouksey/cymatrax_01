@@ -10,6 +10,7 @@ use App\Upload;
 use Facade\FlareClient\Stacktrace\File;
 use FFMpeg;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Omnipay\Omnipay;
@@ -91,6 +92,7 @@ class UserController extends Controller
             $data->user_id = auth()->user()->id;
             $data->file_name = $imageName;
             $data->save();
+            Cache::flush();
 
         }
         return response()->json(['success' => $imageName, 'count' => $count]);

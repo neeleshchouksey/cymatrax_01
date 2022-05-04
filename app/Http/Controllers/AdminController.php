@@ -8,6 +8,7 @@ use App\AdminRoleFeature;
 use App\Feature;
 use App\FreeSubscription;
 use App\FileDeleteSetting;
+use App\Paymentdetail;
 use App\User;
 use App\UserCard;
 use Illuminate\Http\Request;
@@ -109,15 +110,15 @@ class AdminController extends Controller
             $v->sno = $k + 1;
 
             if ($v->trial_expiry_date) {
-                $v->trial_expiry_date = date("d-m-Y", $v->trial_expiry_date);
+                $v->trial_expiry_date = date("m-d-Y", $v->trial_expiry_date);
             } else {
                 $v->trial_expiry_date = "Trial Not Started";
             }
 
             if ($v->last_login_at) {
-                $v->last_login_at = date("d-m-Y h:i A", $v->last_login_at);
+                $v->last_login_at = date("m-d-Y h:i A", $v->last_login_at);
             } else {
-                $v->last_login_at = date("d-m-Y h:i A", strtotime($v->created_at));;
+                $v->last_login_at = date("m-d-Y h:i A", strtotime($v->created_at));;
             }
 
             if($v->enterprise_user){
@@ -126,17 +127,20 @@ class AdminController extends Controller
                 $v->enterprise_user = "<button class='btn-sm btn-primary' onclick='makeRemoveEnterPriseUser($v->id,1)'>Make</button>";
             }
 
-            $updateButton = "<button class='btn btn-sm btn-primary mb-2' onclick='resetTrial($v->id)'>Reset Trial</button><br>";
+            $updateButton = "<button class='btn btn-sm btn-primary mb-2Upload Date	' onclick='resetTrial($v->id)'>Reset Trial</button><br>";
             //view user all files button
             $viewFilesButton = "<button class='btn btn-sm btn-primary mt-2'><a style='color: #fff;' href='" . url('/admin/user-files/') . "/$v->id'>View Files</a></button><br>";
             if ($v->deleted_at) {
                 // activate Button
-                $deleteButton = "<button class='btn btn-sm btn-success' onclick='activateDeactivateUser($v->id,1)'>Activate</button>";
+                $deleteButton = "<button class='btn btn-sm btn-success mt-2' onclick='activateDeactivateUser($v->id,1)'>Activate</button>";
 
             } else {
                 // Deactivate Button
-                $deleteButton = "<button class='btn btn-sm btn-danger' onclick='activateDeactivateUser($v->id,0)'>Deactivate</button>";
+                $deleteButton = "<button class='btn btn-sm btn-danger mt-2' onclick='activateDeactivateUser($v->id,0)'>Deactivate</button>";
             }
+
+            $forcedeleteButton = "<button class='btn btn-sm btn-danger mt-2' onclick='deleteUser($v->id)'>Delete</button>";
+
 
             if(!$v->subscription){
                 $subscription_btn =  "<button class='btn btn-sm btn-primary mt-2' onclick='subscribe($v->id)'>Subscribe</button><br>";
@@ -145,7 +149,7 @@ class AdminController extends Controller
                 $subscription_btn =  "<button class='btn btn-sm btn-primary mt-2' disabled>Subscribed</button><br>";
             }
 
-            $action = $updateButton . " " . $deleteButton . " " . $viewFilesButton." ".$subscription_btn;
+            $action = $updateButton . " " . $deleteButton . " " . $viewFilesButton." ".$subscription_btn." ".$forcedeleteButton;
             $v->action = $action;
 
         }
@@ -175,15 +179,15 @@ class AdminController extends Controller
             $v->name = "<a href='" . url('/admin/view/') . "/$v->id'>$v->name</a>";
 
             if ($v->trial_expiry_date) {
-                $v->trial_expiry_date = date("d-m-Y", $v->trial_expiry_date);
+                $v->trial_expiry_date = date("m-d-Y", $v->trial_expiry_date);
             } else {
                 $v->trial_expiry_date = "Trial Not Started";
             }
 
             if ($v->last_login_at) {
-                $v->last_login_at = date("d-m-Y h:i A", $v->last_login_at);
+                $v->last_login_at = date("m-d-Y h:i A", $v->last_login_at);
             } else {
-                $v->last_login_at = date("d-m-Y h:i A", strtotime($v->created_at));;
+                $v->last_login_at = date("m-d-Y h:i A", strtotime($v->created_at));;
             }
 
             $viewFilesButton = "<button class='btn btn-sm btn-primary mt-2'><a style='color: #fff;' href='" . url('/admin/view/') . "/$v->id'>View</a></button><br>";
@@ -229,6 +233,8 @@ class AdminController extends Controller
             if ($d < $fifteendaysago) {
                 $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteFile($value->id)'>Delete</button>";
             }
+
+            $value->created = date("m-d-Y h:i A",strtotime($value->created_at));
 
             $new_array = explode('_',$files[$key]->file_name);
             array_shift($new_array);
@@ -290,14 +296,14 @@ class AdminController extends Controller
                 $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteUserFile($value->id)'>Delete</button>";
             }
 
-            $files[$key]->created = date("d-m-Y h:i:s A", strtotime($value->created_at));
+            $files[$key]->created = date("m-d-Y h:i:s A", strtotime($value->created_at));
             if ($files[$key]->cleaned) {
                 $files[$key]->cleaned = "Yes";
             } else {
                 $files[$key]->cleaned = "No";
             }
             if($files[$key]->cleaned_at){
-                $files[$key]->cleaned_at = date("d-m-Y h:i:s A", strtotime($value->created_at));
+                $files[$key]->cleaned_at = date("m-d-Y h:i:s A", strtotime($value->created_at));
             }else{
                 $files[$key]->cleaned_at = "NA";
             }
@@ -340,6 +346,15 @@ class AdminController extends Controller
             $user = User::withTrashed()->find($request->id)->restore();
         }
         return response(["status" => "success", "msg" => "User " . $st . " successfully"], 200);
+    }
+    public function delete_user(Request $request)
+    {
+        $pd = Paymentdetail::where('user_id',$request->id)->forceDelete();
+        $pd = Upload::where('user_id',$request->id)->forceDelete();
+        $user = User::withTrashed()->find($request->id);
+        $user->forceDelete();
+
+        return response(["status" => "success", "msg" => "User deleted successfully"], 200);
     }
 
     public function make_remove_enterprise_user(Request $request)
@@ -386,8 +401,8 @@ class AdminController extends Controller
 
             $v->sno = $k + 1;
 
-//            $v->created = date("d-m-Y h:i A",strtotime($v->created_at));
-//            $v->updated = date("d-m-Y h:i A",strtotime($v->updated_at));
+//            $v->created = date("m-d-Y h:i A",strtotime($v->created_at));
+//            $v->updated = date("m-d-Y h:i A",strtotime($v->updated_at));
 
             // Update Button
             $updateButton = "<button class='btn btn-sm btn-primary' onclick='getSingleAdmin($v->id)'>Edit</button>";
