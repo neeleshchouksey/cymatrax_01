@@ -426,7 +426,7 @@ function fileFilter(value) {
 
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
-                                '                    <td><span id="duration' + aud_id + '">' + data[i].duration + '</span></td>\n' +
+                                '                    <td><span id="duration' + aud_id + '">' + data[i].duration_in_min + '</span></td>\n' +
                                 '                    <td>' + data[i].created + '</td>\n' +
                                 '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue" value="' + data[i].duration_in_sec + '"/>' +
                                 '                    <audio id="audio' + aud_id + '" controls="" style="vertical-align: middle"' +

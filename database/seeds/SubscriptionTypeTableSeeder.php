@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class subscriptionType extends Seeder
+class SubscriptionTypeTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

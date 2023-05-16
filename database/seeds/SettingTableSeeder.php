@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class SettingSeeder extends Seeder
+class SettingTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,9 +13,14 @@ class SettingSeeder extends Seeder
     {
         DB::table("settings")->insert(
             [
-                "user_id"=>1,
+                
                 "key"=>'time_on_disk',
                 "value"=>15,
+            ],
+            [
+               
+                "key"=>'file_limit_upload',
+                "value"=>5,
             ]
         );
     }
