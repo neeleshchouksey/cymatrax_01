@@ -9,6 +9,9 @@ $(function () {
     if (uri_segment == 'roles') {
         get_roles();
     }
+    if (uri_segment == 'plan-and-subscription') {
+        get_plans();
+    }
     if (uri_segment == 'users') {
         get_users();
     }
@@ -167,10 +170,10 @@ function get_admins() {
             type: "GET",
         },
         "columns": [
-            {mData: 'sno'},
-            {mData: 'name'},
-            {mData: 'email'},
-            {mData: 'action'}
+            { mData: 'sno' },
+            { mData: 'name' },
+            { mData: 'email' },
+            { mData: 'action' }
         ]
 
     }).buttons().container().appendTo('#admin-datatable_wrapper .col-md-6:eq(0)');
@@ -403,6 +406,20 @@ function getSingleRole(id) {
     });
 }
 
+function getSinglePlan(id) {
+    $.ajax({
+        method: "get",
+        url: APP_URL + "/admin/get-plan/" + id,
+        success: function (response) {
+            $("#update-plan-modal").modal("show");
+            $("#edit_id").val(response.res.id);
+            $("#edit_name").val(response.res.name);
+            $("#edit_charges").val(response.res.charges);
+            $("#edit_no_of_clean_file").val(response.res.no_of_clean_file);
+        },
+    });
+}
+
 function updateRole() {
     $.ajax({
         method: "post",
@@ -432,7 +449,38 @@ function updateRole() {
             });
         }
     });
+}
 
+function updatePlan() {
+    $.ajax({
+        method: "post",
+        url: APP_URL + "/admin/update-plan",
+        data: {
+            "_token": CSRF_TOKEN,
+            "id": $("#edit_id").val(),
+            "name": $("#edit_name").val(),
+            "charges": $("#edit_charges").val(),
+            "no_of_clean_file": $("#edit_no_of_clean_file").val(),
+        },
+        success: function (response) {
+            Swal.fire({
+                title: 'Success!',
+                text: response.msg,
+                icon: 'success',
+                showCancelButton: false,
+            }).then((result) => {
+                $("#update-plan-modal").modal("hide");
+                get_plans();
+            })
+        },
+        error: function (error) {
+            Swal.fire({
+                title: "Error",
+                text: error.responseJSON.msg,
+                icon: "error",
+            });
+        }
+    });
 }
 
 function get_roles() {
@@ -449,12 +497,36 @@ function get_roles() {
             type: "GET",
         },
         "columns": [
-            {mData: 'sno'},
-            {mData: 'role'},
-            {mData: 'action'}
+            { mData: 'sno' },
+            { mData: 'role' },
+            { mData: 'action' }
         ]
 
     }).buttons().container().appendTo('#role-datatable_wrapper .col-md-6:eq(0)');
+}
+
+function get_plans() {
+
+    $("#plan-datatable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "bDestroy": true,
+        "ordering": false,
+        ajax: {
+            url: APP_URL + "/admin/get-all-plans",
+            type: "GET",
+        },
+        "columns": [
+            { mData: 'sno' },
+            { mData: 'name' },
+            { mData: 'charges' },
+            { mData: 'no_of_clean_file' },
+            { mData: 'action' }
+        ]
+
+    }).buttons().container().appendTo('#plan-datatable_wrapper .col-md-6:eq(0)');
 }
 
 function get_users() {
@@ -473,21 +545,21 @@ function get_users() {
             type: "GET",
         },
         "columns": [
-            {mData: 'sno'},
-            {mData: 'name'},
-            {mData: 'email'},
-            {mData: 'address'},
-            {mData: 'city'},
-            {mData: 'state'},
-            {mData: 'country'},
-            {mData: 'zip_code'},
-            {mData: 'trial_expiry_date'},
-            {mData: 'uploaded_files_count'},
-            {mData: 'cleaned_files_count'},
-            {mData: 'paid_files_count'},
-            {mData: 'last_login_at'},
-            {mData: 'enterprise_user'},
-            {mData: 'action'}
+            { mData: 'sno' },
+            { mData: 'name' },
+            { mData: 'email' },
+            { mData: 'address' },
+            { mData: 'city' },
+            { mData: 'state' },
+            { mData: 'country' },
+            { mData: 'zip_code' },
+            { mData: 'trial_expiry_date' },
+            { mData: 'uploaded_files_count' },
+            { mData: 'cleaned_files_count' },
+            { mData: 'paid_files_count' },
+            { mData: 'last_login_at' },
+            { mData: 'enterprise_user' },
+            { mData: 'action' }
         ]
 
     }).buttons().container().appendTo('#user-datatable_wrapper .col-md-6:eq(0)');
@@ -523,20 +595,20 @@ function get_reports() {
             type: "GET",
         },
         "columns": [
-            {mData: 'sno'},
-            {mData: 'name'},
-            {mData: 'email'},
-            {mData: 'address'},
-            {mData: 'city'},
-            {mData: 'state'},
-            {mData: 'country'},
-            {mData: 'zip_code'},
-            {mData: 'trial_expiry_date'},
-            {mData: 'uploaded_files_count'},
-            {mData: 'cleaned_files_count'},
-            {mData: 'paid_files_count'},
-            {mData: 'last_login_at'},
-            {mData: 'action'}
+            { mData: 'sno' },
+            { mData: 'name' },
+            { mData: 'email' },
+            { mData: 'address' },
+            { mData: 'city' },
+            { mData: 'state' },
+            { mData: 'country' },
+            { mData: 'zip_code' },
+            { mData: 'trial_expiry_date' },
+            { mData: 'uploaded_files_count' },
+            { mData: 'cleaned_files_count' },
+            { mData: 'paid_files_count' },
+            { mData: 'last_login_at' },
+            { mData: 'action' }
         ]
 
     }).buttons().container().appendTo('#report-datatable_wrapper .col-md-6:eq(0)');
@@ -560,11 +632,11 @@ function get_user_files() {
             type: "GET",
         },
         "columns": [
-            {mData: 'sno'},
-            {mData: 'name'},
-            {mData: 'file_name'},
-            {mData: 'created'},
-            {mData: 'action'}
+            { mData: 'sno' },
+            { mData: 'name' },
+            { mData: 'file_name' },
+            { mData: 'created' },
+            { mData: 'action' }
         ]
 
     }).buttons().container().appendTo('#files-dt_wrapper .col-md-6:eq(0)');
@@ -615,31 +687,31 @@ function view_user_files() {
         "scrollX": true,
         "searching": false,
         ajax: {
-            url: APP_URL + "/admin/view-user-files/" + segment1 + "?date="+date+"&filter_by="+filter_by+"&keyword="+keyword+"&date_filter_by="+date_filter_by,
+            url: APP_URL + "/admin/view-user-files/" + segment1 + "?date=" + date + "&filter_by=" + filter_by + "&keyword=" + keyword + "&date_filter_by=" + date_filter_by,
             type: "GET",
         },
         "columns": [
-            {mData: 'sno'},
-            {mData: 'name'},
-            {mData: 'file_name'},
-            {mData: 'created'},
-            {mData: 'cleaned'},
-            {mData: 'cleaned_at'},
-            {mData: 'duration'},
-            {mData: 'action'}
+            { mData: 'sno' },
+            { mData: 'name' },
+            { mData: 'file_name' },
+            { mData: 'created' },
+            { mData: 'cleaned' },
+            { mData: 'cleaned_at' },
+            { mData: 'duration' },
+            { mData: 'action' }
         ],
         "footerCallback": function (row, data, start, end, display) {
             var api = this.api(), data;
 
             // computing column Total of the complete result
             var total = api
-                .column( 6 )
+                .column(6)
                 .data()
-                .reduce( function (a, b) {
+                .reduce(function (a, b) {
                     return parseFloat(a) + parseFloat(b);
-                }, 0 );
-            $( api.column( 5 ).footer() ).html('Total Duration');
-            $( api.column( 6 ).footer() ).html(total.toFixed(2));
+                }, 0);
+            $(api.column(5).footer()).html('Total Duration');
+            $(api.column(6).footer()).html(total.toFixed(2));
 
         }
 
@@ -772,9 +844,9 @@ function getDuration1(path, aud_id) {
 
 }
 
-function getTotalDuration(){
-    console.log(total_min+"."+total_sec);
-    $("#total-duration-full").html(total_min+"."+total_sec);
+function getTotalDuration() {
+    console.log(total_min + "." + total_sec);
+    $("#total-duration-full").html(total_min + "." + total_sec);
 
 }
 
@@ -800,7 +872,7 @@ function htmlToCSV() {
 function downloadCSVFile(csv, filename) {
     var csv_file, download_link;
 
-    csv_file = new Blob([csv], {type: "text/csv"});
+    csv_file = new Blob([csv], { type: "text/csv" });
 
     download_link = document.createElement("a");
 

@@ -124,6 +124,16 @@
                             </a>
                         </li>
                     @endif
+                    @if(checkRoleFeature('plan-and-subscription'))
+                        <li class="nav-item menu-open">
+                            <a href="{{URL::to('/admin/')}}/plan-and-subscription"
+                               class="nav-link  @if(Request::segment(2) == "plan-and-subscription") active @endif">
+                                <p>
+                                    Plan & Subscription
+                                </p>
+                            </a>
+                        </li>
+                    @endif
                     @if(checkRoleFeature('file-delete-setting'))
                         <li class="nav-item menu-open">
                             <a href="{{URL::to('/admin/')}}/file-delete-setting"
@@ -170,6 +180,16 @@
                                class="nav-link  @if(Request::segment(2) == "reports") active @endif">
                                 <p>
                                     Reports
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+                    @if(checkRoleFeature('time-on-disk'))
+                        <li class="nav-item menu-open">
+                            <a href="{{URL::to('/admin/')}}/time-on-disk"
+                               class="nav-link  @if(Request::segment(2) == "time-on-disk") active @endif">
+                                <p>
+                                    Time On Disk
                                 </p>
                             </a>
                         </li>

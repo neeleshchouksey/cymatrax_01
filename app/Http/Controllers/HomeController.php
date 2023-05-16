@@ -8,8 +8,8 @@ use App\Upload;
 use DB;
 use FFMpeg;
 use Omnipay\Omnipay;
-use Omnipay\Common\CreditCard; 
-//test commit
+use Omnipay\Common\CreditCard;
+
 class HomeController extends Controller
 {
     /**

@@ -9,6 +9,7 @@ use App\Feature;
 use App\FreeSubscription;
 use App\FileDeleteSetting;
 use App\Paymentdetail;
+use App\Settings;
 use App\User;
 use App\UserCard;
 use Illuminate\Http\Request;
@@ -70,6 +71,18 @@ class AdminController extends Controller
         return view('admin.free-subscription', compact('data'));
     }
 
+    public function time_on_disk()
+    {
+        $data = Settings::first();
+        return view('admin.time-on-disk', compact('data'));
+    }
+
+    public function plan_and_subscription()
+    {
+        // $data = FreeSubscription::first();
+        return view('admin.plan-and-subscription');
+    }
+
     public function file_delete_setting()
     {
         $data = FileDeleteSetting::first();
@@ -82,7 +95,15 @@ class AdminController extends Controller
         $fs->days = $request->days;
         $fs->save();
         return redirect()->back()->with('success', 'Updated Successfully');
+    }
 
+    public function update_time_on_disk(Request $request)
+    {
+        $fs = Settings::first();
+        $fs->key = $request->key;
+        $fs->value = $request->value;
+        $fs->save();
+        return redirect()->back()->with('success', 'Updated Successfully');
     }
 
     public function update_file_delete_days(Request $request)
@@ -91,7 +112,6 @@ class AdminController extends Controller
         $fds->days = $request->days;
         $fds->save();
         return redirect()->back()->with('success', 'Updated Successfully');
-
     }
 
 
@@ -121,9 +141,9 @@ class AdminController extends Controller
                 $v->last_login_at = date("m-d-Y h:i A", strtotime($v->created_at));;
             }
 
-            if($v->enterprise_user){
+            if ($v->enterprise_user) {
                 $v->enterprise_user = "<button class='btn-sm btn-primary' onclick='makeRemoveEnterPriseUser($v->id,0)'>Remove</button>";
-            }else{
+            } else {
                 $v->enterprise_user = "<button class='btn-sm btn-primary' onclick='makeRemoveEnterPriseUser($v->id,1)'>Make</button>";
             }
 
@@ -133,7 +153,6 @@ class AdminController extends Controller
             if ($v->deleted_at) {
                 // activate Button
                 $deleteButton = "<button class='btn btn-sm btn-success mt-2' onclick='activateDeactivateUser($v->id,1)'>Activate</button>";
-
             } else {
                 // Deactivate Button
                 $deleteButton = "<button class='btn btn-sm btn-danger mt-2' onclick='activateDeactivateUser($v->id,0)'>Deactivate</button>";
@@ -142,16 +161,14 @@ class AdminController extends Controller
             $forcedeleteButton = "<button class='btn btn-sm btn-danger mt-2' onclick='deleteUser($v->id)'>Delete</button>";
 
 
-            if(!$v->subscription){
+            if (!$v->subscription) {
                 $subscription_btn =  "<button class='btn btn-sm btn-primary mt-2' onclick='subscribe($v->id)'>Subscribe</button><br>";
-            }
-            else{
+            } else {
                 $subscription_btn =  "<button class='btn btn-sm btn-primary mt-2' disabled>Subscribed</button><br>";
             }
 
-            $action = $updateButton . " " . $deleteButton . " " . $viewFilesButton." ".$subscription_btn." ".$forcedeleteButton;
+            $action = $updateButton . " " . $deleteButton . " " . $viewFilesButton . " " . $subscription_btn . " " . $forcedeleteButton;
             $v->action = $action;
-
         }
 
         $results = array(
@@ -192,7 +209,6 @@ class AdminController extends Controller
 
             $viewFilesButton = "<button class='btn btn-sm btn-primary mt-2'><a style='color: #fff;' href='" . url('/admin/view/') . "/$v->id'>View</a></button><br>";
             $v->action = $viewFilesButton;
-
         }
 
         $results = array(
@@ -222,7 +238,7 @@ class AdminController extends Controller
         $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id')
             ->join("users", "users.id", "uploads.user_id")
             ->where('uploads.user_id', '=', $id)
-            ->orderby("id","desc")
+            ->orderby("id", "desc")
             ->get();
 
         foreach ($files as $key => $value) {
@@ -234,12 +250,11 @@ class AdminController extends Controller
                 $files[$key]->action = "<button class='btn btn-sm btn-danger' onclick='deleteFile($value->id)'>Delete</button>";
             }
 
-            $value->created = date("m-d-Y h:i A",strtotime($value->created_at));
+            $value->created = date("m-d-Y h:i A", strtotime($value->created_at));
 
-            $new_array = explode('_',$files[$key]->file_name);
+            $new_array = explode('_', $files[$key]->file_name);
             array_shift($new_array);
-            $files[$key]->file_name = implode('_',$new_array);
-
+            $files[$key]->file_name = implode('_', $new_array);
         }
 
         $results = array(
@@ -262,30 +277,29 @@ class AdminController extends Controller
 
         DB::enableQueryLog();
 
-        $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id', 'uploads.cleaned','uploads.duration','uploads.cleaned_at')
+        $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id', 'uploads.cleaned', 'uploads.duration', 'uploads.cleaned_at')
             ->join("users", "users.id", "uploads.user_id")
             ->where('uploads.user_id', '=', $id);
 
-        if($date != 'undefined'){
-            $date = explode('-',$date);
-             $fromDate = date('Y-m-d',strtotime($date[0]));
-             $toDate = date('Y-m-d',strtotime($date[1]));
-            if($date_filter_by !=""){
+        if ($date != 'undefined') {
+            $date = explode('-', $date);
+            $fromDate = date('Y-m-d', strtotime($date[0]));
+            $toDate = date('Y-m-d', strtotime($date[1]));
+            if ($date_filter_by != "") {
                 $files = $files->whereBetween("uploads.$date_filter_by", [$fromDate, $toDate]);
             }
         }
-        if($filter_by!=""){
-            $files = $files->where("cleaned",$filter_by);
+        if ($filter_by != "") {
+            $files = $files->where("cleaned", $filter_by);
         }
 
-        if($keyword!=""){
-            $files = $files->where("users.name","like","%$keyword%")
-                    ->orwhere("uploads.file_name","like","%$keyword%")
-                    ->orwhere("uploads.duration","like","%$keyword%");
-
+        if ($keyword != "") {
+            $files = $files->where("users.name", "like", "%$keyword%")
+                ->orwhere("uploads.file_name", "like", "%$keyword%")
+                ->orwhere("uploads.duration", "like", "%$keyword%");
         }
 
-        $files = $files->orderby("id","desc")->get();
+        $files = $files->orderby("id", "desc")->get();
 
         foreach ($files as $key => $value) {
             $files[$key]->sno = $key + 1;
@@ -302,18 +316,17 @@ class AdminController extends Controller
             } else {
                 $files[$key]->cleaned = "No";
             }
-            if($files[$key]->cleaned_at){
+            if ($files[$key]->cleaned_at) {
                 $files[$key]->cleaned_at = date("m-d-Y h:i:s A", strtotime($value->created_at));
-            }else{
+            } else {
                 $files[$key]->cleaned_at = "NA";
             }
 
-            $new_array = explode('_',$files[$key]->file_name);
+            $new_array = explode('_', $files[$key]->file_name);
             array_shift($new_array);
-            $files[$key]->file_name = implode('_',$new_array);
-
+            $files[$key]->file_name = implode('_', $new_array);
         }
-//        return response()->json($files,200);
+        //        return response()->json($files,200);
         $results = array(
             "sEcho" => 1,
             "iTotalRecords" => count($files),
@@ -349,8 +362,8 @@ class AdminController extends Controller
     }
     public function delete_user(Request $request)
     {
-        $pd = Paymentdetail::where('user_id',$request->id)->forceDelete();
-        $pd = Upload::where('user_id',$request->id)->forceDelete();
+        $pd = Paymentdetail::where('user_id', $request->id)->forceDelete();
+        $pd = Upload::where('user_id', $request->id)->forceDelete();
         $user = User::withTrashed()->find($request->id);
         $user->forceDelete();
 
@@ -379,7 +392,7 @@ class AdminController extends Controller
         $user->save();
         return response(["status" => "success", "msg" => "Free Trial reset successfully"], 200);
     }
-     public function subscription($id)
+    public function subscription($id)
     {
         $user = User::find($id);
         $user->subscription = 1;
@@ -389,7 +402,7 @@ class AdminController extends Controller
 
     public function admins()
     {
-//        $admins = Admin::withTrashed()->get();
+        //        $admins = Admin::withTrashed()->get();
         $roles = AdminRole::all();
         return view('admin.admins', compact("roles"));
     }
@@ -401,8 +414,8 @@ class AdminController extends Controller
 
             $v->sno = $k + 1;
 
-//            $v->created = date("m-d-Y h:i A",strtotime($v->created_at));
-//            $v->updated = date("m-d-Y h:i A",strtotime($v->updated_at));
+            //            $v->created = date("m-d-Y h:i A",strtotime($v->created_at));
+            //            $v->updated = date("m-d-Y h:i A",strtotime($v->updated_at));
 
             // Update Button
             $updateButton = "<button class='btn btn-sm btn-primary' onclick='getSingleAdmin($v->id)'>Edit</button>";
@@ -410,14 +423,12 @@ class AdminController extends Controller
             if ($v->deleted_at) {
                 // activate Button
                 $deleteButton = "<button class='btn btn-sm btn-success' onclick='activateDeactivateAdmin($v->id,1)'>Activate</button>";
-
             } else {
                 // Deactivate Button
                 $deleteButton = "<button class='btn btn-sm btn-danger' onclick='activateDeactivateAdmin($v->id,0)'>Deactivate</button>";
             }
             $action = $updateButton . " " . $deleteButton;
             $v->action = $action;
-
         }
 
         $results = array(
@@ -457,7 +468,6 @@ class AdminController extends Controller
             $u->save();
 
             return response()->json(["status" => "success", "msg" => "Admin Added Successfully"], 200);
-
         }
     }
 
@@ -523,13 +533,12 @@ class AdminController extends Controller
                 $u->save();
             }
             return response()->json(["status" => "success", "msg" => "Admin Updated Successfully"], 200);
-
         }
     }
 
     public function roles()
     {
-//        $roles = AdminRole::where("id","!=",1)->get();
+        //        $roles = AdminRole::where("id","!=",1)->get();
         $features = Feature::all();
         return view('admin.roles', compact("features"));
     }
@@ -545,7 +554,29 @@ class AdminController extends Controller
 
             $action = $updateButton;
             $v->action = $action;
+        }
 
+        $results = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($data),
+            "iTotalDisplayRecords" => count($data),
+            "aaData" => $data
+        );
+        return response()->json($results);
+    }
+
+    public function get_plans()
+    {
+        $data = \DB::table('subscription_type')->get();
+        
+        foreach ($data as $k => $v) {
+            $v->sno = $k + 1;
+
+            // Update Button
+            $updateButton = "<button class='btn btn-sm btn-primary' onclick='getSinglePlan($v->id)'>Edit</button>";
+
+            $action = $updateButton;
+            $v->action = $action;
         }
 
         $results = array(
@@ -573,6 +604,12 @@ class AdminController extends Controller
         return response(["status" => "success", "res" => $role, "features" => $features], 200);
     }
 
+    public function get_plan(Request $request)
+    {
+        $plan = \DB::table('subscription_type')->find($request->id);
+        return response(["status" => "success", "res" => $plan], 200);
+    }
+
     public function update_role(Request $request)
     {
         $role_id = $request->id;
@@ -591,14 +628,21 @@ class AdminController extends Controller
                 $arf->save();
             }
         }
+    }
 
-        return response(["status" => "success", "msg" => "Role updated successfully", "res" => $ar], 200);
+    public function update_plan(Request $request)
+    {
+        $ar = \DB::table('subscription_type')->where('id', $request->id)->update([
+            'name' => $request->name,
+            'charges' => $request->charges,
+            'no_of_clean_file' => $request->no_of_clean_file,
+        ]);
 
+        return response(["status" => "success", "msg" => "Plan updated successfully", "res" => $ar], 200);
     }
 
     public function unauthorize_access()
     {
         return view("admin/unauthorize-access");
     }
-
 }

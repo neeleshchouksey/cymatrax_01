@@ -18,6 +18,7 @@ use Omnipay\Common\CreditCard;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
+use App\Settings;
 
 class UserController extends Controller
 {
@@ -39,8 +40,10 @@ class UserController extends Controller
     public function index()
     {
         $title = "Dashboard";
+        $uploads =  DB::table('uploads')->where('user_id', Auth::user()->id)->groupBy('user_id')
+            ->selectRaw('sum(duration_in_sec) as duration, count(*) as count, user_id')->get();
 
-        return view('home', compact('title'));
+        return view('home', compact('title', 'uploads'));
     }
 
     public function upload_audio()
@@ -50,9 +53,11 @@ class UserController extends Controller
 //        $outName1 = $dir."Ashnikko-DaisyLyrics.wav";
 //        $res = shell_exec("lame --quiet --decode  $inName  $outName1  2>&1;");
 //        dd($res);
+        $select =  DB::table('settings')->select('value')->where('id',1)->first();
+        $val = $select->value;
 
         $title = "Upload Audio";
-        return view('upload', compact('title'));
+        return view('upload', compact('title','val'));
     }
 
     public function profile()
@@ -75,7 +80,7 @@ class UserController extends Controller
         $user->zip_code = $request->zipcode ? $request->zipcode : $user->zip_code;
         $user->save();
 
-        return Redirect::to('/profile')->with('alert', 'Profile Updated Successfully');
+        return redirect()->back()->with('message', 'Profile Updated Successfully');
 
     }
 
@@ -182,6 +187,20 @@ class UserController extends Controller
     {
         $title = "My Account";
         $getData = DB::table('uploads')->where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        foreach ($getData as $key => $upload) {
+            $seconds = $upload->duration;
+            $minutes = floor($seconds / 60);
+            $secondsleft = $seconds % 60;
+            if ($minutes < 10) {
+                $minutes = '0' . $minutes;
+            }
+            if ($secondsleft < 10) {
+                $secondsleft = '0' . $secondsleft;
+            }
+            $upload->duration = $minutes.':'.$secondsleft;
+            $upload->duration_in_min = $minutes.':'.$secondsleft;
+        }
+       //  dd($getData);
         return view('account', compact('getData', 'title'));
     }
 
@@ -293,6 +312,8 @@ class UserController extends Controller
             ->where('user_id', '=', auth()->user()->id)
             ->orderBy('created_at', 'desc');
 
+          
+        
         if ($value == 0) {
             $query->where('cleaned', 1);
         }
@@ -301,6 +322,22 @@ class UserController extends Controller
         }
 
         $getData = $query->get();
+
+        foreach ($getData as $key => $upload) {
+            $seconds = $upload->duration;
+            $minutes = floor($seconds / 60);
+            $secondsleft = $seconds % 60;
+            if ($minutes < 10) {
+                $minutes = '0' . $minutes;
+            }
+            if ($secondsleft < 10) {
+                $secondsleft = '0' . $secondsleft;
+            }
+            $upload->duration = $minutes.':'.$secondsleft;
+            $upload->duration_in_min = $minutes.':'.$secondsleft;
+        }
+
+
         return response()->json(['status' => 'success', 'res' => $getData], 200);
 
     }
@@ -370,5 +407,12 @@ class UserController extends Controller
         } else {
             return redirect(url('/account'))->with('error', 'File not found');
         }
+    }
+
+    public function subscription()
+    {
+        $title = "Select Subscription";
+        $subscriptions = DB::table('subscription_type')->get();
+        return view("subscription", compact("title", "subscriptions"));
     }
 }

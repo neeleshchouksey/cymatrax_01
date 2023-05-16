@@ -70,15 +70,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>User Type<span class="req">*</span> :</td>
-                            <td>
-                                <input type="radio" name="user" value="1" checked>
-                                Single User
-
-
-                                <input type="radio" name="user" value="2" style="margin-left: 22px;">
-                                Company User
-                            </td>
+                            <input type="hidden" name="user" value="1">
                         </tr>
                         <tr>
                             <td>Address<span class="req">*</span> :</td>

@@ -23,14 +23,14 @@ Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('r
 Route::get('/services', 'HomeController@services');
 Route::get('/privacy', 'HomeController@privacy');
 Route::get('/terms', 'HomeController@terms');
-Route::get('/dashboard', 'UserController@index');
-Route::get('/upload-audio', 'UserController@upload_audio');
-Route::get('/profile', 'UserController@profile');
+Route::get('/dashboard', 'UserController@index')->name('userDashboard');
+Route::get('/upload-audio', 'UserController@upload_audio')->name('uploadAudio');
+Route::get('/profile', 'UserController@profile')->name('userProfile');
 Route::post('/update-profile', 'UserController@update_profile')->name("update-profile");
 Route::post('file/upload', 'UserController@upload')->name('file.upload');
 Route::post('download-file', 'UserController@download');
 Route::post('save-duration', 'UserController@save_duration');
-Route::get('account', 'UserController@account');
+Route::get('account', 'UserController@account')->name('my_account');
 Route::get('send-csv-email', 'UserController@sendCsvEmail');
 Route::get('/upload-summary/{id}', 'UserController@upload_summary');
 Route::get('/transactions', 'UserController@transactions');
@@ -52,6 +52,17 @@ Route::get('/get-uploaded-audio/{id}','UserController@getUploadedAudio');
 Route::get('/get-audio/{id}','UserController@getAudio');
 Route::get('/free-subscription','UserController@free_subscription');
 Route::get('/confirm-subscription','UserController@confirm_subscription');
+Route::get('/subscription','UserController@subscription')->name('subscription');
+Route::get('/payments/create/{id}','PaypalController@createView')->name('paymentCreateView');
+Route::post('/payments/process','PaypalController@paymentProcess')->name('paymentProcess');
+Route::get('/cancel-plan','PaypalController@cancelPlan')->name('cancelPlan');
+
+Route::get('create-product','PaypalController@createProduct')->name('createProduct');
+Route::get('create-plan','PaypalController@createPlan')->name('createPlan');
+Route::get('generate-token','PaypalController@generateAccessToken')->name('generateAccessToken');
+
+Route::get('test', 'PaypalController@test')->name('test');
+// Route::post('subscription', 'PaypalController@subscription')->name('subscription');
 
 ###################### Admin Routes ##########################
 
@@ -63,6 +74,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/logout', 'AdminController@logout');
     Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard')->middleware('role:dashboard');
     Route::get('/free-subscription', 'AdminController@free_subscription')->middleware('role:free-subscription');
+    Route::get('/time-on-disk', 'AdminController@time_on_disk')->middleware('role:time-on-disk');
     Route::get('/file-delete-setting','AdminController@file_delete_setting');
     Route::get('/users', 'AdminController@users')->name('admin.users')->middleware('role:users');
     Route::get('/user-files/{id}','AdminController@user_files');
@@ -71,9 +83,11 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/view-user-files/{id}','AdminController@view_get_user_files');
     Route::get('/admins', 'AdminController@admins')->name('admin.admins')->middleware('role:admins');
     Route::get('/roles', 'AdminController@roles')->name('admin.roles')->middleware('role:roles');
+    Route::get('/plan-and-subscription', 'AdminController@plan_and_subscription')->name('admin.roles')->middleware('role:plan-and-subscription');
     Route::get('/reports', 'AdminController@reports')->name('admin.reports')->middleware('role:reports');
 
     Route::post('/update-free-subscription-days', 'AdminController@update_free_subscription_days');
+    Route::post('/update-time-on-disk', 'AdminController@update_time_on_disk');
     Route::post('/update-file-delete-days', 'AdminController@update_file_delete_days');
     Route::get('/delete-file/{id}', 'AdminController@delete_file');
     Route::get('/get-all-users', 'AdminController@get_users');
@@ -92,6 +106,9 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::post('/update-admin', 'AdminController@update_admin')->name('admin.update-admin');
 
     Route::get('/get-all-roles', 'AdminController@get_roles');
-    Route::get('/get-role/{id}', 'AdminController@get_role');
     Route::post('/update-role', 'AdminController@update_role');
+    Route::get('/get-role/{id}', 'AdminController@get_role');
+    Route::get('/get-all-plans', 'AdminController@get_plans');
+    Route::post('/update-plan', 'AdminController@update_plan');
+    Route::get('/get-plan/{id}', 'AdminController@get_plan');
 });
