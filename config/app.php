@@ -176,7 +176,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         LaravelCaptcha\Providers\LaravelCaptchaServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class
+        //Laravel\Socialite\SocialiteServiceProvider::class
 
     ],
 
