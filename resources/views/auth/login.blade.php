@@ -3,8 +3,36 @@
 @section('content')
 
     <div class="content">
-        <section>
+        <style>
+            table {
+                    margin-top: 23px;
+                }
+                .google a {
+                    padding: 10px 40px;
+                    border: 3px solid;
+                    / color: #000000; /
+                    border-radius: 7px;
+                    text-decoration: none;
+                    font-weight: 600;
+                    font-size: 18px;
+                }
 
+                .google {
+                    text-align: center;
+                    / padding-top: 30px; /
+                }
+        </style>
+        <section>
+            @if (session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
+                @if (session()->has('error'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('error') }}
+                    </div>
+                @endif
             <div class="relative">
                 @error('email')
                 <div class="errors">{{ $message }}</div>
@@ -15,11 +43,17 @@
                 <br>
                 <form method="POST" action="{{ route('login') }}" class="login">
                     @csrf
+                    <div class="google">
+                        <h3>Customer Login</h3><br>
+                        <a href="{{ route('login-with-google') }}">Continue with Google</a>
+                        <div style="margin-top: 33px">OR</div>
+                    </div>
                     <table width="100%" border="0" cellspacing="0" cellpadding="6">
                         <tbody>
-                        <tr>
+                        {{-- <tr>
                             <td colspan="2"><h3>Customer Login</h3></td>
-                        </tr>
+                        </tr> --}}
+
                         <tr>
                             <td>Email Address:</td>
                             <td>
@@ -48,6 +82,9 @@
                             <td colspan="2">
                                 <p>Forgot your password? <a href="{{ route('password.request') }}">Click Here</a></p>
                                 <p>Don't have an account? <a href="{{ route('register') }}">Create one</a></p>
+                                @if (session('email__'))
+                                <p>Verify your email? <a href="{{route('send-verify-email', session('email__'))}}">Click Here</a></p>
+                                @endif
                             </td>
                         </tr>
                         </tbody>
@@ -57,3 +94,5 @@
         </section>
     </div>
 @endsection
+
+

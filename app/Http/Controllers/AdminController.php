@@ -110,6 +110,7 @@ class AdminController extends Controller
     {
         $fds = FileDeleteSetting::first();
         $fds->days = $request->days;
+        $fds->clean_files_limits = $request->clean_files_limits;
         $fds->save();
         return redirect()->back()->with('success', 'Updated Successfully');
     }
@@ -568,7 +569,6 @@ class AdminController extends Controller
     public function get_plans()
     {
         $data = \DB::table('subscription_type')->get();
-        
         foreach ($data as $k => $v) {
             $v->sno = $k + 1;
 
@@ -636,6 +636,9 @@ class AdminController extends Controller
             'name' => $request->name,
             'charges' => $request->charges,
             'no_of_clean_file' => $request->no_of_clean_file,
+            'text_1' => $request->text_1,
+            'text_2' => $request->text_2,
+            'text_3' => $request->text_3,
         ]);
 
         return response(["status" => "success", "msg" => "Plan updated successfully", "res" => $ar], 200);

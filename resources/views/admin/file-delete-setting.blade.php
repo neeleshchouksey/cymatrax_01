@@ -29,16 +29,25 @@
                             <div class="card-header">
                                 <h3 class="card-title">Update File Delete Days</h3>
                             </div>
-                            <form class="form-horizontal" method="post" action="{{URL::to('/')}}/admin/update-file-delete-days">
+                            <form class="form-horizontal" method="post" action="{{route('update-file-delete')}}">
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group row">
                                         <label for="inputEmail3" class="col-sm-3 col-form-label">Days</label>
                                         <div class="col-sm-9">
-                                            <input required="required" type="text  " class="form-control" id="days" name="days"
+                                            <input required="required" type="text" class="form-control" id="days" name="days"
                                                    placeholder="Days" value="{{$data->days}}">
                                         </div>
                                     </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-3 col-form-label">Clean file limits</label>
+                                        <div class="col-sm-9">
+                                            <input required="required" type="text" class="form-control" id="clean_files_limits" name="clean_files_limits"
+                                                   placeholder="Clean file limits" value="{{$data->clean_files_limits}}">
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-info">Update</button>

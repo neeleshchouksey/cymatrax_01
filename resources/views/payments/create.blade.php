@@ -29,7 +29,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <input type="hidden" value="{{ $data[0]->id }}" name="plan_id">
+                                    <input type="hidden" value="{{ $data[0]->plan_id }}" name="plan_id">
                                     <td>Email :</td>
                                     <td>
                                         <input id="name" type="text" disabled

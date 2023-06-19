@@ -14,6 +14,12 @@ return [
     |
     */
 
+
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'), 
+        'client_secret' => env('GOOGLE_SECRET_ID'), 
+        'redirect' => 'https://dev.alcondts.com/auth/google/callback', 
+    ],
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
@@ -30,4 +36,15 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'paypal' => [
+        'client_id' => env('PAYPAL_CLIENT_ID'),
+        'secret' => env('PAYPAL_SECRET'),
+        'settings' => [
+            'mode' => env('PAYPAL_MODE', 'sandbox'),
+            'http.ConnectionTimeOut' => 30,
+            'log.LogEnabled' => true,
+            'log.FileName' => storage_path() . '/logs/paypal.log',
+            'log.LogLevel' => 'DEBUG'
+        ],
+    ],
 ];

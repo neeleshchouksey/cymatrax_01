@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColsToUsersTable extends Migration
+class AlterUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,11 @@ class AddColsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text("address")->nullable();
-            $table->string("city")->nullable();
-            $table->string("state")->nullable();
-            $table->string("country")->nullable();
-            $table->string("zip_code")->nullable();
+            $table->string('name')->nullable()->change();
+            $table->tinyInteger('user')->nullable()->change();
+            $table->integer('is_verified')->default(0)->after('email_verified_at');
+            $table->integer('google_id')->nullable()->after('is_verified');
+            $table->dateTime('email_sent_at')->nullable()->after('google_id');
         });
     }
 
@@ -29,8 +29,6 @@ class AddColsToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }

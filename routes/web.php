@@ -20,6 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/register', 'Auth\RegisterController@doRegister')->name('do-register');
+Route::get('send-verify-email/{email}', 'Auth\LoginController@sendVerifyEmail')->name('send-verify-email');
+Route::get('auth/google', 'GoogleController@loginWithGoogle')->name('login-with-google');
+Route::any('auth/google/callback', 'GoogleController@callbackFromGoogle')->name('callback-google');
+Route::get('verify-user/{id}', 'Auth\RegisterController@verifyEmail')->name('verify-user');
+Route::get('open-inbox', 'Auth\RegisterController@openInbox')->name('open-inbox');
 Route::get('/services', 'HomeController@services');
 Route::get('/privacy', 'HomeController@privacy');
 Route::get('/terms', 'HomeController@terms');
@@ -53,6 +59,7 @@ Route::get('/get-audio/{id}','UserController@getAudio');
 Route::get('/free-subscription','UserController@free_subscription');
 Route::get('/confirm-subscription','UserController@confirm_subscription');
 Route::get('/subscription','UserController@subscription')->name('subscription');
+// Route::get('')
 Route::get('/payments/create/{id}','PaypalController@createView')->name('paymentCreateView');
 Route::post('/payments/process','PaypalController@paymentProcess')->name('paymentProcess');
 Route::get('/cancel-plan','PaypalController@cancelPlan')->name('cancelPlan');
@@ -61,7 +68,7 @@ Route::get('create-product','PaypalController@createProduct')->name('createProdu
 Route::get('create-plan','PaypalController@createPlan')->name('createPlan');
 Route::get('generate-token','PaypalController@generateAccessToken')->name('generateAccessToken');
 
-Route::get('test', 'PaypalController@test')->name('test');
+Route::get('new-subscription', 'PaypalController@test')->name('test');
 // Route::post('subscription', 'PaypalController@subscription')->name('subscription');
 
 ###################### Admin Routes ##########################
@@ -75,7 +82,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard')->middleware('role:dashboard');
     Route::get('/free-subscription', 'AdminController@free_subscription')->middleware('role:free-subscription');
     Route::get('/time-on-disk', 'AdminController@time_on_disk')->middleware('role:time-on-disk');
-    Route::get('/file-delete-setting','AdminController@file_delete_setting');
+    Route::get('/clean-file-limit','AdminController@file_delete_setting');
     Route::get('/users', 'AdminController@users')->name('admin.users')->middleware('role:users');
     Route::get('/user-files/{id}','AdminController@user_files');
     Route::get('/view/{id}','AdminController@view_user_files');
@@ -88,7 +95,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
 
     Route::post('/update-free-subscription-days', 'AdminController@update_free_subscription_days');
     Route::post('/update-time-on-disk', 'AdminController@update_time_on_disk');
-    Route::post('/update-file-delete-days', 'AdminController@update_file_delete_days');
+    Route::post('/update-file-delete-days', 'AdminController@update_file_delete_days')->name('update-file-delete');
     Route::get('/delete-file/{id}', 'AdminController@delete_file');
     Route::get('/get-all-users', 'AdminController@get_users');
     Route::get('/get-all-reports', 'AdminController@get_reports');

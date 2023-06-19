@@ -34,7 +34,8 @@
                     </button>
                 </form>
                 @if (Auth::user()->is_admin || Auth::user()->subscription || Auth::user()->enterprise_user)
-                    <button id="clean-btn" class="c-btn  float-right" onclick="clean_multiple_files()">Clean File(s)
+                    <button id="clean-btn" class="c-btn  float-right"
+                        onclick="clean_multiple_files({{ $remaining_file_limits }})">Clean File(s)
                     </button>
                 @else
                     @if (!Auth::user()->trial_expiry_date)
@@ -58,15 +59,17 @@
                             </button>
                         </form>
                     @else
-                        <button id="clean-btn" class="c-btn float-right" disabled onclick="clean_multiple_files()">Clean
+                        <button id="clean-btn" class="c-btn float-right" disabled
+                            onclick="clean_multiple_files({{ $remaining_file_limits }})">Clean
                             File(s)
                         </button>
                     @endif
                 @endif
 
-                
 
-                <button type="button" class="c-btn float-right mr-2"><a style="text-decoration: none; color:#ffffff" href="{{route('uploadAudio')}}">Upload</a></button>
+
+                <button type="button" class="c-btn float-right mr-2"><a style="text-decoration: none; color:#ffffff"
+                        href="{{ route('uploadAudio') }}">Upload</a></button>
                 {{--                <button onclick="allDownload(event);" id="btnDownload" disabled type="button" --}}
                 {{--                        class="c-btn float-right mr-2"> --}}
                 {{--                    Download --}}
@@ -95,7 +98,7 @@
                     <tr style="text-align: left">
 
                         <th data-priority="1">Name</th>
-                        <th data-priority="2">Duration in minutes</th>                    
+                        <th data-priority="2">Duration in minutes</th>
                         <th data-priority="3">Upload Date</th>
                         <th data-priority="4">Audio</th>
                         <th data-priority="5">Status</th>
@@ -108,6 +111,43 @@
 
             </table>
         </div>
+
+
+
     </section>
+    {{-- model  --}}
+    <div class="modal fade" id="file-limits-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Now you don't have limit more than {{ $remaining_file_limits }}
+                        files, please select a new plan or upgrade your current plan</h3>
+                    <br><br>
+                </div>
+                <div class="modal-footer" style="text-align:center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="closelimitsModal()">Close</button>
+                    <button type="button" class="btn btn-primary"><a href="{{ route('subscription') }}">Select or Upgrade
+                            Plan</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // $(document).ready(function() {
+        // $('.swal2-confirm swal2-styled').click(function(e) {
+        //     window.location = env(APP_URL) + '/subscription'
+        // });
+        // });
+
+        var elements = document.getElementsByClassName("swal2-confirm swal2-styled");
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener("click", function() {
+                console.log(12312313)
+                window.location = 'http://localhost/cymatrax_dev/subscription';
+            });
+        }
+    </script>
 
 @endsection

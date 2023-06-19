@@ -416,8 +416,25 @@ function getSinglePlan(id) {
             $("#edit_name").val(response.res.name);
             $("#edit_charges").val(response.res.charges);
             $("#edit_no_of_clean_file").val(response.res.no_of_clean_file);
+            $("#edit_text_1").val(response.res.text_1);
+            $("#edit_text_2").val(response.res.text_2);
+            $("#edit_text_3").val(response.res.text_3);
         },
     });
+}
+
+function cancelPlanModal() {
+    // $.ajax({
+    //     method: "get",
+    //     url: APP_URL + "/admin/get-plan/" + id,
+    //     success: function (response) {
+            $("#cancel-plan-modal").modal("show");
+            // $("#edit_id").val(response.res.id);
+            // $("#edit_name").val(response.res.name);
+            // $("#edit_charges").val(response.res.charges);
+            // $("#edit_no_of_clean_file").val(response.res.no_of_clean_file);
+    //     },
+    // });
 }
 
 function updateRole() {
@@ -461,6 +478,9 @@ function updatePlan() {
             "name": $("#edit_name").val(),
             "charges": $("#edit_charges").val(),
             "no_of_clean_file": $("#edit_no_of_clean_file").val(),
+            "text_1": $("#edit_text_1").val(),
+            "text_2": $("#edit_text_2").val(),
+            "text_3": $("#edit_text_3").val(),
         },
         success: function (response) {
             Swal.fire({
@@ -523,6 +543,9 @@ function get_plans() {
             { mData: 'name' },
             { mData: 'charges' },
             { mData: 'no_of_clean_file' },
+            { mData: 'text_1' },
+            { mData: 'text_2' },
+            { mData: 'text_3' },
             { mData: 'action' }
         ]
 

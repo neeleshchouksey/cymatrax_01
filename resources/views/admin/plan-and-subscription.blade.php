@@ -33,6 +33,9 @@
                                         <th>Plan </th>
                                         <th>Charges</th>
                                         <th>Files</th>
+                                        <th>Text 1</th>
+                                        <th>Text 2</th>
+                                        <th>Text 3</th>
                                         <th>Action </th>
                                     </tr>
                                     </thead>
@@ -44,6 +47,9 @@
                                         <th>Plan Name</th>
                                         <th>Charges</th>
                                         <th>No of clean files</th>
+                                        <th>Text 1</th>
+                                        <th>Text 2</th>
+                                        <th>Text 3</th>
                                         <th>Action </th>
                                     </tr>
                                     </tfoot>
@@ -95,6 +101,30 @@
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="edit_no_of_clean_file" name="edit_no_of_clean_file"
                                    placeholder="No of clean files">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="text_1" class="col-sm-3 col-form-label">Text 1</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="edit_text_1" name="edit_text_1"
+                                   placeholder="Text 1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="text_2" class="col-sm-3 col-form-label">Text 2</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="edit_text_2" name="edit_text_2"
+                                   placeholder="Text 2">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="text_3" class="col-sm-3 col-form-label">Text 3</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="edit_text_3" name="edit_text_3"
+                                   placeholder="Text 3">
                         </div>
                     </div>
 

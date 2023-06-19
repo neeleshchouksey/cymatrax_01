@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'user', 'address', 'city', 'state', 'country', 'zip_code'
+        'name', 'email', 'password', 'user', 'address', 'city', 'state', 'email_sent_at', 'country', 'zip_code', 'google_id'
     ];
 
     /**
@@ -56,7 +56,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Upload::class, 'user_id', 'id')->where("cleaned",1);
     }
-    public function paidFiles()
+     public function paidFiles()
     {
         return $this->hasMany(Upload::class, 'user_id', 'id');
     }

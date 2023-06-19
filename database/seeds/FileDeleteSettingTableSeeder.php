@@ -11,6 +11,7 @@ class FileDeleteSettingTableSeeder extends Seeder
      */
     public function run()
     {
+        
         DB::table("file_delete_setting")->insert(["id"=>1,"days"=>15,"clean_files_limits"=>5,"created_at"=>now(),"updated_at"=>now()]);
     }
 }

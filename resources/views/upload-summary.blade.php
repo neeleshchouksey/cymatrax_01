@@ -36,7 +36,7 @@
                 @endif
             </div>
             @if(Auth::user()->is_admin || Auth::user()->subscription || Auth::user()->enterprise_user)
-                <button id="clean-btn" class="c-btn" onclick="clean_files({{$id}})"
+                <button id="clean-btn" class="c-btn" onclick="clean_files({{$id. ','.$remaining_file_limits}})"
                         style="margin-top: 1rem; margin-bottom: 20px;">Clean File(s)
                 </button>
             @else
@@ -54,7 +54,7 @@
                             style="margin-top: 1rem; margin-bottom: 20px;">Proceed to Checkout
                     </button>
                 @else
-                    <button id="clean-btn" class="c-btn" onclick="clean_files({{$id}})"
+                    <button id="clean-btn" class="c-btn" onclick="clean_files({{$id. ','.$remaining_file_limits}})"
                             style="margin-top: 1rem; margin-bottom: 20px;">Clean File(s)
                     </button>
                 @endif
