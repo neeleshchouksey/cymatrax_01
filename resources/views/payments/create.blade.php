@@ -15,7 +15,8 @@
                         @csrf
                         <table width="100%" border="0" cellspacing="0" cellpadding="6">
                             <tbody>
-
+                                <input type="hidden" name="value" value={{$data[0]->charges}}>
+                                <input type="hidden" name="plan_id" value={{$data[0]->plan_id}}>
                                 <tr>
                                     <td colspan="2"><b>Caymatrax "{{ $data[0]->name }}" Subscription</b></td>
                                 </tr>
@@ -34,11 +35,11 @@
                                     <td>
                                         <input id="name" type="text" disabled
                                             class="form-control @error('name') is-invalid @enderror" name="name" disabled
-                                            value="{{ Auth::user()->email }}" required>
+                                            value="{{ Auth::user()->email ?? '' }}" required>
                                     </td>
                                 </tr>
                                 @php
-                                    $name_parts = explode(' ', Auth::user()->name);
+                                    $name_parts = Auth::user()->name ? explode(' ', Auth::user()->name) : '';
                                 @endphp
                                 <tr>
                                     <td>First Name :</td>

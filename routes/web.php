@@ -62,8 +62,8 @@ Route::get('/subscription','UserController@subscription')->name('subscription');
 // Route::get('')
 Route::get('/payments/create/{id}','PaypalController@createView')->name('paymentCreateView');
 Route::post('/payments/process','PaypalController@paymentProcess')->name('paymentProcess');
-Route::get('/cancel-plan','PaypalController@cancelPlan')->name('cancelPlan');
-
+Route::get('/payments/success','PaypalController@paymentSuccess')->name('paymentSuccess');
+Route::get('/payments/cancel','PaypalController@paymentCancel')->name('paymentCancel');
 Route::get('create-product','PaypalController@createProduct')->name('createProduct');
 Route::get('create-plan','PaypalController@createPlan')->name('createPlan');
 Route::get('generate-token','PaypalController@generateAccessToken')->name('generateAccessToken');
