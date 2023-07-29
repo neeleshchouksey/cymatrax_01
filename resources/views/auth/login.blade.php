@@ -1,16 +1,21 @@
 @extends('layouts.app')
- 
-@section('content')
 
+@section('content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class="content">
         <style>
             table {
                     margin-top: 23px;
                 }
+                .google-logo {
+                    background: linear-gradient(45deg, #DB4437 0%, #DB4437 33.33%, #4285F4 33.33%, #4285F4 66.66%, #F4B400 66.66%, #F4B400 100%);
+                    color: #FFFFFF;
+                    padding: 5px
+                    }
                 .google a {
                     padding: 10px 40px;
                     border: 3px solid;
-                    / color: #000000; /
+                    /* color: #000000; */
                     border-radius: 7px;
                     text-decoration: none;
                     font-weight: 600;
@@ -19,7 +24,7 @@
 
                 .google {
                     text-align: center;
-                    / padding-top: 30px; /
+                    /* padding-top: 30px; */
                 }
         </style>
         <section>
@@ -45,7 +50,7 @@
                     @csrf
                     <div class="google">
                         <h3>Customer Login</h3><br>
-                        <a href="{{ route('login-with-google') }}">Continue with Google</a>
+                        <a href="{{ route('login-with-google') }}"><i class="google-logo fa fa-google"></i> Continue with Google</a>
                         <div style="margin-top: 33px">OR</div>
                     </div>
                     <table width="100%" border="0" cellspacing="0" cellpadding="6">
@@ -94,5 +99,3 @@
         </section>
     </div>
 @endsection
-
-

@@ -13,6 +13,12 @@
         .buttons td {
             padding: 10px 20px 20px 0 !important;
         }
+        .subs-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: solid 1px #ccc;
+        }
     </style>
     <div class="content">
         <div class="modal fade" id="cancel-plan-modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -32,7 +38,15 @@
             </div>
         </div>
         <section class="contained">
-            <h1 class="myaccount">{{ $title }}</h1>
+            <div class="subs-header">
+                <h1>{{ $title }}</h1>
+                @if (Auth::user()->is_cancelled == 1 && !is_null(Auth::user()->plan_end_date)) 
+                    <div>
+                        <p><b>Your {{Auth()->user()->plan_name}} plan is still active</b></p> 
+                        <p style="color: #ea0d0d"><b>Expiry on {{Auth::user()->plan_end_date}}</b></p> 
+                    </div>
+                @endif
+            </div>
 
             <div class="relative">
                 @if (session()->has('message'))
@@ -94,24 +108,23 @@
                                     <td>Subscription :</td>
                                     <td>
                                         <input type="text" disabled name="plan_name"
-                                            value="{{ $user->subscription == 1 ? $user->plan_name : "Your don't have it" }}">
+                                            value="{{ $user->subscription == 1 ? $user->plan_name : "Community" }}">
 
 
                                     </td>
                                 </tr>
                                 <tr class="buttons">
-                                    @if ($user->subscription == 1)
+                                    <td>
+                                        <a href="{{ route('subscription') }}">Upgrade Plan</a>
+                                    </td>
+                                    @if ($user->subscription == 1 && $user->subscription_id && $user->is_cancelled == 0)
 
-                                        <td>
+                                        {{-- <td>
                                             <a href="{{ route('subscription') }}">Upgrade Plan</a>
-                                        </td>
+                                        </td> --}}
                                         <td onclick="cancelPlannn()">
                                             <a href="#">Cancel Plan</a>
                                             {{-- Cancel Plan --}}
-                                        </td>
-                                    @else
-                                        <td>
-                                            <a href="{{ route('subscription') }}">Select Plan</a>
                                         </td>
                                     @endif
                                 </tr>
@@ -176,6 +189,7 @@
         </div>
         <script>
             function cancelPlannn() {
+                console.log(12312313);
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You want to cancel your plan",
@@ -188,7 +202,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             method: "get",
-                            url: APP_URL + "/cancel-plan",
+                            url: APP_URL + "/payments/cancel",
                             success: function(response) {
                                 Swal.fire({
                                     title: 'Success!',

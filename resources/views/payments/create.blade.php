@@ -22,7 +22,7 @@
                                 </tr>
                                 <tr>
                                     <td><h3 style="color: green">Monthly Cost :</h3></td>
-                                    <td><h3 style="color: green">{{$data[0]->charges}}$ Plus tax</h3></td>
+                                    <td><h3 style="color: green">${{$data[0]->charges}}</h3></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">

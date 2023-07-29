@@ -1,16 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class="content">
         <section>
             <style>
                 table {
                     margin-top: 23px;
                 }
+                .google-logo {
+                    background: linear-gradient(45deg, #DB4437 0%, #DB4437 33.33%, #4285F4 33.33%, #4285F4 66.66%, #F4B400 66.66%, #F4B400 100%);
+                    color: #FFFFFF;
+                    padding: 5px
+                    }
                 .google a {
                     padding: 10px 40px;
                     border: 3px solid;
-                    / color: #000000; /
+                    /* color: #000000; */
                     border-radius: 7px;
                     text-decoration: none;
                     font-weight: 600;
@@ -208,7 +214,7 @@
                     <div>
                         <h3>Registration</h3>
                         <div class="google">
-                            <a href="{{ route('login-with-google') }}">Continue with Google</a>
+                            <a href="{{ route('login-with-google') }}"><i class="google-logo fa fa-google"></i> Continue with Google</a>
                             <div style="margin-top: 33px">OR</div>
                         </div>
                     </div>
@@ -242,6 +248,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td colspan="2">
+                                    By clicking "Create account" or "Continue with Google" you agree to the 
+                                    <span style="cursor: pointer; color: #6fb4b7" onclick="openPrivacyModel()">Cymatrax TOS and Privacy Policy</span>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td colspan="2">&nbsp;</td>
                             </tr>
                             <tr>
@@ -255,5 +267,43 @@
                 </form>
             </div>
         </section>
+
+
+        <div class="modal fade" id="privacy-policy-modal" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div style="border-radius: 5px"  class="modal-content">
+                    <div class="main-content">
+                        <h2>Content of Privacy Policy</h2>
+                        <p>Service Providers: We may engage with trusted service providers who assist us in operating our business and delivering our services, such as hosting providers, payment processors, customer support services, or data analysis providers. These service providers are authorized to use your personal information only as necessary to provide the requested services to us.</p>
+                        <p>Service Providers: We may engage with trusted service providers who assist us in operating our business and delivering our services, such as hosting providers, payment processors, customer support services, or data analysis providers. These service providers are authorized to use your personal information only as necessary to provide the requested services to us.</p>
+                        <p>Service Providers: We may engage with trusted service providers who assist us in operating our business and delivering our services, such as hosting providers, payment processors, customer support services, or data analysis providers. These service providers are authorized to use your personal information only as necessary to provide the requested services to us.</p>
+                        <p>Service Providers: We may engage with trusted service providers who assist us in operating our business and delivering our services, such as hosting providers, payment processors, customer support services, or data analysis providers. These service providers are authorized to use your personal information only as necessary to provide the requested services to us.</p>
+                        <p>Service Providers: We may engage with trusted service providers who assist us in operating our business and delivering our services, such as hosting providers, payment processors, customer support services, or data analysis providers. These service providers are authorized to use your personal information only as necessary to provide the requested services to us.</p>
+                        <p>Service Providers: We may engage with trusted service providers who assist us in operating our business and delivering our services, such as hosting providers, payment processors, customer support services, or data analysis providers. These service providers are authorized to use your personal information only as necessary to provide the requested services to us.</p>
+                        <p>Service Providers: We may engage with trusted service providers who assist us in operating our business and delivering our services, such as hosting providers, payment processors, customer support services, or data analysis providers. These service providers are authorized to use your personal information only as necessary to provide the requested services to us.</p>
+                        <p>Service Providers: We may engage with trusted service providers who assist us in operating our business and delivering our services, such as hosting providers, payment processors, customer support services, or data analysis providers. These service providers are authorized to use your personal information only as necessary to provide the requested services to us.</p>
+                        <p>Service Providers: We may engage with trusted service providers who assist us in operating our business and delivering our services, such as hosting providers, payment processors, customer support services, or data analysis providers. These service providers are authorized to use your personal information only as necessary to provide the requested services to us.</p>
+                        <p>Service Providers: We may engage with trusted service providers who assist us in operating our business and delivering our services, such as hosting providers, payment processors, customer support services, or data analysis providers. These service providers are authorized to use your personal information only as necessary to provide the requested services to us.</p>
+                        <p>Service Providers: We may engage with trusted service providers who assist us in operating our business and delivering our services, such as hosting providers, payment processors, customer support services, or data analysis providers. These service providers are authorized to use your personal information only as necessary to provide the requested services to us.</p>
+                    </div>
+                    <div style="text-align: center" class="privacy-footer">
+                        <button style="padding: 8px 18px;background: #6fb4b7;border-radius: 5px;cursor: pointer;border: none;" onclick="closePrivacyPolicy()">Okay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
+    <script>
+        function openPrivacyModel() {
+            $("#privacy-policy-modal").show();
+        }
+
+        function closePrivacyPolicy() {
+            $("#privacy-policy-modal").hide();
+        }
+    </script>
 @endsection

@@ -47,6 +47,7 @@
             display: flex;
             border-bottom: 1px solid #ccc;
             align-items: center;
+            justify-content: space-between;
         }
 
         .subs-header button {
@@ -160,7 +161,13 @@
     <section class="contained">
         <div class="subs-header">
             <h1>{{ $title }}</h1>
-            <button>Starter {{ Auth::user()->subscription ? Auth::user()->plan_name : 'Community' }}</button>
+            <button>{{ Auth::user()->subscription ? Auth::user()->plan_name : 'Community' }}</button>
+            @if (Auth::user()->is_cancelled == 1 && !is_null(Auth::user()->plan_end_date)) 
+                <div>
+                    <p><b>Your {{Auth()->user()->plan_name}} plan is still active</b></p> 
+                    <p style="color: #ea0d0d"><b>Expiry on {{Auth::user()->plan_end_date}}</b></p> 
+                </div>
+            @endif
         </div>
         <div class="subs-content">
             @foreach ($subscriptions as $key => $data)

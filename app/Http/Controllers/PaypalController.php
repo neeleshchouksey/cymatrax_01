@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -10,7 +11,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Mail;
 
 
 class PaypalController extends Controller
@@ -111,6 +112,7 @@ class PaypalController extends Controller
             $plan_id = $plan_details['id'];
             $subscription_id = $request->query('subscription_id');
             $plan_data = DB::table('subscription_type')->where('plan_id', $plan_id)->first();
+            $plan_start_date = Carbon::now()->format('Y-m-d');
             if($user_id == Auth::user()->id && (!Auth::user()->subscription_id || $subscription_id != Auth::user()->subscription_id)){
                 User::where('id', $user_id)->update([
                     'subscription' => 1,
@@ -118,10 +120,24 @@ class PaypalController extends Controller
                     'plan_name' => $plan_data->name,
                     'charges' => $plan_data->charges,
                     'no_of_clean_file' => $plan_data->no_of_clean_file,
-                    'subscription_id' => $subscription_id
+                    'subscription_id' => $subscription_id,
+                    'plan_start_date' => $plan_start_date,
+                    'is_cancelled' => 0
                 ]);
                 $status = 1;
                 $plan_name = $plan_data->name;
+                $to = Auth::user()->email;
+                $subject = 'Your plan has been upgraded';
+                $cc = 'invoice@cymatrax.com';
+                if(!empty($to)) {
+                    $mail = Mail::send('emails.upgradePlan', [
+                        "plan_name" => $plan_name
+                    ], function ($message) use ($to, $subject, $cc) {
+                        $message->to($to);
+                        $message->cc($cc);
+                        $message->subject($subject);
+                    });
+                }
             }
         }else {
             $plan_name = '';
@@ -159,13 +175,21 @@ class PaypalController extends Controller
             }
 
             // Process cancellation response if needed
+                $now = Carbon::now();
+                $futureDate = $now->addMonth();
+                $month = $futureDate->format('m');
+                $current_date = $now->format('d');
+                $current_month = $now->format('m');
+                $current_year = $now->format('Y');
+                $date = Carbon::createFromFormat('Y-m-d', Auth::user()->plan_start_date)->format('d');
+                if ($current_date > $date) {
+                    $expiry_date = $current_year. '-'. $month.'-'.$date;
+                }else {
+                    $expiry_date = $current_year. '-'. $current_month.'-'.$date;
+                }  
             $update_user = User::where('id', Auth::user()->id)->update([
-                'subscription' => 0,
-                'plan_id' => null,
-                'plan_name' => null,
-                'charges' => null,
-                'no_of_clean_file' => null,
-                'subscription_id' => null
+                'is_cancelled' => 1,
+                'plan_end_date' => $expiry_date
             ]);
 
             if ($update_user) {
