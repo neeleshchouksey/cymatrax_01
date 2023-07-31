@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cymatrax | Admin</title>
+    <meta name="insight-app-sec-validation" content="d8792fe8-7b87-492d-89cb-f19c814ace07">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -41,7 +42,6 @@
     <link rel="stylesheet" href="{{asset('/assets/admin/')}}/plugins/select2/css/select2.min.css">
     <link rel="stylesheet"
           href="{{asset('/assets/admin/')}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-          <meta name="insight-app-sec-validation" content="ba1bae2f-eb54-4e72-b795-9f780ed49d3c">
 
     <script>
         var APP_URL = '{{URL::to("/")}}';

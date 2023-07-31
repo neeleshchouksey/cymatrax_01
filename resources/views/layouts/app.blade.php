@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="insight-app-sec-validation" content="d8792fe8-7b87-492d-89cb-f19c814ace07">
     <link rel="icon" type="image/png" href="{{URL::to('/')}}/assets/images/favicon.png">
     <link rel="stylesheet" href="{{asset('public/dropzone/dist/dropzone.css')}}"/>
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
