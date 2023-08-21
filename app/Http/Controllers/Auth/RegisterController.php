@@ -95,6 +95,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'email_sent_at' => $currentDateTime->format('Y-m-d H:i:s'),
+            'plan_name'=> 'Community',
             // 'user' => $data['user'],
             // 'address'=>$data['streetaddress'],
             // 'city'=>$data['city'],

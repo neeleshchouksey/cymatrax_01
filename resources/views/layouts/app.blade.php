@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="insight-app-sec-validation" content="d8792fe8-7b87-492d-89cb-f19c814ace07">
     <link rel="icon" type="image/png" href="{{URL::to('/')}}/assets/images/favicon.png">
     <link rel="stylesheet" href="{{asset('public/dropzone/dist/dropzone.css')}}"/>
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -36,8 +35,8 @@
     }
     #overlay > img{
         position: absolute;
-        top: 35%;
-        left: 45%;
+        top: 50%;
+        left: 50%;
     }
 </style>
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -84,6 +83,7 @@
                 <li><a href="{{URL::to('/')}}">Home</a></li>
                 <li><a href="{{URL::to('/')}}/services/">Services</a></li>
                 <li><a href="{{URL::to('/')}}/login">Login</a></li>
+                <li><a href="{{URL::to('/')}}/register">Sign Up Free</a></li>
             @endif
         </ul>
     </div>
@@ -91,7 +91,7 @@
 
 <div id="app">
     <div id="overlay" class="d-none">
-        <img src="{{asset('assets/images/loader.gif')}}" alt="Loading" />
+        <img src="{{asset('assets/images/loader.gif')}}" alt="Loading" style="height:30px;width:30px" />
     </div>
     @yield('content')
 </div>
@@ -206,7 +206,7 @@
         // FADE OUT YOUR OVERLAYING DIV
         setTimeout(function () {
             // $('#overlay').fadeOut();
-        },1600);
+        },1000);
     });
 
 </script>

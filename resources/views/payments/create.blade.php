@@ -101,9 +101,25 @@
                                             name="charge" required>
                                     </td>
                                 </tr>
+                                <td colspan="2">
+                                        <div class="alert alert-warning" style="background-color: pink;">
+                                            <strong>!</strong> To Continue with your purchase, agree to deferred or recurring purchase terms
+                                        </div>    
+                                    </td>
+                                
+                                        </tr>
+                                <tr>
+                                <td colspan="2">
+                                        <div class="" >
+                                            <strong> <input type="checkbox" name="checkbox" id="checkb1"></strong>I understand that i'm agreeing to a subscription.it will renew at the price and frequency listed 
+                                            until it ends or is cancelled. Discounts are applicable to the first subscription order only unless othewise stated.
+                                        </div>    
+                                    </td>
+                                </tr>
+
                                 <tr>
                                     <td>
-                                        <button type="submit">Process Payment</button>
+                                        <button type="submit" id="processPaymentBtn">Complete Order</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -116,3 +132,17 @@
             </section>
         </div>
     @endsection
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const $checkbox = $('#checkb1');
+        const $processPaymentBtn = $('#processPaymentBtn');
+
+        // Disable the button initially if the checkbox is not checked
+        $processPaymentBtn.prop('disabled', !$checkbox.is(':checked'));
+
+        $checkbox.on('change', function () {
+            $processPaymentBtn.prop('disabled', !this.checked);
+        });
+    });
+</script>

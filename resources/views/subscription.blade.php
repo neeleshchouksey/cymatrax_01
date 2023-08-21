@@ -129,8 +129,8 @@
         }
 
         .bottom-3 {
-            border: 2px solid blue;
-            background-color: blue;
+            border: 2px solid;
+           
         }
 
         .bottom-btn {
@@ -169,9 +169,22 @@
                 </div>
             @endif
         </div>
+       
+            
         <div class="subs-content">
+
+            
             @foreach ($subscriptions as $key => $data)
-                <div class="single-subs subs-{{ $key + 1 }}">
+                    
+            <?php 
+                $selectedClass = (Auth::user()->plan_name == $data->name) ? 'subs-2' : 'subs-1';
+                $selectedButtonClass = (Auth::user()->plan_name == $data->name  || Auth::user()->plan_name == NULL ) ? '2' : '';
+             ?>
+
+        <div class="single-subs {{ $selectedClass }}">
+               
+            
+            
                     <h3>{{ $data->name }}</h3>
                     <p class="first-p">{{ $data->charges == 'Free' ? 'Free' : '$' . $data->charges . ' per editor/month' }}
                     </p>
@@ -188,18 +201,26 @@
                         <p>&#9989;{{ $data->text_3 }}</p>
                     @endif
 
-                    <div class="bottom-btn-main bottom-{{ $key + 1 }}">
+                    @if(Auth::user()->plan_name == $data->name )
+                    <div class="bottom-btn-main bottom-2">
                         {{-- <div> --}}
 
                         {{-- </div> --}}
                     </div>
+                    @else
+                    <div class="bottom-btn-main bottom-1">
+                        {{-- <div> --}}
+
+                        {{-- </div> --}}
+                    </div>
+                    @endif
                     <button class="bottom-btn">
                         @if (!Auth::user()->subscription && $data->name == 'Community')
                             Selected
                         @elseif(Auth::user()->subscription && Auth::user()->plan_name == $data->name)
                             Selected
                         @else
-                            <a href="{{ route('paymentCreateView', $data->id) }}">{{ 'Choose ' . $data->name }}</a>
+                            <a href="{{ route('paymentCreateView', $data->id) }}">{{$data->name }}</a>
                         @endif
 
                     </button>

@@ -9,8 +9,8 @@
                     {{ Auth::user()->plan_name }} Subscription Enabled
                 @else
                     @if (!Auth::user()->trial_expiry_date)
-                        <a href="{{ URL::to('/') }}/free-subscription">Start <b><?php echo get_free_trial_days(); ?> Days</b> free
-                            trial</a>
+                        <!-- <a href="{{ URL::to('/') }}/free-subscription">Start <b><?php echo get_free_trial_days(); ?> Days</b> free
+                            trial</a> -->
                     @elseif(Auth::user()->trial_expiry_date < time())
                         Your trial period is expired
                     @else

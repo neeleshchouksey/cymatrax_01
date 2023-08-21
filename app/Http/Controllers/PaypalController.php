@@ -127,14 +127,18 @@ class PaypalController extends Controller
                 $status = 1;
                 $plan_name = $plan_data->name;
                 $to = Auth::user()->email;
+                
                 $subject = 'Your plan has been upgraded';
-                $cc = 'invoice@cymatrax.com';
+                $cc_email = config('service.MAIL_FROM_ADDRESS.email_cc');
+
+                $cc = $cc_email;
                 if(!empty($to)) {
                     $mail = Mail::send('emails.upgradePlan', [
                         "plan_name" => $plan_name
-                    ], function ($message) use ($to, $subject, $cc) {
+                    ], function ($message) use ($to,$from,$subject, $cc) {
                         $message->to($to);
                         $message->cc($cc);
+                        $message->from($from);
                         $message->subject($subject);
                     });
                 }
