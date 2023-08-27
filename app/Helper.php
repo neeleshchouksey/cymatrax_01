@@ -2,10 +2,13 @@
 
 use App\Admin;
 use App\FreeSubscription;
+use App\ConstantSettings;
 use Illuminate\Support\Facades\Auth;
 
 function get_free_trial_days(){
-    return FreeSubscription::first()->days;
+    $days = ConstantSettings::where('id',1)->first();
+    $days = $days->value;
+    return $days;
 }
 
 function checkRoleFeature($feature){

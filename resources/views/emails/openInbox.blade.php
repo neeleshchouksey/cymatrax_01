@@ -41,7 +41,7 @@
         <p>Click on the link we sent to <b>{{ session('email__sentt') }}</b> to finish your account setup.</p><br>
         <a class="google_btn" target="_blank" href="https://mail.google.com/mail/u/0/#inbox">Open Gmail</a>
         <br><br>
-        <p>No email in your inbox or span folder? Let's <a
+        <p>No email in your inbox or spam folder? Let's <a
                 href="{{ route('send-verify-email', session('email__sentt')) }}">resend it</a></p>
         <br><br>
     </div>

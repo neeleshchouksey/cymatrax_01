@@ -70,6 +70,12 @@ Route::get('generate-token','PaypalController@generateAccessToken')->name('gener
 
 Route::get('new-subscription', 'PaypalController@test')->name('test');
 // Route::post('subscription', 'PaypalController@subscription')->name('subscription');
+Route::post('/pay-via-paypal','UserController@redirectToPayment');
+Route::get('/paymentinfo', 'UserController@redirectToPayInfo');
+
+
+
+
 
 ###################### Admin Routes ##########################
 
@@ -118,4 +124,14 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/get-all-plans', 'AdminController@get_plans');
     Route::post('/update-plan', 'AdminController@update_plan');
     Route::get('/get-plan/{id}', 'AdminController@get_plan');
+
+    // Constat Menu Route 27 Aug 
+
+    Route::get('/constant-settings', 'AdminController@constant_settings')->middleware('role:constant-settings');
+    Route::get('/get-all-constant', 'AdminController@get_constant_setting');
+    Route::get('/get-all-const/{id}', 'AdminController@get_const');
+    Route::post('/update-constant-settings', 'AdminController@update_constant_settings');
+
+    
+
 });

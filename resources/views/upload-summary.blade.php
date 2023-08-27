@@ -32,13 +32,28 @@
                     @if(Auth::user()->trial_expiry_date>time())
                         <span>($0 per minute)</span>
                     @else
-                        <span id="total-cost"></span>($1 per minute) </b>
+                        <span id="total-cost"></span>(${{$dollerValue->value}} per minute) </b>
+                        <input type="hidden" name="value" id="charge-value" value="">
                 @endif
             </div>
+             <?php //dd($remaining_file_limits); ?>
             @if(Auth::user()->is_admin || Auth::user()->subscription || Auth::user()->enterprise_user)
-                <button id="clean-btn" class="c-btn" onclick="clean_files({{$id. ','.$remaining_file_limits}})"
-                        style="margin-top: 1rem; margin-bottom: 20px;">Clean File(s)
-                </button>
+               
+                
+               
+                @if($remaining_file_limits ==0 )
+                    <button id="clean-btn" class="c-btn" onclick="clean_files({{$id. ','.$remaining_file_limits}})"
+                            style="margin-top: 1rem; margin-bottom: 20px;">Clean File(s)
+                    </button>
+
+                <div id="file_count" class="row">
+                    <span> Plan Limit is exceeded </span> </div>
+                @else
+                    <button id="clean-btn" class="c-btn" onclick="clean_files({{$id. ','.$remaining_file_limits}})"
+                            style="margin-top: 1rem; margin-bottom: 20px;">Clean File(s)
+                    </button>
+                @endif
+                
             @else
                 @if(!Auth::user()->trial_expiry_date)
                     <button id="clean-btn" class="c-btn" onclick="clean_files_with_free_trial({{$id}})"
@@ -56,7 +71,8 @@
                 @else
                     <button id="clean-btn" class="c-btn" onclick="clean_files({{$id. ','.$remaining_file_limits}})"
                             style="margin-top: 1rem; margin-bottom: 20px;">Clean File(s)
-                    </button>
+                    </button> 
+                    <label> Plan Limit is exceeded </label>
                 @endif
             @endif
         </div>

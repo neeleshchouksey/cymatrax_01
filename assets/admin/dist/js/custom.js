@@ -24,6 +24,9 @@ $(function () {
     if (uri_segment2 == 'view') {
         view_user_files();
     }
+    if (uri_segment == 'constant-settings') {
+        get_constant_setting();
+    }
 });
 
 function activateDeactivateUser(id, status) {
@@ -406,6 +409,7 @@ function getSingleRole(id) {
     });
 }
 
+
 function getSinglePlan(id) {
     $.ajax({
         method: "get",
@@ -456,6 +460,7 @@ function updateRole() {
             }).then((result) => {
                 $("#update-role-modal").modal("hide");
                 get_roles();
+
             })
         },
         error: function (error) {
@@ -919,3 +924,70 @@ function downloadCSVFile(csv, filename) {
 //         $('#pageInfo').html( 'Showing page: '+info.page+' of '+info.pages );
 //     } );
 // })
+
+function get_constant_setting() {
+
+    $("#role-datatable1").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "bDestroy": true,
+        "ordering": false,
+        ajax: {
+            url: APP_URL + "/admin/get-all-constant",
+            type: "GET",
+        },
+        "columns": [
+            { mData: 'id' },
+            { mData: 'key' },
+            { mData: 'value' },
+            { mData: 'action' }
+        ]
+
+    }).buttons().container().appendTo('#role-datatable1_wrapper .col-md-6:eq(0)');
+}
+
+function getConstant(id) {
+    $.ajax({
+        method: "get",
+        url: APP_URL + "/admin/get-all-const/" + id,
+        success: function (response) {
+            $("#update-role-modal").modal("show");
+            $("#edit_id1").val(response.res.id);
+            $("#edit_role1").val(response.res.value);
+        },
+    });
+}
+
+function updatesubscriptiondays() {
+    $.ajax({
+        method: "post",
+        url: APP_URL + "/admin/update-constant-settings",
+        data: {
+            "_token": CSRF_TOKEN,
+            "id": $("#edit_id1").val(),
+            "value": $("#edit_role1").val(),
+        },
+        success: function (response) {
+            Swal.fire({
+                title: 'Success!',
+                text: response.msg,
+                icon: 'success',
+                showCancelButton: false,
+            }).then((result) => {
+                $("#update-role-modal").modal("hide");
+                get_constant_setting();
+            })
+        },
+        error: function (error) {
+            Swal.fire({
+                title: "Error",
+                text: error.responseJSON.msg,
+                icon: "error",
+            });
+        }
+    });
+}
+
+

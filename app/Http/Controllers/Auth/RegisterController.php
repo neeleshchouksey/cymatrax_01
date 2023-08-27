@@ -83,6 +83,7 @@ class RegisterController extends Controller
      */
     protected function doRegister(Request $request)
     {
+       
         $data = $request->all();
         $currentDateTime = Carbon::now();
         $exists_user = User::where('email',$data['email'])->first();
@@ -90,12 +91,20 @@ class RegisterController extends Controller
             return redirect()->route('register')->with('error', 'This is email is already exists');
         }
         // return $currentDateTime->format('Y-m-d H:i:s');
+
+        $data_sub = DB::table('subscription_type')->where('id',1)->get()->toArray();
+        $plan_name = $data_sub[0]->name;
+        $plan_id = $data_sub[0]->id;
+        $no_of_clean_file = $data_sub[0]->no_of_clean_file;
+
         $user =  User::create([
             // 'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'email_sent_at' => $currentDateTime->format('Y-m-d H:i:s'),
-            'plan_name'=> 'Community',
+            'plan_name'=>$plan_name,
+            'plan_id'=>$plan_id,
+            'no_of_clean_file'=>$no_of_clean_file,
             // 'user' => $data['user'],
             // 'address'=>$data['streetaddress'],
             // 'city'=>$data['city'],

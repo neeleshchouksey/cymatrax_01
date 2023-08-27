@@ -23,7 +23,7 @@
     </script>
 
 <style>
-    #overlay{
+    /* #overlay{
         position:fixed;
         z-index:99999;
         top:0;
@@ -37,7 +37,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-    }
+    } */
 </style>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGRTB9YSNS"></script>
@@ -90,9 +90,10 @@
 </header>
 
 <div id="app">
-    <div id="overlay" class="d-none">
+     <!-- /* loader is temp display:none  -->
+    <!-- <div id="overlay" class="d-none">
         <img src="{{asset('assets/images/loader.gif')}}" alt="Loading" style="height:30px;width:30px" />
-    </div>
+    </div> -->
     @yield('content')
 </div>
 <footer>
@@ -206,7 +207,7 @@
         // FADE OUT YOUR OVERLAYING DIV
         setTimeout(function () {
             // $('#overlay').fadeOut();
-        },1000);
+        },500);
     });
 
 </script>

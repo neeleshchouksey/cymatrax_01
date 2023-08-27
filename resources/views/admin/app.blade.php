@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cymatrax | Admin</title>
-    <meta name="insight-app-sec-validation" content="d8792fe8-7b87-492d-89cb-f19c814ace07">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -42,6 +41,7 @@
     <link rel="stylesheet" href="{{asset('/assets/admin/')}}/plugins/select2/css/select2.min.css">
     <link rel="stylesheet"
           href="{{asset('/assets/admin/')}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+          <meta name="insight-app-sec-validation" content="ba1bae2f-eb54-4e72-b795-9f780ed49d3c">
 
     <script>
         var APP_URL = '{{URL::to("/")}}';
@@ -114,7 +114,7 @@
                             </p>
                         </a>
                     </li>
-                    @if(checkRoleFeature('free-subscription'))
+                    <!-- @if(checkRoleFeature('free-subscription'))
                         <li class="nav-item menu-open">
                             <a href="{{URL::to('/admin/')}}/free-subscription"
                                class="nav-link  @if(Request::segment(2) == "free-subscription") active @endif">
@@ -123,7 +123,7 @@
                                 </p>
                             </a>
                         </li>
-                    @endif
+                    @endif -->
                     @if(checkRoleFeature('plan-and-subscription'))
                         <li class="nav-item menu-open">
                             <a href="{{URL::to('/admin/')}}/plan-and-subscription"
@@ -134,7 +134,7 @@
                             </a>
                         </li>
                     @endif
-                    @if(checkRoleFeature('file-delete-setting'))
+                    <!-- @if(checkRoleFeature('file-delete-setting'))
                         <li class="nav-item menu-open">
                         <a href="{{URL::to('/admin/')}}/clean-file-limit"
                                class="nav-link  @if(Request::segment(2) == "clean-file-limit") active @endif">
@@ -143,7 +143,7 @@
                                 </p>
                             </a>
                         </li>
-                    @endif
+                    @endif -->
                     @if(checkRoleFeature('users'))
                         <li class="nav-item menu-open">
                             <a href="{{URL::to('/admin/')}}/users"
@@ -184,12 +184,22 @@
                             </a>
                         </li>
                     @endif
-                    @if(checkRoleFeature('time-on-disk'))
+                    <!-- @if(checkRoleFeature('time-on-disk'))
                         <li class="nav-item menu-open">
                             <a href="{{URL::to('/admin/')}}/time-on-disk"
                                class="nav-link  @if(Request::segment(2) == "time-on-disk") active @endif">
                                 <p>
                                     Time On Disk
+                                </p>
+                            </a>
+                        </li>
+                    @endif -->
+                    @if(checkRoleFeature('constant-settings'))
+                        <li class="nav-item menu-open">
+                            <a href="{{URL::to('/admin/')}}/constant-settings"
+                               class="nav-link  @if(Request::segment(2) == "constant-settings") active @endif">
+                                <p>
+                                    Constant Settings
                                 </p>
                             </a>
                         </li>
@@ -274,7 +284,7 @@
 <script src="{{asset('/assets/admin/')}}/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 {{--<script src="{{asset('/assets/admin/')}}/dist/js/pages/dashboard.js"></script>--}}
-<script src="{{asset('/assets/admin/')}}/dist/js/custom.js"></script>
+<script src="{{asset('/assets/admin/')}}/dist/js/custom.js?time();"></script>
 
 <script>
     @if(session()->has('error'))

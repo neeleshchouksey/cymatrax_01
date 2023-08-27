@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Omnipay\Omnipay;
 use Omnipay\Common\CreditCard;
+use App\ConstantSettings;
 
 class AdminController extends Controller
 {
@@ -233,7 +234,9 @@ class AdminController extends Controller
 
     public function get_user_files($id)
     {
-        $days = FileDeleteSetting::first()->days;
+        // $days = FileDeleteSetting::first()->days;
+        $file_days = \DB::table('constant_settings')->where('id',2)->first();
+        $days = $file_days->value;
         $fifteendaysago = date_format(date_create($days . 'days ago'), 'Y-m-d 00:00:00');
 
         $files = Upload::select('users.name', 'uploads.file_name', 'uploads.created_at', 'uploads.id')
@@ -273,7 +276,9 @@ class AdminController extends Controller
         $keyword = $request->keyword;
         $filter_by = $request->filter_by;
         $date_filter_by = $request->date_filter_by;
-        $days = FileDeleteSetting::first()->days;
+        // $days = FileDeleteSetting::first()->days;
+        $file_days = \DB::table('constant_settings')->where('id',2)->first();
+        $days = $file_days->value;
         $fifteendaysago = date_format(date_create($days . 'days ago'), 'Y-m-d 00:00:00');
 
         DB::enableQueryLog();
@@ -387,7 +392,8 @@ class AdminController extends Controller
     public function reset_trial($id)
     {
         $user = User::find($id);
-        $days = FreeSubscription::first()->days;
+        $days = ConstantSettings::where('id',1)->first();
+        $days = $days->value;
         $trial_expiry_date = strtotime("+$days days ", time());
         $user->trial_expiry_date = $trial_expiry_date;
         $user->save();
@@ -648,4 +654,47 @@ class AdminController extends Controller
     {
         return view("admin/unauthorize-access");
     }
+
+    public function constant_settings()
+    {
+        $constant = ConstantSettings::where('id',2)->first();
+        return view('admin.constant_settings', compact("constant"));
+    }
+
+    public function get_constant_setting()
+    {
+        $data = ConstantSettings::get();
+        foreach ($data as $k => $v) {
+            $v->sno = $k + 1;
+
+            // Update Button
+            $updateButton = "<button class='btn btn-sm btn-primary' onclick='getConstant($v->id)'>Edit</button>";
+
+            $action = $updateButton;
+            $v->action = $action;
+        }
+
+        $results = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($data),
+            "iTotalDisplayRecords" => count($data),
+            "aaData" => $data
+        );
+        return response()->json($results);
+    }
+    public function update_constant_settings(Request $request)
+    {
+        $id = $request->id;
+        $value = $request->value;
+        $ar = ConstantSettings::find($id);
+        $ar->value = $value;
+        $ar->save();
+    }
+
+    public function get_const(Request $request)
+    {
+        $role = ConstantSettings::find($request->id);
+        return response(["status" => "success", "res" => $role], 200);
+    }
+
 }

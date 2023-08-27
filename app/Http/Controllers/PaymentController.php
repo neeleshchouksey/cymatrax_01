@@ -6,6 +6,7 @@ use App\FreeSubscription;
 use App\Upload;
 use App\UserCard;
 use App\User;
+use App\ConstantSettings;
 use http\Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -323,7 +324,8 @@ class PaymentController extends Controller
     {
         $user = User::find(Auth::user()->id);
         if (!$user->trial_expiry_date) {
-            $days = FreeSubscription::first()->days;
+            $days = ConstantSettings::where('id',1)->first();
+            $days = $days->value;
             $trial_expiry_date = strtotime("+$days days ", time());
             $user->trial_expiry_date = $trial_expiry_date;
             $user->save();
@@ -350,7 +352,8 @@ class PaymentController extends Controller
     {
         $user = User::find(Auth::user()->id);
         if (!$user->trial_expiry_date) {
-            $days = FreeSubscription::first()->days;
+            $days = ConstantSettings::where('id',1)->first();
+            $days = $days->value;
             $trial_expiry_date = strtotime("+$days days ", time());
             $user->trial_expiry_date = $trial_expiry_date;
             $user->save();

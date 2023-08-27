@@ -14,14 +14,17 @@
 @section('content')
     <section class="contained">
         <h1 class="myaccount">{{$title}}</h1>
+        
+        <span> You have used {{ $uploads[0]->count ?? 0 }} of the {{ $maxlimit}} files allowed for this plan. After {{ $maxlimit}} files, cleaning is ${{$dollerval}}/minute  </span>
+        <div style="margin-top:40px;"></div>
         <div class="tool">
             <h3>Audio Conversion Tool</h3>
-            <p>$<?php echo "1" ?> per minute</p>
+            <p>${{$dollerval}} per minute</p>
             <form id="dropzoneForm" enctype="multipart/form-data" class="dropzone"
                   action="{{ route('file.upload') }}">
                 @csrf
                 <div class="dz-default dz-message">
-{{--                    <img src="{{URL::to('/')}}/assets/images/upload.png" class="logo-banner"/>--}}
+
                     <img width="50px" height="50px" src="{{URL::to('/')}}/assets/images/upload-icon.png" class="logo-banner"/>
                     <br>
                     Drag and Drop files here

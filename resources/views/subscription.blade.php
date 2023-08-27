@@ -52,12 +52,14 @@
 
         .subs-header button {
             margin-left: 100px;
-            height: 45px;
-            font-size: 18px;
-            padding: 0 35px;
-            border-radius: 8px;
-            font-weight: 600;
-            background: #a9fbe4;
+    height: 44px;
+    font-size: 16px;
+    padding: 0 35px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #fff;
+    background: #44908d;
+    border: #fff;
         }
 
         .subs-content {
@@ -136,20 +138,27 @@
         .bottom-btn {
             position: absolute;
             bottom: 6%;
-            padding: 12px;
+            padding: 16px;
             min-width: 150px;
-            font-size: 19px;
+            font-size: 15px;
             font-weight: 600;
             left: 50%;
             transform: translateX(-50%);
-            background: #a9fbe4;
-            color: #000000;
+            background: #44908d;
+          
             border-radius: 10px;
+
+            color: #fff !important;
+    letter-spacing: 2px !important;
+    cursor: pointer !important;
+    transition: all 0.4s !important;
+    border:#fff !important;
         }
 
         .bottom-btn a {
-            color: #000000;
+            color: #fff;
             text-decoration: none;
+            font-family: Futura, Trebuchet MS, Arial, sans-serif;
         }
 
         .mini-para {
@@ -239,18 +248,6 @@
                 {{ $free_clean_files }}
             </div> --}}
         </div>
-        {{-- <div class="dashboard-main">
-            <div class="subscription-buttons">
-                @foreach ($subscriptions as $subscription)
-                    <button><a disabled
-                            href="{{ Auth::user()->plan_id == $subscription->plan_id ? '#' : route('paymentCreateView', $subscription->id) }}"><span>{{ $subscription->name }}
-                                Subscription - ${{ $subscription->charges }}/month</span><br><span style="font-size: 16px">
-                                @if ($subscription->name != 'Unlimited')
-                                    (upload and clean up to {{ $subscription->no_of_clean_file }} files a month)
-                                @endif
-                            </span></a></button><br>
-                @endforeach
-            </div>
-        </div> --}}
+       
     </section>
 @endsection

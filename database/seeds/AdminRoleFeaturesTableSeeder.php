@@ -23,7 +23,8 @@ class AdminRoleFeaturesTableSeeder extends Seeder
             ["role_id"=>1,"feature_id"=>6],
             ["role_id"=>1,"feature_id"=>7],
             ["role_id"=>1,"feature_id"=>8],
-            ["role_id"=>1,"feature_id"=>9]
+            ["role_id"=>1,"feature_id"=>9],
+            ["role_id"=>1,"feature_id"=>10],
             ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 

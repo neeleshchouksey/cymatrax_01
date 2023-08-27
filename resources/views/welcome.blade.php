@@ -14,7 +14,10 @@
                         </video>
                     </div>
                     <h4>Digital Audio</h4>
-                    <p>$1.00 per minute</p>
+                    <?php
+                        $const_settings = DB::table('constant_settings')->where('id',6)->first();
+                    ?>
+                    <p>${{ $const_settings->value }}.00 per minute</p>
                     <a href="{{URL::to('/')}}/services/">
                         <button>LEARN MORE</button>
                     </a>

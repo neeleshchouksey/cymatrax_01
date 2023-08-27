@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 use App\Settings;
+use App\ConstantSettings;
+
 
 class UserController extends Controller
 {
@@ -42,7 +44,7 @@ class UserController extends Controller
     {
         $title = "Dashboard";
         $subscriptions = DB::table('subscription_type')->get();
-        $free_clean_files = DB::table('file_delete_setting')->value('clean_files_limits');
+        $free_clean_files = DB::table('constant_settings')->where('id',3)->first();
         $uploads =  DB::table('uploads')->where('user_id', Auth::user()->id)->groupBy('user_id')
             ->selectRaw('sum(duration_in_sec) as duration, count(*) as count, user_id')->get();
 
@@ -58,21 +60,46 @@ class UserController extends Controller
         //        dd($res);
 
         $upload_limits = 'Unlimited';
+        $user_limits = null;
+        $maxlimit = Auth::user()->no_of_clean_file;
+        $uploads = 0;
         if(Auth::user()->subscription == 0 && is_null(Auth::user()->trial_expiry_date)){
-            $upload_limits = FileDeleteSetting::value('clean_files_limits');
+
+            $clean_files = DB::table('constant_settings')->select('value')->where('id', 3)->first();
+            $upload_limits = $clean_files->value;
             $user_limits = Upload::where('user_id', Auth::user()->id)->count();
+
             $upload_limits = (int)$upload_limits + (int)$user_limits;
+
+            // if(($user_limits + $count) > $upload_limits){
+            //     return redirect()->back()->with('failed', 'You can not further process');
+            // }
+        }
+        if(Auth::user()->subscription == 1 && is_null(Auth::user()->trial_expiry_date)){
+
+            $clean_files = DB::table('constant_settings')->select('value')->where('id', 3)->first();
+            $upload_limits = $clean_files->value;
+            $user_limits = Upload::where('user_id', Auth::user()->id)->count();
+
+            $upload_limits = (int)$upload_limits + (int)$user_limits;
+            $uploads =  DB::table('uploads')->where('user_id', Auth::user()->id)->groupBy('user_id')
+            ->selectRaw('count(*) as count')->where('cleaned', 1)->get();
             // if(($user_limits + $count) > $upload_limits){
             //     return redirect()->back()->with('failed', 'You can not further process');
             // }
         }
 
-        $select =  DB::table('settings')->select('value')->where('id', 1)->first();
+        $select =  DB::table('constant_settings')->select('value')->where('id', 4)->first();
         $val = $select->value;
-
         $title = "Upload Audio";
 
-        return view('upload', compact('title', 'val', 'upload_limits'));
+        $select =  DB::table('constant_settings')->select('value')->where('id', 6)->first();
+        $dollerval = $select->value;
+
+        
+        	
+
+        return view('upload', compact('title', 'val','dollerval', 'upload_limits','maxlimit','uploads'));
     }
 
     public function profile()
@@ -125,7 +152,7 @@ class UserController extends Controller
             $data->save();
             Cache::flush();
 
-            
+
         }
         return response()->json(['success' => $imageName, 'count' => $count]);
     }
@@ -241,7 +268,8 @@ class UserController extends Controller
                 $remaining_file_limits = $remaining_file_limits <= 0 ? 0 : $remaining_file_limits;
             }
         }else if (is_null(Auth::user()->trial_expiry_date)){
-            $file_limits = FileDeleteSetting::value('clean_files_limits');
+            $clean_files = DB::table('constant_settings')->select('value')->where('id', 3)->first();
+            $file_limits = $clean_files->value;
             $remaining_file_limits = $file_limits - $user_limits;
                 $remaining_file_limits = $remaining_file_limits <= 0 ? 0 : $remaining_file_limits;
         }
@@ -257,21 +285,77 @@ class UserController extends Controller
         $remaining_file_limits = "'Default'";
 
         $user_limits = Upload::where('user_id', Auth::user()->id)->where('cleaned', 1)->count();
+        $dollerValue = DB::table('constant_settings')->where('id',6)->first();
         if (Auth::user()->subscription ==  1) {
-            $file_limits = DB::table('subscription_type')->where('plan_id', Auth::user()->plan_id)->value('no_of_clean_file');
-            if ($file_limits == 'Unlimited') {
-                $remaining_file_limits = "'Unlimited'";
-            } else {
-                $remaining_file_limits = $file_limits - $user_limits;
-                $remaining_file_limits = $remaining_file_limits <= 0 ? 0 : $remaining_file_limits;
-            }
+            // $file_limits = DB::table('subscription_type')->where('plan_id', Auth::user()->plan_id)->value('no_of_clean_file');
+            // if ($file_limits == 'Unlimited') {
+            //     $remaining_file_limits = "'Unlimited'";
+            // } else {
+            //     $remaining_file_limits = $file_limits - $user_limits;
+            //     $remaining_file_limits = $remaining_file_limits <= 0 ? 0 : $remaining_file_limits;
+            // }
+
+            $user_limits = Upload::where('user_id', Auth::user()->id)->where('cleaned', 1)->count();
+            $maxlimit = Auth::user()->no_of_clean_file;
+
+            $remaining_file_limits = ($maxlimit - $user_limits);
+
         }else if (is_null(Auth::user()->trial_expiry_date)){
-            $file_limits = FileDeleteSetting::value('clean_files_limits');
-            $remaining_file_limits = $file_limits - $user_limits;
-                $remaining_file_limits = $remaining_file_limits <= 0 ? 0 : $remaining_file_limits;
+            // $file_limits = FileDeleteSetting::value('clean_files_limits');
+            // $remaining_file_limits = $file_limits - $user_limits;
+
+               // $remaining_file_limits = $remaining_file_limits <= 0 ? 0 : $remaining_file_limits;
+               $user_limits = Upload::where('user_id', Auth::user()->id)->where('cleaned', 1)->count();
+               $maxlimit = Auth::user()->no_of_clean_file;
+
+               $remaining_file_limits = ($maxlimit - $user_limits);
+
         }
 
-        return view('upload-summary', compact('title', 'getData', 'id', 'remaining_file_limits'));
+
+
+        return view('upload-summary', compact('title', 'getData', 'id', 'remaining_file_limits','dollerValue'));
+    }
+
+    public function redirectToPayment(Request $request){
+        $postData = $request->all();
+
+        // $durationValues = $request->input('durationValues');
+        // $ids = $request->input('iDs');
+    
+        // // Loop through the IDs and update records
+        // foreach ($ids as $index => $id) {
+        //     $durationValue = $durationValues[$index];
+    
+        //     // Update the record
+        //     Upload::where('id', $id)->where('user_id', Auth::user()->id)
+        //         ->update(['duration' => $durationValue]);
+        // }
+
+        
+        $charge = $postData['charge'];
+    
+        // Store the data in the session
+        session(['postData' => $postData]);
+    
+        
+         return true;
+        
+    }
+
+
+    public function redirectToPayInfo(){
+        
+        $postData = session('postData');
+        if ($postData) {
+            // Clear the data from the session
+            session()->forget('postData');
+    
+            // Pass the data to the view
+            return view('payments.payinfo', compact('postData'));
+        }
+
+       // return view('payments.payinfo', compact('charge'));
     }
 
     public function transaction_details($id)
@@ -390,7 +474,8 @@ class UserController extends Controller
     {
         $user = User::find(Auth::user()->id);
         if (!$user->trial_expiry_date) {
-            $days = FreeSubscription::first()->days;
+            $days = ConstantSettings::where('id',1)->first();
+            $days = $days->value;
             $trial_expiry_date = strtotime("+$days days ", time());
             $user->trial_expiry_date = $trial_expiry_date;
             $user->save();
@@ -450,7 +535,7 @@ class UserController extends Controller
     {
         $title = "Select Subscription";
         $subscriptions = DB::table('subscription_type')->get();
-        $free_clean_files = DB::table('file_delete_setting')->value('clean_files_limits');
+        $free_clean_files = DB::table('constant_settings')->where('id',3)->first();
         return view("subscription", compact("title", "subscriptions", "free_clean_files"));
     }
 }

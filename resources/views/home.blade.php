@@ -29,6 +29,22 @@
         .high-text {
             color: #187fde !important;
         }
+        h1.myaccount {
+            display: flex;
+            align-items: center;
+            border-bottom: solid 1px #ccc;
+            margin-right: 50px;
+        }
+
+        h1.myaccount .title {
+            flex: 1;
+            /* Add any additional styling for the title if needed */
+        }
+
+        h1.myaccount .current-plan {
+            /* Add any additional styling for the current plan if needed */
+            
+        }
     </style>
      <style>
         .dashboard-main {
@@ -166,19 +182,25 @@
         .bottom-btn {
             position: absolute;
             bottom: 6%;
-            padding: 12px;
+            padding: 16px;
             min-width: 150px;
-            font-size: 19px;
+            font-size: 15px;
             font-weight: 600;
             left: 50%;
             transform: translateX(-50%);
-            background: #a9fbe4;
-            color: #000000;
+            background: #44908d;
+          
             border-radius: 10px;
+
+            color: #fff !important;
+    letter-spacing: 2px !important;
+    cursor: pointer !important;
+    transition: all 0.4s !important;
+    border:#fff !important;
         }
 
         .bottom-btn a {
-            color: #000000;
+            color: #fff;
             text-decoration: none;
         }
 
@@ -196,7 +218,13 @@
                             {{ session()->get('message') }}
                         </div>
                     @endif
-            <h1 class="myaccount">{{ $title }}</h1>
+                    
+                    <h1 class="myaccount">
+                        <span class="title">{{ $title }}</span>
+                        <span class="current-plan">Current Plan: {{ Auth::user()->plan_name }}</span>
+                    </h1>
+            
+            
             <div class="dashboard-main">
                 <h2>Welcome back  {{ Auth::user()->name }}</h2><br>
                 <?php  if(isset($uploads[0])) {  ?>
@@ -228,89 +256,93 @@
             </div>
         </section>
     @else
-    <section class="contained">
-        <div class="subs-header">
-            <h1>{{ $title }}</h1>
-            <button>{{ Auth::user()->subscription ? Auth::user()->plan_name : 'Community' }}</button>
-            @if (Auth::user()->is_cancelled == 1 && !is_null(Auth::user()->plan_end_date)) 
-                <div>
-                    <p><b>Your {{Auth()->user()->plan_name}} plan is still active</b></p> 
-                    <p style="color: #ea0d0d"><b>Expiry on {{Auth::user()->plan_end_date}}</b></p> 
-                </div>
-            @endif
-        </div>
-       
-            
-        <div class="subs-content">
-
-            
-            @foreach ($subscriptions as $key => $data)
-                    
-            <?php 
-                $selectedClass = (Auth::user()->plan_name == $data->name) ? 'subs-2' : 'subs-1';
-                $selectedButtonClass = (Auth::user()->plan_name == $data->name  || Auth::user()->plan_name == NULL ) ? '2' : '';
-             ?>
-
-        <div class="single-subs {{ $selectedClass }}">
-               
-            
-            
-                    <h3>{{ $data->name }}</h3>
-                    <p class="first-p">{{ $data->charges == 'Free' ? 'Free' : '$' . $data->charges . ' per editor/month' }}
-                    </p>
-                    @if ($data->charges == 'Free')
-                        <p class="mini-para">Always</p>
-                    @endif
-                    @if ($data->text_1)
-                        <p>&#9989;{{ $data->text_1 }}</p>
-                    @endif
-                    @if ($data->text_2)
-                        <p>&#9989;{{ $data->text_2 }}</p>
-                    @endif
-                    @if ($data->text_3)
-                        <p>&#9989;{{ $data->text_3 }}</p>
-                    @endif
-
-                    @if(Auth::user()->plan_name == $data->name )
-                    <div class="bottom-btn-main bottom-2">
-                        {{-- <div> --}}
-
-                        {{-- </div> --}}
+        <section class="contained">
+            <div class="subs-header">
+                  <h1>{{ $title }}</h1>  
+                <!-- <h1 class="myaccount">
+    <span class="title">{{ $title }}</span>
+    <span class="current-plan">Current Plan: {{ Auth::user()->plan_name }}</span>
+</h1> -->
+                <span><b>Current Plan: {{ Auth::user()->plan_name }} </b></span>
+                @if (Auth::user()->is_cancelled == 1 && !is_null(Auth::user()->plan_end_date)) 
+                    <div>
+                        <p><b>Your {{Auth()->user()->plan_name}} plan is still active</b></p> 
+                        <p style="color: #ea0d0d"><b>Expiry on {{Auth::user()->plan_end_date}}</b></p> 
                     </div>
-                    @else
-                    <div class="bottom-btn-main bottom-1">
-                        {{-- <div> --}}
+                @endif
+            </div>
+        
+                
+            <div class="subs-content">
 
-                        {{-- </div> --}}
-                    </div>
-                    @endif
-                    <button class="bottom-btn">
-                        @if (!Auth::user()->subscription && $data->name == 'Community')
-                            Selected
-                        @elseif(Auth::user()->subscription && Auth::user()->plan_name == $data->name)
-                            Selected
-                        @else
-                            <a href="{{ route('paymentCreateView', $data->id) }}">{{$data->name }}</a>
+                
+                @foreach ($subscriptions as $key => $data)
+                        
+                <?php 
+                    $selectedClass = (Auth::user()->plan_name == $data->name) ? 'subs-2' : 'subs-1';
+                    $selectedButtonClass = (Auth::user()->plan_name == $data->name  || Auth::user()->plan_name == NULL ) ? '2' : '';
+                ?>
+
+            <div class="single-subs {{ $selectedClass }}">
+                
+                
+                
+                        <h3>{{ $data->name }}</h3>
+                        <p class="first-p">{{ $data->charges == 'Free' ? 'Free' : '$' . $data->charges . ' per editor/month' }}
+                        </p>
+                        @if ($data->charges == 'Free')
+                            <p class="mini-para">Always</p>
+                        @endif
+                        @if ($data->text_1)
+                            <p>&#9989;{{ $data->text_1 }}</p>
+                        @endif
+                        @if ($data->text_2)
+                            <p>&#9989;{{ $data->text_2 }}</p>
+                        @endif
+                        @if ($data->text_3)
+                            <p>&#9989;{{ $data->text_3 }}</p>
                         @endif
 
-                    </button>
+                        @if(Auth::user()->plan_name == $data->name )
+                        <div class="bottom-btn-main bottom-2">
+                            {{-- <div> --}}
+
+                            {{-- </div> --}}
+                        </div>
+                        @else
+                        <div class="bottom-btn-main bottom-1">
+                            {{-- <div> --}}
+
+                            {{-- </div> --}}
+                        </div>
+                        @endif
+                        <button class="bottom-btn">
+                            @if (!Auth::user()->subscription && $data->name == 'Community')
+                                Selected
+                            @elseif(Auth::user()->subscription && Auth::user()->plan_name == $data->name)
+                                Selected
+                            @else
+                                <a href="{{ route('paymentCreateView', $data->id) }}">{{$data->name }}</a>
+                            @endif
+
+                        </button>
+                    </div>
+                @endforeach
+                {{-- <div class="single-subs second-subs">
+                    <h3>Community</h3>
+                    <p>Free</p>
+                    <p>Forever</p>
+                    {{ $free_clean_files }}
                 </div>
-            @endforeach
-            {{-- <div class="single-subs second-subs">
-                <h3>Community</h3>
-                <p>Free</p>
-                <p>Forever</p>
-                {{ $free_clean_files }}
+                <div class="single-subs third-subs">
+                    <h3>Community</h3>
+                    <p>Free</p>
+                    <p>Forever</p>
+                    {{ $free_clean_files }}
+                </div> --}}
             </div>
-            <div class="single-subs third-subs">
-                <h3>Community</h3>
-                <p>Free</p>
-                <p>Forever</p>
-                {{ $free_clean_files }}
-            </div> --}}
-        </div>
-       
-    </section>
+        
+        </section>
 
     @endif
 
