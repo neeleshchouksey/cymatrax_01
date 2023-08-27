@@ -32,6 +32,7 @@
                     @if(Auth::user()->trial_expiry_date>time())
                         <span>($0 per minute)</span>
                     @else
+                        <input type="hidden" name="dollerValue" id="dollerValue" value="{{$dollerValue->value}}">
                         <span id="total-cost"></span>(${{$dollerValue->value}} per minute) </b>
                         <input type="hidden" name="value" id="charge-value" value="">
                 @endif

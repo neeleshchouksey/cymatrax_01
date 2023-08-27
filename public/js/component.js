@@ -821,8 +821,8 @@ function getDuration1(path, aud_id) {
         $("#duration" + aud_id).html(minutes + "." + seconds);
         $("#duration_in_sec" + aud_id).val(duration_in_sec);
 
-
-        var per_sec_cost = 1 / 60;
+        DollerValue = $("#dollerValue").val();
+        var per_sec_cost = DollerValue / 60;
         total_cost = per_sec_cost * total_duration;
         $("#total-duration").html(total_min + ' min ' + total_sec + ' sec')
         
