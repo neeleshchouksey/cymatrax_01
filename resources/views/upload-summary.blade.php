@@ -41,7 +41,7 @@
             @if(Auth::user()->is_admin || Auth::user()->subscription || Auth::user()->enterprise_user)
                
                 
-               
+            <input type="hidden" name="value"  value="{{$remaining_file_limits}}">
                 @if($remaining_file_limits ==0 )
                     <button id="clean-btn" class="c-btn" onclick="clean_files({{$id. ','.$remaining_file_limits}})"
                             style="margin-top: 1rem; margin-bottom: 20px;">Clean File(s)
