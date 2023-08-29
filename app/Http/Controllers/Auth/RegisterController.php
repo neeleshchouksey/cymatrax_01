@@ -14,6 +14,7 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -96,11 +97,11 @@ class RegisterController extends Controller
         $plan_name = $data_sub[0]->name;
         $plan_id = $data_sub[0]->id;
         $no_of_clean_file = $data_sub[0]->no_of_clean_file;
-
+     
         $user =  User::create([
             // 'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+           // 'password' => $data['password'] ? $data['password'] : null,
             'email_sent_at' => $currentDateTime->format('Y-m-d H:i:s'),
             'plan_name'=>$plan_name,
             'plan_id'=>$plan_id,
@@ -139,6 +140,39 @@ class RegisterController extends Controller
         return $user;
     }
 
+    
+    public function Changepassword(Request $request){
+       // dd($request->all());
+       $validator = Validator::make($request->all(), [
+        'password' => ['required', 'min:8', 'confirmed'],
+    ]);
+    
+    $validator->setAttributeNames([
+        'password' => 'Password',
+        'password_confirmation' => 'Confirm Password',
+    ]);
+    
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+    }else {
+            $check = User::where('id', $request->id)->update(['password' =>Hash::make($request->password)]);
+            // $u = User::find($request->id);
+
+            return redirect(url('/login'));
+
+            // if (Auth::guard('web')->attempt(['email' => $u->email, 'password' => $u->password])) {
+                
+            //     return redirect('/dashboard');
+            // }else{
+                
+                
+            //     return redirect(url('/login'))->with('message', 'Invalid Login');
+            // }
+        }
+    } 
+
     public function verifyEmail($id)
     {
         $currentDateTime = Carbon::now();
@@ -151,11 +185,29 @@ class RegisterController extends Controller
             'is_verified' => 1
         ]);
         if($user){
-            session()->forget('email__sentt');
-            session()->forget('email__');
-            return redirect(url('/login'))->with('message', 'Your email is verified, Now you can login');
+            return view('auth.passwords.changePassword',compact('id'));
+            // session()->forget('email__sentt');
+            // session()->forget('email__');
+            // return redirect(url('/login'))->with('message', 'Your email is verified, Now you can login');
         }
     }
+    // public function verifyEmail($id)
+    // {
+    //     $currentDateTime = Carbon::now();
+    //     $oneDayAgo = $currentDateTime->subDay()->format('Y-m-d H:i:s');
+    //     $user = User::find($id);
+    //     if ($user->email_sent_at < $oneDayAgo) {
+    //         return redirect(url('/login'))->with('error', 'Verify link is expired please send new verify mail!');
+    //     }
+    //     $user = User::where('id', $id)->update([
+    //         'is_verified' => 1
+    //     ]);
+    //     if($user){
+    //         session()->forget('email__sentt');
+    //         session()->forget('email__');
+    //         return redirect(url('/login'))->with('message', 'Your email is verified, Now you can login');
+    //     }
+    // }
 
     public function openInbox()
     {

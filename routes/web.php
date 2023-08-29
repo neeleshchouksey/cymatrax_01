@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::post('/change-password', 'Auth\RegisterController@Changepassword')->name('change-password');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', 'Auth\RegisterController@doRegister')->name('do-register');
 Route::get('send-verify-email/{email}', 'Auth\LoginController@sendVerifyEmail')->name('send-verify-email');
