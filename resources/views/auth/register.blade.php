@@ -233,14 +233,14 @@
                                         value="{{ old('email') }}" required autocomplete="email" autofocus>
                                 </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td>Password<span class="req">*</span> :</td>
                                 <td>
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
                                         required autocomplete="new-password">
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <td></td>
                                 <td>
