@@ -235,7 +235,7 @@ class UserController extends Controller
     public function account()
     {
         $title = "My Account";
-        $getData = DB::table('uploads')->where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        $getData = Upload::where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         foreach ($getData as $key => $upload) {
             $seconds = $upload->duration;
             $minutes = floor($seconds / 60);
@@ -246,9 +246,10 @@ class UserController extends Controller
             if ($secondsleft < 10) {
                 $secondsleft = '0' . $secondsleft;
             }
-            $upload->duration = $minutes . ':' . $secondsleft;
-            $upload->duration_in_min = $minutes . ':' . $secondsleft;
+            $getData[$key]['duration'] = $minutes . ':' . $secondsleft;
+            $getData[$key]['duration_in_min'] = $minutes . ':' . $secondsleft;
         }
+      
         $expire_trial_subs = Auth::user()->trial_expiry_date;
         $remaining_file_limits = "'Default'";
         // if(is_null($expire_trial_subs) && Auth::user()->subscription == 0){
@@ -259,8 +260,11 @@ class UserController extends Controller
         //     }
         // return $remaining_file_limits;
         $user_limits = Upload::where('user_id', Auth::user()->id)->where('cleaned', 1)->count();
+        
         if (Auth::user()->subscription ==  1) {
-            $file_limits = DB::table('subscription_type')->where('plan_id', Auth::user()->plan_id)->value('no_of_clean_file');
+           
+            $file_limits = DB::table('subscription_type')->where('id', Auth::user()->plan_id)->value('no_of_clean_file');
+            
             if ($file_limits == 'Unlimited') {
                 $remaining_file_limits = "'Unlimited'";
             } else {
@@ -268,12 +272,14 @@ class UserController extends Controller
                 $remaining_file_limits = $remaining_file_limits <= 0 ? 0 : $remaining_file_limits;
             }
         }else if (is_null(Auth::user()->trial_expiry_date)){
+           
             $clean_files = DB::table('constant_settings')->select('value')->where('id', 3)->first();
             $file_limits = $clean_files->value;
             $remaining_file_limits = $file_limits - $user_limits;
                 $remaining_file_limits = $remaining_file_limits <= 0 ? 0 : $remaining_file_limits;
         }
-        return view('account', compact('getData', 'title', 'remaining_file_limits'));
+       
+        return view('account', compact('getData', 'title', 'remaining_file_limits','upload'));
     }
 
     public function upload_summary($id)
@@ -461,6 +467,21 @@ class UserController extends Controller
         }
 
         $getData = $query->get();
+
+        foreach ($getData as $key => $upload) {
+            $seconds = $upload->duration;
+            $minutes = floor($seconds / 60);
+            $secondsleft = $seconds % 60;
+            if ($minutes < 10) {
+                $minutes = '0' . $minutes;
+            }
+            if ($secondsleft < 10) {
+                $secondsleft = '0' . $secondsleft;
+            }
+            $getData[$key]['duration'] = $minutes . ':' . $secondsleft;
+            $getData[$key]['duration_in_min'] = $minutes . ':' . $secondsleft;
+        }
+
         return response()->json(['status' => 'success', 'res' => $getData], 200);
     }
 

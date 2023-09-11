@@ -373,13 +373,13 @@ body{
 	color:var(--link-color);
 	transform:scale(1.2) rotate(180deg);
 }
-.feature{
-	display: block;
+.feature {
+    display: block;
     width: 50%;
     margin-left: auto;
-    margin-right: auto;
+    /* margin-right: auto; */
     text-align: center;
-    min-height: 550px;
+    /* min-height: 550px; */
     position: relative;
 }
 .feature video{
@@ -388,13 +388,13 @@ body{
     outline: none;
     transform: translateY(-50px);
 }
-h3.headline{
-	/*font-family: helvetica;*/
+h3.headline {
+    /* font-family: helvetica; */
     font-size: 16pt;
     text-align: center;
     font-weight: normal;
-    margin-top: 30px;
-    margin-bottom: -100px;
+    /* margin-top: 30px; */
+    /* margin-bottom: -100px; */
 }
 blockquote{
 	padding: 0px;
@@ -403,27 +403,24 @@ blockquote{
 blockquote>p{
 	margin-top: 0px;
 }
-.feature article{
-	display: block;
+.feature article {
+    display: block;
     width: 280px;
-
     border-radius: 6px;
     box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
     background-color: #fff;
-    background-image: url("../images/bg.png");
+    background-image: url(../images/bg.png);
     background-position: top center;
     background-size: 100% auto;
     background-repeat: no-repeat;
     transition: all 0.4s;
     top: 50%;
-    position: absolute;
+    /* position: absolute; */
     left: 50%;
-    margin-left: -140px;
-    transform: translateY(-50%);
+    /* margin-left: -140px; */
+    /* transform: translateY(-50%); */
 }
-.feature article:hover{
 
-}
 .feature article>div{
 	padding:20px;
 	position: relative;
@@ -1030,4 +1027,27 @@ tr td {
 	footer{
 		position: fixed;
 	}
+}
+
+.banner-section{
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+.banner-section-left {
+    flex:1;
+}
+.banner-section-right {
+    flex:1;
+}
+.banner-section-title{
+
+    font-size: 64px;
+    line-height: 68px;
+    letter-spacing: -2px;
+    font-weight: 400;
+}
+
+.banner-section-subtitle{
+
 }

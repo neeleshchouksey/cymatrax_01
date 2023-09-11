@@ -12,7 +12,7 @@
                     <div class="errors">{{ $message }}</div>
                     @endif
                    
-                    <form method="POST" action="{{ route('paymentProcess') }}" class="payment">
+                    <form method="POST" action="{{ route('onetimePaymentProcess') }}" class="payment">
                         @csrf
                         <table width="100%" border="0" cellspacing="0" cellpadding="6">
                             <tbody>

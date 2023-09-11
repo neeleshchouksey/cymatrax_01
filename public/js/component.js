@@ -556,7 +556,7 @@ function fileFilter(value) {
                         var table = $('#example').DataTable();
                         table.destroy();
                         $("#audio-list-datatable").empty();
-
+                        console.log(data);
                         for (var i = 0; i < data.length; i++) {
                             aud_id = data[i].id;
                             $new_array = data[i].file_name.split('_');
@@ -576,7 +576,7 @@ function fileFilter(value) {
                             $("#audio-list-datatable").append('<tr class="border_bottom">\n' +
                                 '                    <td style="cursor:pointer;" title="' + data[i].file_name + '">' + $new_array.substring(0, 15) + ($new_array.length > 15 ? "..." : "") + '</td>\n' +
                                 '                    <td><span id="duration' + aud_id + '">' + data[i].duration_in_min + '</span></td>\n' +
-                                '                    <td>' + data[i].created + '</td>\n' +
+                                '                    <td>' + data[i].created_at + '</td>\n' +
                                 '                    <td><input type="hidden" id="duration_in_sec' + aud_id + '" class="durValue" value="' + data[i].duration_in_sec + '"/>' +
                                 '                    <audio id="audio' + aud_id + '" controls="" style="vertical-align: middle"' +
                                 '                           src="' + APP_URL + '/public/upload/' + data[i].file_name + '" type="audio/mp3"' +

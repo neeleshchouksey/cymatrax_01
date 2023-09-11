@@ -166,13 +166,10 @@
         }
 
         .bottom-1 {
-            border: 2px solid;
+        
         }
 
-        .bottom-2 {
-            background-color: green;
-            border: 2px solid green;
-        }
+       
 
         .bottom-3 {
             border: 2px solid;
@@ -183,20 +180,18 @@
             position: absolute;
             bottom: 6%;
             padding: 16px;
-            min-width: 150px;
+            min-width: 240px;
             font-size: 15px;
-            font-weight: 600;
+            font-weight: 500;
             left: 50%;
             transform: translateX(-50%);
-            background: #44908d;
-          
+            background: #6fb4b7;
             border-radius: 10px;
-
             color: #fff !important;
-    letter-spacing: 2px !important;
-    cursor: pointer !important;
-    transition: all 0.4s !important;
-    border:#fff !important;
+            letter-spacing: 2px !important;
+            cursor: pointer !important;
+            transition: all 0.4s !important;
+            border: #fff !important;
         }
 
         .bottom-btn a {
@@ -288,7 +283,7 @@
                 
                 
                         <h3>{{ $data->name }}</h3>
-                        <p class="first-p">{{ $data->charges == 'Free' ? 'Free' : '$' . $data->charges . ' per editor/month' }}
+                        <p class="first-p">{{ $data->charges == 'Free' ? 'Free' : '$' . $data->charges . ' month' }}
                         </p>
                         @if ($data->charges == 'Free')
                             <p class="mini-para">Always</p>
@@ -316,6 +311,7 @@
                             {{-- </div> --}}
                         </div>
                         @endif
+                        
                         <button class="bottom-btn">
                             @if (!Auth::user()->subscription && $data->name == 'Community')
                                 Selected

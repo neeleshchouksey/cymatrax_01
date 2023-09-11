@@ -37,6 +37,7 @@ class PaypalController extends Controller
                     'grant_type' => 'client_credentials'
                 ]
             ]);
+           
             $data = json_decode($response->getBody(), true);
             return $data['access_token'];
         } catch (RequestException $e) {
@@ -265,6 +266,50 @@ class PaypalController extends Controller
         ]);
 
         return $response;
+    }
+
+    public function onetimePaymentProcess(Request $request)
+    {
+        try {
+            $client = new Client();
+            $sandboxBaseUrl = 'https://api.sandbox.paypal.com';
+
+            $response = $client->post($sandboxBaseUrl . '/v1/payments/payment', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->generateAccessToken(),
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => [
+                    'intent' => 'sale',
+                    'payer' => [
+                        'payment_method' => 'paypal',
+                    ],
+                    'transactions' => [
+                        [
+                            'amount' => [
+                                'total' => $request->value,
+                                'currency' => 'USD',
+                            ],
+                        ],
+                    ],
+                    'redirect_urls' => [
+                        'return_url' => url('/dashboard'),
+                        'cancel_url' => url('/dashboard'), 
+                    ],
+                ],
+            ]);
+
+            $data = json_decode($response->getBody(), true);
+
+            return redirect($data['links'][1]['href']); 
+        } catch (RequestException $e) {
+            if ($e->getResponse()) {
+                $statusCode = $e->getResponse()->getStatusCode();
+                $responseBody = json_decode($e->getResponse()->getBody(), true);
+            } else {
+                echo 'Something went wrong';exit;
+            }
+        }
     }
 
     public function test()

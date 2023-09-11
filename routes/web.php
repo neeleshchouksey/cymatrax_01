@@ -13,11 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', 'Auth\RegisterController@welcomeBlade')->name('welcome');
 
 Auth::routes();
+Route::post('/home-register', 'Auth\RegisterController@doRegisterviaHome')->name('home-register');
 Route::post('/change-password', 'Auth\RegisterController@Changepassword')->name('change-password');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', 'Auth\RegisterController@doRegister')->name('do-register');
@@ -72,7 +75,7 @@ Route::get('new-subscription', 'PaypalController@test')->name('test');
 // Route::post('subscription', 'PaypalController@subscription')->name('subscription');
 Route::post('/pay-via-paypal','UserController@redirectToPayment');
 Route::get('/paymentinfo', 'UserController@redirectToPayInfo');
-
+Route::post('/onetime-payment/process','PaypalController@onetimePaymentProcess')->name('onetimePaymentProcess');
 
 
 

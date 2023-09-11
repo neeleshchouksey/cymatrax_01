@@ -121,38 +121,28 @@
             height: 30px;
         }
 
-        .bottom-1 {
+        /* .bottom-1 {
             border: 2px solid;
-        }
+        } */
 
-        .bottom-2 {
-            background-color: green;
-            border: 2px solid green;
-        }
-
-        .bottom-3 {
-            border: 2px solid;
-           
-        }
+        
 
         .bottom-btn {
             position: absolute;
             bottom: 6%;
             padding: 16px;
-            min-width: 150px;
+            min-width: 240px;
             font-size: 15px;
-            font-weight: 600;
+            font-weight: 500;
             left: 50%;
             transform: translateX(-50%);
-            background: #44908d;
-          
+            background: #6fb4b7;
             border-radius: 10px;
-
             color: #fff !important;
-    letter-spacing: 2px !important;
-    cursor: pointer !important;
-    transition: all 0.4s !important;
-    border:#fff !important;
+            letter-spacing: 2px !important;
+            cursor: pointer !important;
+            transition: all 0.4s !important;
+            border: #fff !important;
         }
 
         .bottom-btn a {
