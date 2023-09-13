@@ -95,11 +95,12 @@ class UserController extends Controller
 
         $select =  DB::table('constant_settings')->select('value')->where('id', 6)->first();
         $dollerval = $select->value;
-
+        $select =  DB::table('constant_settings')->select('value')->where('id', 7)->first();
+        $per_minute = $select->value;
         
         	
 
-        return view('upload', compact('title', 'val','dollerval', 'upload_limits','maxlimit','uploads'));
+        return view('upload', compact('title', 'val','dollerval','per_minute', 'upload_limits','maxlimit','uploads'));
     }
 
     public function profile()
@@ -279,7 +280,7 @@ class UserController extends Controller
                 $remaining_file_limits = $remaining_file_limits <= 0 ? 0 : $remaining_file_limits;
         }
        
-        return view('account', compact('getData', 'title', 'remaining_file_limits','upload'));
+        return view('account', compact('getData', 'title', 'remaining_file_limits'));
     }
 
     public function upload_summary($id)

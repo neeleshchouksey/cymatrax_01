@@ -821,11 +821,16 @@ function getDuration1(path, aud_id) {
         $("#duration" + aud_id).html(minutes + "." + seconds);
         $("#duration_in_sec" + aud_id).val(duration_in_sec);
 
-        DollerValue = $("#dollerValue").val();
+        var DollerValue = $("#dollerValue").val();
+        DollerValue = DollerValue.replace('$', '');
+
+         console.log("DollerValue",DollerValue);
         var per_sec_cost = DollerValue / 60;
         total_cost = per_sec_cost * total_duration;
         $("#total-duration").html(total_min + ' min ' + total_sec + ' sec')
         
+        console.log("total-cost",total_cost);
+
         $("#total-cost").html('$' + total_cost.toFixed(2))
         $("#charge-value").val(total_cost.toFixed(2));
 

@@ -26,36 +26,39 @@
                     @endif
 
                     <br>
-                    <form method="POST" action="{{ route('home-register') }}" class="register" id="register-form">
-                        @csrf
-                        <div>
-                            <h3>Registration</h3>
+                    <div class="relative" style="margin-left:-190px">
 
-                        </div>
-                        <table>
-                            <tbody>
+                        <form method="POST" action="{{ route('home-register') }}" class="register" id="register-form">
+                            @csrf
+                            <div>
+                                <h3>Registration</h3>
 
-                                <tr>
-                                    <td>Email Address<span class="req">*</span> :</td>
-                                    <td>
-                                        <input id="email" type="email"
-                                            class="form-control @error('email') is-invalid @enderror" name="email"
-                                            value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            </div>
+                            <table>
+                                <tbody>
 
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>Email Address<span class="req">*</span> :</td>
+                                        <td>
+                                            <input id="email" type="email"
+                                                class="form-control @error('email') is-invalid @enderror" name="email"
+                                                value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        <button type="submit">Create Account</button>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                            </tbody>
-                        </table>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <button type="submit">Create Account</button>
+                                        </td>
+                                    </tr>
 
-                    </form>
+                                </tbody>
+                            </table>
+
+                        </form>
+                    </div>
                 </div>
 
             </div>
@@ -74,8 +77,10 @@
                         <h4>Digital Audio</h4>
                         <?php
                                 $const_settings = DB::table('constant_settings')->where('id',6)->first();
+                                $perminute = DB::table('constant_settings')->where('id',7)->first();
                             ?>
-                        <p>{{ $const_settings->value }}</p>
+                        <p>{{ $const_settings->value ?? 0  }} /
+                            {{$perminute->value ?? "per minute"}}</p>
                         <a href="{{URL::to('/')}}/services/">
                             <button>LEARN MORE</button>
                         </a>
