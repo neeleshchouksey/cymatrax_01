@@ -4,6 +4,9 @@
 
     <div class="content">
         <section>
+            <br><br><br>
+            <center><h3 style="color: green">Payment</h3></center>
+
             <div class="relative">
                 @error('email')
                     <div class="errors">{{ $message }}</div>

@@ -28,6 +28,11 @@
                     padding-top: 30px;
                 }
             </style>
+            <style type="text/css">
+                .register-button{
+                        background-color: #44908d !important;
+                    }
+            </style>
             @if (session()->has('message'))
                 <div class="alert alert-success">
                     {{ session()->get('message') }}
@@ -169,7 +174,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                <button type="submit" >Create Account</button>
+                                <button class="register-button" type="submit" >Create Account</button>
                             </td>
                         </tr>
                         <tr>
@@ -244,7 +249,7 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button type="submit">Create Account</button>
+                                    <button class="register-button" type="submit">Create Account</button>
                                 </td>
                             </tr>
                             <tr>

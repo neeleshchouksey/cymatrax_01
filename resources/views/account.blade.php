@@ -1,12 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+<style type="text/css">
+        .paginate_button {
+    background-color: #44908d !important;
+    color: #fff!important;
+}
+</style>
 
 <section class="contained">
     <h1 class="">{{ $title }}
         <span class="free-trial" style="margin-top: 8px;">
             @if (Auth::user()->subscription || Auth::user()->enterprise_user)
-            {{ Auth::user()->plan_name }} Subscription Enabled
+            {{-- {{ Auth::user()->plan_name }} Subscription Enabled --}}
             @else
             @if (!Auth::user()->trial_expiry_date)
             <!-- <a href="{{ URL::to('/') }}/free-subscription">Start <b><?php echo get_free_trial_days(); ?> Days</b> free

@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<style type="text/css">
+    .reset-button{
+            background-color: #44908d !important;
+        }
+</style>
     <div class="content">
         <section>
             <div class="relative">
@@ -28,7 +33,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                <button type="submit">Reset</button>
+                                <button class="reset-button" type="submit">Reset</button>
                             </td>
                         </tr>
                         <tr>

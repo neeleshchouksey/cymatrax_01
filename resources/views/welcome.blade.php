@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-
+<style type="text/css">
+                .welcome-button{
+                        background-color: #44908d !important;
+                    }
+            </style>
 <div class="content">
     <section class="banner-section">
         <div class="banner-section-left">
@@ -50,7 +54,7 @@
                                     <tr>
                                         <td></td>
                                         <td>
-                                            <button type="submit">Create Account</button>
+                                            <button class="welcome-button" type="submit">Create Account</button>
                                         </td>
                                     </tr>
 
@@ -79,7 +83,7 @@
                                 $const_settings = DB::table('constant_settings')->where('id',6)->first();
                                 $perminute = DB::table('constant_settings')->where('id',7)->first();
                             ?>
-                        <p>{{ $const_settings->value ?? 0  }} /
+                        <p> {{-- {{ $const_settings->value ?? 0  }} / --}}
                             {{$perminute->value ?? "per minute"}}</p>
                         <a href="{{URL::to('/')}}/services/">
                             <button>LEARN MORE</button>

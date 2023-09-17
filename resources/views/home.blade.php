@@ -182,7 +182,7 @@ h1.myaccount .current-plan {
     font-weight: 500;
     left: 50%;
     transform: translateX(-50%);
-    background: #6fb4b7;
+    background: #44908d;
     border-radius: 10px;
     color: #fff !important;
     letter-spacing: 2px !important;
@@ -263,6 +263,7 @@ h1.myaccount .current-plan {
         </div>
         @endif
     </div>
+    <p>Upgrade Today and unlock more Cymatrax features</p>
 
 
     <div class="subs-content">
@@ -280,7 +281,7 @@ h1.myaccount .current-plan {
 
 
             <h3>{{ $data->name }}</h3>
-            <p class="first-p">{{ $data->charges == 'Free' ? 'Free' : '$' . $data->charges . ' / month' }}
+            <p class="first-p">{{ $data->charges == 'Free' ? 'Free' : $data->display_text_price_per_month }}
             </p>
             @if ($data->charges == 'Free')
             <p class="mini-para">Always</p>

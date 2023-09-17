@@ -125,7 +125,7 @@
             border: 2px solid;
         } */
 
-        
+
 
         .bottom-btn {
             position: absolute;
@@ -136,7 +136,7 @@
             font-weight: 500;
             left: 50%;
             transform: translateX(-50%);
-            background: #6fb4b7;
+            background: #44908d;
             border-radius: 10px;
             color: #fff !important;
             letter-spacing: 2px !important;
@@ -157,35 +157,37 @@
             margin-top: -10px;
         }
     </style>
-    <section class="contained">
+    <section class="contained"><br><br>
         <div class="subs-header">
             <h1>{{ $title }}</h1>
             <button>{{ Auth::user()->subscription ? Auth::user()->plan_name : 'Community' }}</button>
-            @if (Auth::user()->is_cancelled == 1 && !is_null(Auth::user()->plan_end_date)) 
+            @if (Auth::user()->is_cancelled == 1 && !is_null(Auth::user()->plan_end_date))
                 <div>
-                    <p><b>Your {{Auth()->user()->plan_name}} plan is still active</b></p> 
-                    <p style="color: #ea0d0d"><b>Expiry on {{Auth::user()->plan_end_date}}</b></p> 
+                    <p><b>Your {{Auth()->user()->plan_name}} plan is still active</b></p>
+                    <p style="color: #ea0d0d"><b>Expiry on {{Auth::user()->plan_end_date}}</b></p>
                 </div>
             @endif
         </div>
-       
-            
+
+
         <div class="subs-content">
 
-            
+
             @foreach ($subscriptions as $key => $data)
-                    
-            <?php 
-                $selectedClass = (Auth::user()->plan_name == $data->name) ? 'subs-2' : 'subs-1';
-                $selectedButtonClass = (Auth::user()->plan_name == $data->name  || Auth::user()->plan_name == NULL ) ? '2' : '';
-             ?>
+
+            <?php
+
+$selectedClass = (Auth::user()->plan_name == $data->name) ? 'subs-2' : 'subs-1';
+$selectedButtonClass = (Auth::user()->plan_name == $data->name || Auth::user()->plan_name == NULL) ? '2' : '';
+?>
 
         <div class="single-subs {{ $selectedClass }}">
-               
-            
-            
+
+
+
                     <h3>{{ $data->name }}</h3>
-                    <p class="first-p">{{ $data->charges == 'Free' ? 'Free' : '$' . $data->charges . ' per editor/month' }}
+                    <p class="first-p">{{
+                        $data->charges == 'Free' ? 'Free' : '$' . $data->charges . ' per editor / '.$data->display_text_price_per_month }}
                     </p>
                     @if ($data->charges == 'Free')
                         <p class="mini-para">Always</p>
@@ -238,6 +240,6 @@
                 {{ $free_clean_files }}
             </div> --}}
         </div>
-       
+
     </section>
 @endsection

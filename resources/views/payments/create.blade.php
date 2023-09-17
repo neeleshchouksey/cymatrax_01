@@ -10,7 +10,8 @@
                 @error('password')
                     <div class="errors">{{ $message }}</div>
                     @endif
-                    <h2 style="color: green; text-align:center">That's a great plan</h2><br>
+                    <br><br><br>
+                    <h2 style="color: green; text-align:center">That's a great plan !</h2><br>
                     <form method="POST" action="{{ route('paymentProcess') }}" class="payment">
                         @csrf
                         <table width="100%" border="0" cellspacing="0" cellpadding="6">
@@ -18,7 +19,7 @@
                                 <input type="hidden" name="value" value={{$data[0]->charges}}>
                                 <input type="hidden" name="plan_id" value={{$data[0]->plan_id}}>
                                 <tr>
-                                    <td colspan="2"><b>Caymatrax "{{ $data[0]->name }}" Subscription</b></td>
+                                    <td colspan="2"><b>Cymatrax "{{ $data[0]->name }}" Subscription</b></td>
                                 </tr>
                                 <tr>
                                     <td><h3 style="color: green">Monthly Cost :</h3></td>

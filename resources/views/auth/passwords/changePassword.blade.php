@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<style type="text/css">
+    .change-password-button{
+        background-color: #44908d !important;
+    }
+</style>
     <div class="content">
         <section>
             <div class="relative">
@@ -40,7 +45,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                <button type="submit">Change Password</button>
+                                <button class="change-password-button" type="submit">Change Password</button>
                             </td>
                         </tr>
                         <tr>

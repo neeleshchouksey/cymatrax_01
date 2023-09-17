@@ -31,8 +31,10 @@
                                     <tr>
                                         <th>S. No.</th>
                                         <th>Plan </th>
+                                        <th>Display Text Price Per Month </th>
                                         <th>Charges</th>
                                         <th>Files</th>
+                                        <th>Price Per Minute </th>
                                         <th>Text 1</th>
                                         <th>Text 2</th>
                                         <th>Text 3</th>
@@ -45,8 +47,10 @@
                                     <tr>
                                         <th>S. No.</th>
                                         <th>Plan Name</th>
+                                        <th>Display Text Price Per Month </th>
                                         <th>Charges</th>
                                         <th>No of clean files</th>
+                                        <th>Price Per Minute </th>
                                         <th>Text 1</th>
                                         <th>Text 2</th>
                                         <th>Text 3</th>
@@ -89,6 +93,14 @@
                     </div>
 
                     <div class="form-group row">
+                        <label for="edit_display_text_price_per_month" class="col-sm-3 col-form-label">Display Text Price Per Month</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="edit_display_text_price_per_month" name="edit_display_text_price_per_month"
+                                   placeholder="Price Per Month">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="edit_charges" class="col-sm-3 col-form-label">Charges</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="edit_charges" name="edit_charges"
@@ -101,6 +113,14 @@
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="edit_no_of_clean_file" name="edit_no_of_clean_file"
                                    placeholder="No of clean files">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="edit_price_per_minute" class="col-sm-3 col-form-label">Price Per Minute</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="edit_price_per_minute" name="edit_price_per_minute"
+                                   placeholder="Price Per Month">
                         </div>
                     </div>
 

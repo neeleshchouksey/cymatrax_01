@@ -19,6 +19,13 @@
             justify-content: space-between;
             border-bottom: solid 1px #ccc;
         }
+        .update-profile-button{
+            background-color: #44908d !important;
+        }
+        .upgrade-plan-button{
+            background-color: #44908d !important;
+            color: white !important;
+        }
     </style>
     <div class="content">
         <div class="modal fade" id="cancel-plan-modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -115,7 +122,7 @@
                                 </tr>
                                 <tr class="buttons">
                                     <td>
-                                        <a href="{{ route('subscription') }}">Upgrade Plan</a>
+                                        <a class="upgrade-plan-button" href="{{ route('subscription') }}">Upgrade Plan</a>
                                     </td>
                                     @if ($user->subscription == 1 && $user->subscription_id && $user->is_cancelled == 0)
 
@@ -177,7 +184,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <button type="submit">Update Profile</button>
+                                        <button class="update-profile-button" type="submit">Update Profile</button>
                                     </td>
                                 </tr>
                             </tbody>

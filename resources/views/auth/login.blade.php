@@ -27,6 +27,11 @@
                     /* padding-top: 30px; */
                 }
         </style>
+        <style type="text/css">
+                .login-button{
+                        background-color: #44908d !important;
+                    }
+            </style>
         <section>
             @if (session()->has('message'))
                     <div class="alert alert-success">
@@ -77,7 +82,7 @@
                         <tr>
                             <td><input type="hidden" value="1" name="sent"/></td>
                             <td>
-                                <button>Sign In</button>
+                                <button class="login-button">Sign In</button>
                             </td>
                         </tr>
                         <tr>

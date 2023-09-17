@@ -41,7 +41,7 @@
     } */
     /* CSS for the button */
     .signup-button {
-        background-color: #475862;
+        background-color: #44908d;
         /* Background color (you can change this) */
         color: white;
         /* Font color */
@@ -75,6 +75,7 @@
     /* CSS for the label */
     .plan-label {
         margin-right: 20px;
+        margin-top: 15px;
         /* Add space between the label and buttons */
     }
 
@@ -103,6 +104,22 @@
         background-color: #2980b9;
         /* Change the background color on hover */
     }
+    .c-btn-upgrade-plan{
+        color: white;
+        text-decoration:none;
+    }
+    /* Add your styles for the active class here */
+    /*.active-menus {
+        padding: -6px !important;
+        border: none !important;
+        line-height: 50px !important;
+        background-color: #44908d !important;
+        color: #fff !important;
+        transition: all 0.4s !important;
+        border-radius: 5px;
+    }*/
+
+
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGRTB9YSNS"></script>
@@ -123,9 +140,10 @@
             <img src="{{URL::to('/')}}/assets/images/logo.banner.png" class="logo-banner" />
             <img src="{{URL::to('/')}}/assets/images/logo.png" class="logo-icon" />
             <a class="mobile-toggle" onclick="$('header ul').toggleClass('open');">&#9776;</a>
-            <ul>
+            <ul id="menu">
                 @if(Auth::user())
-                <li><a href="{{URL::to('/')}}/dashboard">Dashboard</a></li>
+                <li><a  href="{{URL::to('/')}}/dashboard">Dashboard</a></li>
+                <!-- onclick="toggleClass(this)" -->
                 <li><a href="{{URL::to('/')}}/upload-audio/">Upload Audio</a></li>
                 <li><a href="{{URL::to('/')}}/account">My Account</a></li>
                 <li><a href="{{URL::to('/')}}/transactions/">Transactions</a></li>
@@ -152,20 +170,33 @@
                 <li><a href="{{URL::to('/')}}">Home</a></li>
                 <li><a href="{{URL::to('/')}}/services/">Services</a></li>
                 <li><a href="{{URL::to('/')}}/login">Login</a></li>
-                <li><a href="{{URL::to('/')}}/register"><button class="signup-button">Sign Up Free </button> </a>
-                </li>
+                <!-- <li><a  href="{{URL::to('/')}}/register"><button class="signup-button">Sign Up Free </button> </a>
+                </li> -->
+                <a  href="{{URL::to('/')}}/register"><button class="signup-button"> Sign Up For Free Today  <img src="{{asset('assets/images/icon.png')}}" alt="Loading" style="height: 12px; width: 20px; filter: brightness(0) invert(1);" /></button> </a>
                 @endif
             </ul>
         </div>
         <div class="inner-header">
-            <?php  if(Auth::user()) { ?>
-            <div class="plan-container">
+            <?php if (Auth::user()) {
+	?>
+            <div class="plan-container" style="margin-right:20px">
                 <div class="plan-label">Current Plan:</div>
                 <button class="c-btn  mr-2" disabled>{{ Auth::user()->plan_name ?? '' }}</button>
                 <span></span>
-                <button class="c-btn" disabled><a href="{{ route('subscription') }}">Upgrade Plan</a></button>
+                <?php
+$current_date = date('Y-m-d');
+	$id = Auth::user()->id;
+	$user_subscription = \DB::table("user_subscription")->where('user_id', $id)->first();
+	?>
+                @if($user_subscription)
+                    @if($user_subscription->end_date > $current_date)
+                        <button class="c-btn"><a class="c-btn-upgrade-plan" href="{{ route('subscription') }}">Upgrade Plan</a></button>
+                    @endif
+                @else
+                <button class="c-btn"><a class="c-btn-upgrade-plan" href="{{ route('subscription') }}">Upgrade Plan</a></button>
+                @endif
             </div>
-            <?php } ?>
+            <?php }?>
         </div>
         <br>
     </header>
@@ -294,6 +325,34 @@ $(document).ready(function() {
         // $('#overlay').fadeOut();
     }, 500);
 });
+</script>
+
+<script type="text/javascript">
+    // function toggleClass(clickedElement) {
+    //   var menuItems = document.querySelectorAll('#menu a');
+    //   var clickedMenuItemIndex = Array.from(menuItems).indexOf(clickedElement);
+
+    //   // Remove the 'active-menus' class from all menu items
+    //   menuItems.forEach(function(item) {
+    //     item.classList.remove('active-menus');
+    //   });
+
+    //   // Add the 'active-menus' class to the clicked menu item
+    //   clickedElement.classList.add('active-menus');
+
+    //   // Store the active-menus menu item index in local storage
+    //   localStorage.setItem('activeMenuItemIndex', clickedMenuItemIndex);
+    // }
+
+    // window.onload = function() {
+    //   var activeMenuItemIndex = localStorage.getItem('activeMenuItemIndex');
+    //   if (activeMenuItemIndex !== null) {
+    //     var menuItems = document.querySelectorAll('#menu a');
+    //     if (menuItems[activeMenuItemIndex]) {
+    //       menuItems[activeMenuItemIndex].classList.add('active-menus');
+    //     }
+    //   }
+    // };
 </script>
 
 </html>

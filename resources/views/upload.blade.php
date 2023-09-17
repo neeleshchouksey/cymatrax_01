@@ -12,17 +12,20 @@ table {
     border-collapse: collapse;
     border-bottom: 1.5px solid rgba(0, 0, 0, 0.3);
 }
+.drop-btn{
+    background-color: #44908d !important;
+}
 </style>
 @section('content')
 <section class="contained">
     <h1 class="myaccount">{{$title}}</h1>
 
     <span> You have used {{ $uploads[0]->count ?? 0 }} of the {{ $maxlimit}} files allowed for this plan. After
-        {{ $maxlimit}} files, cleaning is {{$dollerval}} / {{$per_minute}} </span>
+        {{ $maxlimit}} files, cleaning is {{-- {{$dollerval}} / --}} ${{$per_minute}}/minute </span>
     <div style="margin-top:40px;"></div>
     <div class="tool">
         <h3>Audio Conversion Tool</h3>
-        <p> {{$dollerval}} / {{$per_minute}}</p>
+        <p> {{-- {{$dollerval}} / --}} ${{$per_minute}}/minute</p>
         <form id="dropzoneForm" enctype="multipart/form-data" class="dropzone" action="{{ route('file.upload') }}">
             @csrf
             <div class="dz-default dz-message">
