@@ -641,7 +641,9 @@ class AdminController extends Controller
         $ar = \DB::table('subscription_type')->where('id', $request->id)->update([
             'name' => $request->name,
             'charges' => $request->charges,
+            'display_text_price_per_month' => $request->display_text_price_per_month,
             'no_of_clean_file' => $request->no_of_clean_file,
+            'price_per_minute' => $request->price_per_minute,
             'text_1' => $request->text_1,
             'text_2' => $request->text_2,
             'text_3' => $request->text_3,

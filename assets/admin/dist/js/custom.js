@@ -418,8 +418,10 @@ function getSinglePlan(id) {
             $("#update-plan-modal").modal("show");
             $("#edit_id").val(response.res.id);
             $("#edit_name").val(response.res.name);
+            $("#edit_display_text_price_per_month").val(response.res.display_text_price_per_month);
             $("#edit_charges").val(response.res.charges);
             $("#edit_no_of_clean_file").val(response.res.no_of_clean_file);
+            $("#edit_price_per_minute").val(response.res.price_per_minute);
             $("#edit_text_1").val(response.res.text_1);
             $("#edit_text_2").val(response.res.text_2);
             $("#edit_text_3").val(response.res.text_3);
@@ -481,8 +483,10 @@ function updatePlan() {
             "_token": CSRF_TOKEN,
             "id": $("#edit_id").val(),
             "name": $("#edit_name").val(),
+            "display_text_price_per_month": $("#edit_display_text_price_per_month").val(),
             "charges": $("#edit_charges").val(),
             "no_of_clean_file": $("#edit_no_of_clean_file").val(),
+            "price_per_minute": $("#edit_price_per_minute").val(),
             "text_1": $("#edit_text_1").val(),
             "text_2": $("#edit_text_2").val(),
             "text_3": $("#edit_text_3").val(),
@@ -546,8 +550,10 @@ function get_plans() {
         "columns": [
             { mData: 'sno' },
             { mData: 'name' },
+            { mData: 'display_text_price_per_month' },
             { mData: 'charges' },
             { mData: 'no_of_clean_file' },
+            { mData: 'price_per_minute' },
             { mData: 'text_1' },
             { mData: 'text_2' },
             { mData: 'text_3' },

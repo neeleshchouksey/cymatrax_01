@@ -95,8 +95,8 @@ class UserController extends Controller
 
         $select =  DB::table('constant_settings')->select('value')->where('id', 6)->first();
         $dollerval = $select->value;
-        $select =  DB::table('constant_settings')->select('value')->where('id', 7)->first();
-        $per_minute = $select->value;
+        $select =  DB::table('subscription_type')->select('price_per_minute')->where('id', Auth::user()->plan_id)->first();
+        $per_minute = $select->price_per_minute ?? '';
         
         	
 
