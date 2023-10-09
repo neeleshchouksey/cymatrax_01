@@ -278,8 +278,10 @@ form.register label{
     padding: 0px !important;
     border: 2px solid #44908d!important;
     line-height: 50px !important;
-    background-color: #FFFFFF !important;
-    color: #44908d !important;
+/*    background-color: #FFFFFF !important;*/
+background-color: #44908d !important;
+/*    color: #44908d !important;*/
+color: #ffffff !important;
     letter-spacing: 3px !important;
     cursor: pointer !important;
     transition: all 0.4s !important;

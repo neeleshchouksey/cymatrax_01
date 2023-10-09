@@ -90,11 +90,11 @@ class UserController extends Controller
         }
 
         $select =  DB::table('constant_settings')->select('value')->where('id', 4)->first();
-        $val = $select->value;
+        $val = $select->value ?? '';
         $title = "Upload Audio";
 
         $select =  DB::table('constant_settings')->select('value')->where('id', 6)->first();
-        $dollerval = $select->value;
+        $dollerval = $select->value ?? '';
         $select =  DB::table('subscription_type')->select('price_per_minute')->where('id', Auth::user()->plan_id)->first();
         $per_minute = $select->price_per_minute ?? '';
         
@@ -340,7 +340,7 @@ class UserController extends Controller
         // }
 
         
-        $charge = $postData['charge'];
+        $charge = $postData['charge'] ?? 0;
     
         // Store the data in the session
         session(['postData' => $postData]);

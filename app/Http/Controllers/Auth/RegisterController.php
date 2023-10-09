@@ -64,7 +64,7 @@ class RegisterController extends Controller
         
         return Validator::make($data, [
             // 'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email:rfc', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             // 'user' => ['required'],
             // 'streetaddress' => ['required'],
@@ -89,14 +89,17 @@ class RegisterController extends Controller
        
 
         $email =$request->email;
-
+             // $validated = $request->validate([
+             //     'email' => 'required|email|regex:/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/',
+             //  ]);
         if (preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $email)) {
             echo "Valid email address";
         } else {
             echo "Invalid email address";
             
-            return redirect()->route('register')->with('error', 'This is and Invalid email');
+            return redirect()->route('register')->with('error', 'This is  Invalid email');
         }
+         // dd("dkdjk");
         
         $data = $request->all();
        

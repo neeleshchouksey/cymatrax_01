@@ -19,7 +19,7 @@
                             trial</a> -->
             @elseif(Auth::user()->trial_expiry_date < time()) Your trial period is expired @else Your trial period will
                 expire on {{ date('m/d/Y', Auth::user()->trial_expiry_date) }} @endif @endif </span>
-                <div class="mb-3">
+                <div class="mb-3" style="z-index: 9999;position: relative;">
                     {{--                <form id="multiple-checkout-frm" action="{{ url('multiple-checkout') }}"
                     method="post"> --}}
                     {{--                    {{ csrf_field() }} --}}
@@ -36,8 +36,14 @@
                         </button>
                     </form>
                     @if (Auth::user()->is_admin || Auth::user()->subscription || Auth::user()->enterprise_user)
+                     <?php
+
+                    $plan_id = Auth::user()->plan_id ?? '0';
+                    $subscription_type = \DB::table("subscription_type")->where('id', $plan_id)->first();
+                    ?>
+                    
                     <button id="clean-btn" class="c-btn  float-right"
-                        onclick="clean_multiple_files({{ $remaining_file_limits }})">Clean File(s)
+                        onclick="clean_multiple_files({{ $remaining_file_limits }},{{ $subscription_type->price_per_minute }})">Clean File(s)
                     </button>
                     @else
                     @if (!Auth::user()->trial_expiry_date)
@@ -70,9 +76,11 @@
 
 
 
-                        <button type="button" class="c-btn float-right mr-2"><a
+                        <button type="button" class="c-btn float-right mr-2" onclick="window.location.href = '{{ route('uploadAudio') }}'"><a
                                 style="text-decoration: none; color:#ffffff"
                                 href="{{ route('uploadAudio') }}">Upload</a></button>
+
+
                         {{--                <button onclick="allDownload(event);" id="btnDownload" disabled type="button" --}}
                         {{--                        class="c-btn float-right mr-2"> --}}
                         {{--                    Download --}}

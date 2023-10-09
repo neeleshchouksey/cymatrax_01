@@ -10,8 +10,9 @@
                 @error('password')
                     <div class="errors">{{ $message }}</div>
                     @endif
-                    <br><br><br>
-                    <h2 style="color: green; text-align:center">That's a great plan !</h2><br>
+                    {{-- <h2 style="color: green; text-align:center">That's a great plan!</h2> --}}
+                    <br>
+                    <br>
                     <form method="POST" action="{{ route('paymentProcess') }}" class="payment">
                         @csrf
                         <table width="100%" border="0" cellspacing="0" cellpadding="6">
@@ -112,8 +113,10 @@
                                 <tr>
                                 <td colspan="2">
                                         <div class="" >
-                                            <strong> <input type="checkbox" name="checkbox" id="checkb1"></strong>I understand that i'm agreeing to a subscription.<br>It will renew at the price and frequency listed 
-                                            until it ends or is cancelled. Discounts are applicable to the first subscription order only unless othewise stated.
+                                            <strong> <input type="checkbox" name="checkbox" id="checkb1"></strong>I understand that I am agreeing to a subscription.
+                                            It will autorenew at the list price at renewal time and at the stated subscription interval until it is cancelled.
+                                            A reminder will be sent X days before your credit card is charged.
+                                            Discounts are applicable to the first subscription order only unless otherwise stated.
                                         </div>    
                                     </td>
                                 </tr>

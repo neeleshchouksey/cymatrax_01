@@ -248,16 +248,74 @@ function clean_files(id, file_limits) {
         // })
     }
 }
-
-function clean_multiple_files(file_limits) {
+/*$subscription_type->price_per_minute*/
+function clean_multiple_files(file_limits,price_per_minute) {
     // window.location = '/dashboard';
     console.log('files_remaingn', file_limits);
+    console.log('price_per_minute', price_per_minute);
     var ids = [];
+    var totalMinutes = 0;
     $('input.testCheckbox[type="checkbox"]:checked').each(function () {
         // if ($(this).attr("idd") > 0) {
-        ids.push($(this).attr("idd"));
+                   ids.push($(this).attr("idd"));
+                    if (price_per_minute) {
+                  
+                        // var hms = $(this).closest("tr").find("td:eq(1)").text().trim();
+                        //     console.log("Original hms:", hms);
+
+                        //      hms = hms.split(':');
+                        //     console.log({hms});
+                        //     if (hms.length >= 1) {
+                        //         var hours =hms.length === 0 ? parseInt(hms[0]) : 0;
+                        //         var minutes = hms.length === 2 ? parseInt(hms[1]) : 0;
+                        //         var seconds = hms.length === 3 ? parseInt(hms[2]) : 0;
+                        //         // Check if the parsed values are valid numbers
+                        //         if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds)) {
+
+                        //             totalMinutes = totalMinutes + ((hours * 60) + minutes + seconds / 60);
+                        //             console.log("Total minutes:", totalMinutes);
+                        //         } else {
+                        //             console.error("Invalid time format in the table cell.");
+                        //         }
+                        //     } else {
+                        //         console.error("Invalid time format in the table cell.");
+                        //     }
+
+                        var ms = $(this).closest("tr").find("td:eq(1)").text().trim();
+                                console.log("Original ms:", ms);
+
+                                // var totalMinutes = 0;
+                                  ms = ms.split(':');
+                                // Check if ms is a non-empty string
+                                if (ms.length > 0) {
+                                    var minutes = ms.length === 1 ? parseInt(ms[0]) : 0 
+                                    var seconds = ms.length === 2 ? parseInt(ms[1]) : 0 
+                                    // var seconds = parseInt(ms.split(':')[1]);
+
+                                    // Check if the parsed values are valid numbers
+                                    if (!isNaN(minutes) && !isNaN(seconds)) {
+                                        // Calculate total minutes
+                                        totalMinutes = totalMinutes + (minutes + seconds / 60);
+                                        // console.log("Total minutes:", totalMinutes);
+                                    } else {
+                                        console.error("Invalid time format in the table cell.");
+                                    }
+                                } else {
+                                    console.error("Empty or invalid input in the table cell.");
+                                }
+
+
+
+
+                    }
+
         // }
     });
+
+    console.log('totalMinutes', totalMinutes);
+
+
+    console.log({ids});
     // permittedValues = ids.map(value => value.value);
     // console.log('ids', permittedValues)
     if (file_limits == 'Default' || file_limits == 'Unlimited' || ids.length <= file_limits) {
@@ -306,8 +364,13 @@ function clean_multiple_files(file_limits) {
         // }
     } else {
 
+          if (price_per_minute) {
+            var chargeValue = (price_per_minute * totalMinutes);
 
-        var chargeValue = $("#charge-value").val();
+          }else{
+
+            var chargeValue = $("#charge-value").val();
+          }
         
         $.ajax({
             method: "post",

@@ -43,7 +43,7 @@ class PaypalController extends Controller
         } catch (RequestException $e) {
             $response = $e->getResponse();
             $errorMessage = json_decode($response->getBody(), true);
-            return $errorMessage['message'];
+            return $errorMessage['message'] ?? '';
         }
     }
 

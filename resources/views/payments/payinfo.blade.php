@@ -4,9 +4,9 @@
 
     <div class="content">
         <section>
-            <br><br><br>
-            <center><h3 style="color: green">Payment</h3></center>
-
+                {{-- <center><h3 style="color: green">That's a great plan!</h3></center> --}}
+                      <br>
+                      <br>
             <div class="relative">
                 @error('email')
                     <div class="errors">{{ $message }}</div>
@@ -112,8 +112,10 @@
                                 <tr>
                                 <td colspan="2">
                                         <div class="" >
-                                            <strong> <input type="checkbox" name="checkbox" id="checkb1"></strong>I understand that i'm agreeing to a subscription.it will renew at the price and frequency listed 
-                                            until it ends or is cancelled. Discounts are applicable to the first subscription order only unless othewise stated.
+                                            <strong> <input type="checkbox" name="checkbox" id="checkb1"></strong>I understand that I am agreeing to a subscription.
+                                            It will autorenew at the list price at renewal time and at the stated subscription interval until it is cancelled.
+                                            A reminder will be sent X days before your credit card is charged.
+                                            Discounts are applicable to the first subscription order only unless otherwise stated.
                                         </div>    
                                     </td>
                                 </tr>

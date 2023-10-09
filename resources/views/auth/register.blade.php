@@ -310,5 +310,13 @@
         function closePrivacyPolicy() {
             $("#privacy-policy-modal").hide();
         }
+
+        function isValidEmail(email) {
+          // Regular expression for validating an Email
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return emailRegex.test(email);
+        }
+
+      
     </script>
 @endsection

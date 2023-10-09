@@ -175,19 +175,16 @@
 
             @foreach ($subscriptions as $key => $data)
 
-            <?php
+     {{--        <?php
 
 $selectedClass = (Auth::user()->plan_name == $data->name) ? 'subs-2' : 'subs-1';
 $selectedButtonClass = (Auth::user()->plan_name == $data->name || Auth::user()->plan_name == NULL) ? '2' : '';
-?>
-
+?> --}}
+{{-- 
         <div class="single-subs {{ $selectedClass }}">
-
-
-
                     <h3>{{ $data->name }}</h3>
                     <p class="first-p">{{
-                        $data->charges == 'Free' ? 'Free' : '$' . $data->charges . ' per editor / '.$data->display_text_price_per_month }}
+                        $data->charges == 'Free' ? 'Free' : '$' . $data->charges . ' / '.$data->display_text_price_per_month }}
                     </p>
                     @if ($data->charges == 'Free')
                         <p class="mini-para">Always</p>
@@ -204,15 +201,10 @@ $selectedButtonClass = (Auth::user()->plan_name == $data->name || Auth::user()->
 
                     @if(Auth::user()->plan_name == $data->name )
                     <div class="bottom-btn-main bottom-2">
-                        {{-- <div> --}}
-
-                        {{-- </div> --}}
+                       
                     </div>
                     @else
                     <div class="bottom-btn-main bottom-1">
-                        {{-- <div> --}}
-
-                        {{-- </div> --}}
                     </div>
                     @endif
                     <button class="bottom-btn">
@@ -226,6 +218,62 @@ $selectedButtonClass = (Auth::user()->plan_name == $data->name || Auth::user()->
 
                     </button>
                 </div>
+ --}}
+
+
+  <?php 
+                    $selectedClass = (Auth::user()->plan_name == $data->name) ? 'subs-2' : 'subs-1';
+                    $selectedButtonClass = (Auth::user()->plan_name == $data->name  || Auth::user()->plan_name == NULL ) ? '2' : '';
+                ?>
+
+        <div class="single-subs {{ $selectedClass }}">
+
+
+
+            <h3>{{ $data->name }}</h3>
+            <p class="first-p">{{ $data->charges == 'Free' ? 'Free' : $data->display_text_price_per_month }}
+            </p>
+            @if ($data->charges == 'Free')
+            <p class="mini-para">Always</p>
+            @endif
+            @if ($data->text_1)
+            <p>&#9989;{{ $data->text_1 }}</p>
+            @endif
+            @if ($data->text_2)
+            <p>&#9989;{{ $data->text_2 }}</p>
+            @endif
+            @if ($data->text_3)
+            <p>&#9989;{{ $data->text_3 }}</p>
+            @endif
+
+            @if(Auth::user()->plan_name == $data->name )
+            <div class="bottom-btn-main bottom-2">
+                {{-- <div> --}}
+
+                {{-- </div> --}}
+            </div>
+            @else
+            <div class="bottom-btn-main bottom-1">
+                {{-- <div> --}}
+
+                {{-- </div> --}}
+            </div>
+            @endif
+
+            <button class="bottom-btn">
+                @if (!Auth::user()->subscription && $data->name == 'Community')
+                Selected
+                @elseif(Auth::user()->subscription && Auth::user()->plan_name == $data->name)
+                Selected
+                @else
+                <a href="{{ route('paymentCreateView', $data->id) }}">{{$data->name }}</a>
+                @endif
+
+            </button>
+        </div>
+
+
+
             @endforeach
             {{-- <div class="single-subs second-subs">
                 <h3>Community</h3>

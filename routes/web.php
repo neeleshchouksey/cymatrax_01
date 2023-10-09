@@ -20,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'Auth\RegisterController@welcomeBlade')->name('welcome');
 
 Auth::routes();
+
+
+Route::group(["middleware"=>["Xss","SJR"]],function(){
+    // code...
+
 Route::post('/home-register', 'Auth\RegisterController@doRegisterviaHome')->name('home-register');
 Route::post('/change-password', 'Auth\RegisterController@Changepassword')->name('change-password');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -136,5 +141,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::post('/update-constant-settings', 'AdminController@update_constant_settings');
 
     
+
+});
 
 });

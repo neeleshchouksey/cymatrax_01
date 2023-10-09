@@ -297,17 +297,13 @@ h1.myaccount .current-plan {
             @endif
 
             @if(Auth::user()->plan_name == $data->name )
-            <div class="bottom-btn-main bottom-2">
-                {{-- <div> --}}
-
-                {{-- </div> --}}
-            </div>
+                <div class="bottom-btn-main bottom-2">
+              
+                </div>
             @else
-            <div class="bottom-btn-main bottom-1">
-                {{-- <div> --}}
-
-                {{-- </div> --}}
-            </div>
+                <div class="bottom-btn-main bottom-1">
+                  
+                </div>
             @endif
 
             <button class="bottom-btn">
