@@ -160,7 +160,7 @@
     <section class="contained"><br><br>
         <div class="subs-header">
             <h1>{{ $title }}</h1>
-            <button>{{ Auth::user()->subscription ? Auth::user()->plan_name : 'Community' }}</button>
+            {{-- <button>{{ Auth::user()->subscription ? Auth::user()->plan_name : 'Community' }}</button> --}}
             @if (Auth::user()->is_cancelled == 1 && !is_null(Auth::user()->plan_end_date))
                 <div>
                     <p><b>Your {{Auth()->user()->plan_name}} plan is still active</b></p>

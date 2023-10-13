@@ -39,6 +39,9 @@ a#example_previous {
     margin-top: 15px;
     border-radius: 5px;
 }
+.disable-btn{
+    background-color:#b4b4b4 !important
+}
 </style>
 
 <section class="contained">
@@ -64,7 +67,7 @@ a#example_previous {
                         @csrf
                         <input type="hidden" name="download_files" id="download_files">
                         <button onclick="allDownload(event);" id="btnDownload" disabled type="submit"
-                            class="c-btn float-right ml-2">
+                            class="c-btn float-right ml-2 disable-btn">
                             Download
                         </button>
                     </form>
@@ -75,7 +78,7 @@ a#example_previous {
                     $subscription_type = \DB::table("subscription_type")->where('id', $plan_id)->first();
                     ?>
                     
-                    <button id="clean-btn" class="c-btn  float-right"
+                    <button id="clean-btn" class="c-btn  float-right disable-btn"
                         onclick="clean_multiple_files({{ $remaining_file_limits }},{{ $subscription_type->price_per_minute  ?? ''}})">Clean File(s)
                     </button>
                     @else
@@ -100,7 +103,7 @@ a#example_previous {
                         </button> -->
                         </form>
                         @else
-                        <button id="clean-btn" class="c-btn float-right" disabled
+                        <button id="clean-btn" class="c-btn float-right disable-btn" disabled
                             onclick="clean_multiple_files({{ $remaining_file_limits }})">Clean
                             File(s)
                         </button>
@@ -192,6 +195,30 @@ for (var i = 0; i < elements.length; i++) {
         window.location = 'http://localhost/cymatrax_dev/subscription';
     });
 }
+
+// setInterval(function () {
+//         var links = [];
+//         $('input.testCheckbox[type="checkbox"]:checked').each(function () {
+//             links.push($(this).attr("link"));
+//         });
+//         if (links.length > 0) {
+//             $('#btnDownload').removeAttr('disabled');
+//             $('#btnCheckout').removeAttr('disabled');
+//             $('#clean-btn').removeAttr('disabled');
+
+//              $("#clean-btn").removeClass("disable-btn")
+//              $("#btnDownload").removeClass("disable-btn")
+//         } else {
+//             $('#btnDownload').attr('disabled', 'disabled');
+//             $('#btnCheckout').attr('disabled', 'disabled');
+//             $('#clean-btn').attr('disabled', 'disabled');
+
+//              $("#clean-btn").addClass("disable-btn")
+//               $("#btnDownload").addClass("disable-btn")
+//         }
+
+//          console.log("settimeout");
+//     }, 1000);
 </script>
 
 @endsection

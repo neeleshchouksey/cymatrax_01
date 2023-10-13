@@ -58,7 +58,7 @@
                                             required>
                                     </td>
                                 </tr>
-                                </tr>
+                               
                                 <tr>
                                     <td>Address :</td>
                                     <td>
@@ -67,7 +67,7 @@
                                             required>
                                     </td>
                                 </tr>
-                                </tr>
+                                
                                 <tr>
                                     <td>City :</td>
                                     <td>
@@ -76,7 +76,7 @@
                                             required>
                                     </td>
                                 </tr>
-                                </tr>
+                               
                                 <tr>
                                     <td>State :</td>
                                     <td>
@@ -85,7 +85,7 @@
                                             required>
                                     </td>
                                 </tr>
-                                </tr>
+                              
                                 <tr>
                                     <td>Country :</td>
                                     <td>
@@ -102,17 +102,25 @@
                                             name="charge" required>
                                     </td>
                                 </tr>
+                                <tr>
                                 <td colspan="2">
-                                        <div class="alert alert-warning" style="background-color: pink; display: none;">
+                                        <div class="alert alert-warning" style="background-color: pink;">
                                             <strong>!</strong> To Continue with your purchase, agree to deferred or recurring purchase terms
                                         </div>    
                                     </td>
                                 
                                         </tr>
+                                        <tr>
+                                               <td colspan="2">
+                                        <div  style="background-color: pink;    background-color: pink;padding: 6px;color: #fff;">
+                                           Please Select Terms & Conditions
+                                        </div>    
+                                    </td>
+                                        </tr>
                                 <tr>
                                 <td colspan="2">
                                         <div class="" >
-                                            <strong> <input type="checkbox" name="checkbox" id="checkb1" onclick="showmsg(event)"></strong>I understand that I am agreeing to a subscription.
+                                            <strong> <input type="checkbox" name="checkbox" id="checkb1"></strong>I understand that I am agreeing to a subscription.
                                             It will autorenew at the list price at renewal time and at the stated subscription interval until it is cancelled.
                                             A reminder will be sent X days before your credit card is charged.
                                             Discounts are applicable to the first subscription order only unless otherwise stated.
@@ -148,11 +156,11 @@
             $processPaymentBtn.prop('disabled', !this.checked);
         });
     });
-    function showmsg(e) {
-                if ($("#checkb1").prop("checked")) {
-                    $(".alert.alert-warning").show();
-                } else {
-                    $(".alert.alert-warning").hide();
-                }
-    }
+    // function showmsg(e) {
+    //             if ($("#checkb1").prop("checked")) {
+    //                 $(".alert.alert-warning").show();
+    //             } else {
+    //                 $(".alert.alert-warning").hide();
+    //             }
+    // }
 </script>

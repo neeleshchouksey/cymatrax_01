@@ -12,9 +12,8 @@ table {
     border-collapse: collapse;
     border-bottom: 1.5px solid rgba(0, 0, 0, 0.3);
 }
-.drop-btn{
-    background-color: #44908d !important;
-}
+
+
 </style>
 @section('content')
 <section class="contained">
@@ -42,8 +41,8 @@ table {
         </form>
         <div style="display: inline-flex">
 
-            <button type="button" class="c-btn" style="margin-right: 2rem" id="submit-all" style="height: 57px;
-    margin-top: 29px;">Upload</button>
+            <button type="button" class="c-btn"  id="submit-all" style="height: 57px;
+    margin-top: 29px;margin-right: 2rem">Upload</button>
 
             <div> 
                 <p>

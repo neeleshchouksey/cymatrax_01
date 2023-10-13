@@ -798,9 +798,12 @@ function saveDuration() {
         }
     });
 }
-
+var set_interval = null;
 function checkboxCount() {
-    setInterval(function () {
+    if (set_interval) {
+        clearInterval(set_interval);
+    }
+  set_interval =  setInterval(function () {
         var links = [];
         $('input.testCheckbox[type="checkbox"]:checked').each(function () {
             links.push($(this).attr("link"));
@@ -809,11 +812,19 @@ function checkboxCount() {
             $('#btnDownload').removeAttr('disabled');
             $('#btnCheckout').removeAttr('disabled');
             $('#clean-btn').removeAttr('disabled');
+
+             $("#clean-btn").removeClass("disable-btn")
+             $("#btnDownload").removeClass("disable-btn")
         } else {
             $('#btnDownload').attr('disabled', 'disabled');
             $('#btnCheckout').attr('disabled', 'disabled');
             $('#clean-btn').attr('disabled', 'disabled');
+
+             $("#clean-btn").addClass("disable-btn")
+              $("#btnDownload").addClass("disable-btn")
         }
+
+         console.log("settimeout");
     }, 1000);
 }
 
