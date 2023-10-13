@@ -401,7 +401,7 @@ function clean_multiple_files(file_limits,price_per_minute) {
                 
                 if (response) {
                     // Redirect to the view using JavaScript
-                    window.location.href = APP_URL +'/paymentinfo';
+                    //window.location.href = APP_URL +'/paymentinfo';
                 } else {
                     // Handle errors if needed
                 }
