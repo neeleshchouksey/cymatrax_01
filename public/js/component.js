@@ -328,6 +328,7 @@ function clean_multiple_files(file_limits,price_per_minute) {
       
     if(data_status){
         alert("You Have Selected a Cleaned Files Please Select Uncleaned Files For Processed");
+        return;
     }
   // return ;
 
