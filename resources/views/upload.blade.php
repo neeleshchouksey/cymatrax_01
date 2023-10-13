@@ -42,16 +42,21 @@ table {
         </form>
         <div style="display: inline-flex">
 
-            <button type="button" class="c-btn" style="margin-right: 2rem" id="submit-all">Upload</button>
+            <button type="button" class="c-btn" style="margin-right: 2rem" id="submit-all" style="height: 57px;
+    margin-top: 29px;">Upload</button>
 
-            <p> *Only mp3 and wav files can be processed, up to 15 files no larger than 600MB may be uploaded at once.
+            <div> 
+                <p>
+                    *Only mp3 and wav files can be processed, up to 15 files no larger than 600MB may be uploaded at once.
                 For more info
                 <a href="javascript:void(0)" id="myBtn">Click Here</a>, page
-            </p>
+                </p>
+                 <p> * All files will be kept for {{ $val}} days </p>
+            </div>
 
         </div>
         <div>
-            <p> * All files will be kept for {{ $val}} days </p>
+           
         </div>
     </div>
 </section>

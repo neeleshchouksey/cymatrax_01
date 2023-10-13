@@ -6,6 +6,39 @@
     background-color: #44908d !important;
     color: #fff!important;
 }
+
+div#example_paginate {
+    width: 50%;
+    display: flex;
+}
+a#example_next {
+    display: block !important;
+    width: 200px !important;
+    padding: 0px !important;
+    border: none !important;
+    line-height: 50px !important;
+    background-color: #44908d !important;
+    color: #fff !important;
+    letter-spacing: 3px !important;
+    cursor: pointer !important;
+    transition: all 0.4s !important;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+a#example_previous {
+    display: block !important;
+    width: 200px !important;
+    padding: 0px !important;
+    border: none !important;
+    line-height: 50px !important;
+    background-color: #44908d !important;
+    color: #fff !important;
+    letter-spacing: 3px !important;
+    cursor: pointer !important;
+    transition: all 0.4s !important;
+    margin-top: 15px;
+    border-radius: 5px;
+}
 </style>
 
 <section class="contained">
@@ -43,7 +76,7 @@
                     ?>
                     
                     <button id="clean-btn" class="c-btn  float-right"
-                        onclick="clean_multiple_files({{ $remaining_file_limits }},{{ $subscription_type->price_per_minute }})">Clean File(s)
+                        onclick="clean_multiple_files({{ $remaining_file_limits }},{{ $subscription_type->price_per_minute  ?? ''}})">Clean File(s)
                     </button>
                     @else
                     @if (!Auth::user()->trial_expiry_date)

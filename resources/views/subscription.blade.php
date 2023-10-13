@@ -260,7 +260,7 @@ $selectedButtonClass = (Auth::user()->plan_name == $data->name || Auth::user()->
             </div>
             @endif
 
-            <button class="bottom-btn">
+            <button class="bottom-btn" onclick="window.location.href='{{ route('paymentCreateView', $data->id) }}'">
                 @if (!Auth::user()->subscription && $data->name == 'Community')
                 Selected
                 @elseif(Auth::user()->subscription && Auth::user()->plan_name == $data->name)

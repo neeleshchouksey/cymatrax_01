@@ -54,6 +54,39 @@ Dropzone.options.dropzoneForm = {
             data.append("price", '1000');
         });
 
+
+        myDropzone.on("sending", function (file, xhr, data) {
+            // Check if the file is an audio file (MP3 or WAV)
+            if (file.type === 'audio/mp3' || file.type === 'audio/wav') {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var arrayBuffer = e.target.result;
+                    var buffer = new Uint8Array(arrayBuffer);
+                    
+                    // Determine audio format (MP3 or WAV) and calculate duration accordingly
+                    var duration = 0;
+                    if (file.type === 'audio/mp3') {
+                        // Calculate duration for MP3 files
+                        // You can use external libraries like getID3.js here
+                        // Or send the file to the server for duration calculation
+                    } else if (file.type === 'audio/wav') {
+                        // Calculate duration for WAV files
+                        // You can use external libraries or custom logic here
+                    }
+                    
+                    // Add duration to the form data
+                    data.append("duration", duration);
+                };
+                reader.readAsArrayBuffer(file);
+            }
+
+            // Add other form data as needed
+            data.append("price", '1000');
+        });
+
+
+
+
         this.on("success", function (data) {
 
             var file = myDropzone.files[0];
@@ -255,32 +288,17 @@ function clean_multiple_files(file_limits,price_per_minute) {
     console.log('price_per_minute', price_per_minute);
     var ids = [];
     var totalMinutes = 0;
+    var data_status = false;
     $('input.testCheckbox[type="checkbox"]:checked').each(function () {
         // if ($(this).attr("idd") > 0) {
                    ids.push($(this).attr("idd"));
+                     console.log($(this).data("status"));
+                    
+                     if (data_status == false) {
+                         data_status = $(this).data("status") == "Cleaned" ? true : false;
+                     }
+
                     if (price_per_minute) {
-                  
-                        // var hms = $(this).closest("tr").find("td:eq(1)").text().trim();
-                        //     console.log("Original hms:", hms);
-
-                        //      hms = hms.split(':');
-                        //     console.log({hms});
-                        //     if (hms.length >= 1) {
-                        //         var hours =hms.length === 0 ? parseInt(hms[0]) : 0;
-                        //         var minutes = hms.length === 2 ? parseInt(hms[1]) : 0;
-                        //         var seconds = hms.length === 3 ? parseInt(hms[2]) : 0;
-                        //         // Check if the parsed values are valid numbers
-                        //         if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds)) {
-
-                        //             totalMinutes = totalMinutes + ((hours * 60) + minutes + seconds / 60);
-                        //             console.log("Total minutes:", totalMinutes);
-                        //         } else {
-                        //             console.error("Invalid time format in the table cell.");
-                        //         }
-                        //     } else {
-                        //         console.error("Invalid time format in the table cell.");
-                        //     }
-
                         var ms = $(this).closest("tr").find("td:eq(1)").text().trim();
                                 console.log("Original ms:", ms);
 
@@ -303,16 +321,15 @@ function clean_multiple_files(file_limits,price_per_minute) {
                                 } else {
                                     console.error("Empty or invalid input in the table cell.");
                                 }
-
-
-
-
                     }
 
         // }
     });
-
-    console.log('totalMinutes', totalMinutes);
+      
+    if(data_status){
+        alert("You Have Selected a Cleaned Files Please Select Uncleaned Files For Processed");
+    }
+  // return ;
 
 
     console.log({ids});
@@ -610,6 +627,7 @@ function fileFilter(value) {
             url: url,
             success: function (response) {
                 var data = response.res;
+                 console.log(data);
                 if (data.length > 0) {
 
                     var cleanText = '';
@@ -647,8 +665,10 @@ function fileFilter(value) {
                                 '                        Your browser does not support the audio element.' +
                                 '                    </audio></td>\n' +
                                 '                    <td>' + cleanText + '</td>\n' +
-                                '                    <td style="width: 5px"><input onchange="checkboxCount();" class="testCheckbox" link="' + dlink + '" idd="' + data[i].id + '" type="checkbox"> </td>\n' +
+                                '                    <td style="width: 5px"><input onchange="checkboxCount();" data-status="'+cleanText+'" class="testCheckbox" link="' + dlink + '" idd="' + data[i].id + '" type="checkbox"> </td>\n' +
                                 '                </tr>');
+
+
 
                         }
 
