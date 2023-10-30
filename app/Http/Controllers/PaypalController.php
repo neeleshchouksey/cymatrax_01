@@ -18,6 +18,31 @@ class PaypalController extends Controller
 {
     public function createView($id)
     {
+
+
+          $plan_start_date = Carbon::now()->format('Y-m-d');
+         $data = DB::table('subscription_type')->where('id', $id)->first();
+
+        if ($data->plan_id == 0 && $data->id == 1 && \Auth::user()->plan_id == null) {
+                    User::where('id', Auth::id())->update([
+                        'subscription' => 1,
+                        'plan_id' => $data->plan_id,
+                        'plan_name' => $data->name,
+                        'charges' => $data->charges,
+                        'no_of_clean_file' => $data->no_of_clean_file,
+                        'subscription_id' => '',//$subscription_id,
+                        'plan_start_date' => $plan_start_date,
+                        'is_cancelled' => 0
+                    ]);
+                    $status = "free";
+                    $plan_name = $data->name;
+                    return view('payments.success', compact('status', 'plan_name'));
+        }
+        else if ($data->plan_id == 0 && $data->id == 1 && \Auth::user()->plan_id != null){
+            \Session::flash('error', "You have already availed   ".$data->name.' package'); 
+            return back();
+        }
+
         $data = DB::table('subscription_type')->where('id', $id)->get()->toArray();
         return view('payments.create', compact('data'));
     }

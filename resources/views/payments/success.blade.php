@@ -79,6 +79,11 @@
                 <div>
                     <a href="{{ route('my_account') }}">Go to My Account</a>
                 </div>
+            @elseif ($status == 'free')
+                <h1>You have successfully added {{ $plan_name }} subscription please click below button to go My Account</h1>
+                <div>
+                    <a href="{{ route('my_account') }}">Go to My Account</a>
+                </div>
             @endif
         </div>
         </div>
