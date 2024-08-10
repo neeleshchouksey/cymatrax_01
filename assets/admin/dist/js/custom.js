@@ -156,15 +156,14 @@ function deleteUsers()
                 url: APP_URL + "/admin/delete-user-bydate",
                 success: function (response)
                 {
-                    console.log(response);
-                    // Swal.fire({
-                    //     title: 'Success!',
-                    //     text: response.msg,
-                    //     icon: 'success',
-                    //     showCancelButton: false,
-                    // }).then((result) => {
-                    //     get_users();
-                    // })
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.msg,
+                        icon: 'success',
+                        showCancelButton: false,
+                    }).then((result) => {
+                        get_users();
+                    })
                 },
                 error: function (error) {
                     Swal.fire({
