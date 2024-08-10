@@ -15,7 +15,7 @@ class AddPlanEndDateAndPricePerMinuteToUserTable extends Migration
     {
         if (!Schema::hasColumn('users', 'plan_end_date'))
         {
-            Schema::table('user', function (Blueprint $table)
+            Schema::table('users', function (Blueprint $table)
             {
                 $table->dateTime('plan_end_date')->nullable();
                 $table->double('price_per_minute')->default(0)->nullable();
@@ -30,7 +30,7 @@ class AddPlanEndDateAndPricePerMinuteToUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('user', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('plan_end_date');
             $table->dropColumn('price_per_minute');
         });
