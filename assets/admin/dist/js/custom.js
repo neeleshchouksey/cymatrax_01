@@ -1,38 +1,34 @@
-$(function () {
+$(function ()
+{
 
     var uri_segment = document.URL.split('/')[document.URL.split('/').length - 1];
     var uri_segment2 = document.URL.split('/')[document.URL.split('/').length - 2];
 
-    if (uri_segment == 'admins')
-    {
+    if (uri_segment == 'admins') {
         get_admins();
     }
-    if (uri_segment == 'roles')
-    {
+    if (uri_segment == 'roles') {
         get_roles();
     }
-    if (uri_segment == 'plan-and-subscription')
-    {
+    if (uri_segment == 'plan-and-subscription') {
         get_plans();
     }
-    if (uri_segment == 'users')
-    {
+    if (uri_segment == 'users') {
         get_users();
     }
-    if (uri_segment == 'reports')
-    {
+    if (uri_segment == 'file-list') {
+        get_files();
+    }
+    if (uri_segment == 'reports') {
         get_reports();
     }
-    if (uri_segment2 == 'user-files')
-    {
+    if (uri_segment2 == 'user-files') {
         get_user_files();
     }
-    if (uri_segment2 == 'view')
-    {
+    if (uri_segment2 == 'view') {
         view_user_files();
     }
-    if (uri_segment == 'constant-settings')
-    {
+    if (uri_segment == 'constant-settings') {
         get_constant_setting();
     }
 });
@@ -82,7 +78,8 @@ function activateDeactivateUser(id, status) {
         }
     });
 }
-function deleteUser(id) {
+function deleteUser(id)
+{
     Swal.fire({
         title: 'Are you sure?',
         text: "You want to delete this user, you wont be able to revert this, all related data of this user will be permanently deleted.",
@@ -124,7 +121,21 @@ function deleteUser(id) {
 
 function deleteUsers()
 {
-    alert(deleteDate);
+
+    let deleteDate = deleteUserFromDate[0].value;
+
+    let [startDateStr, endDateStr] = deleteDate.split(' - ');
+
+    function formatDate(dateStr)
+    {
+        let [month, day, year] = dateStr.split('/').map(Number);
+        return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    }
+
+    // Convert start and end dates
+    let startDate = formatDate(startDateStr);
+    let endDate = formatDate(endDateStr);
+
     Swal.fire({
         title: 'Are you sure?',
         text: "You want to delete this user, you wont be able to revert this, all related data of this user will be permanently deleted.",
@@ -139,18 +150,21 @@ function deleteUsers()
                 method: "post",
                 data: {
                     "_token": CSRF_TOKEN,
-                    id: id
+                    startDate:startDate,
+                    endDate:endDate
                 },
-                url: APP_URL + "/admin/delete-user",
-                success: function (response) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: response.msg,
-                        icon: 'success',
-                        showCancelButton: false,
-                    }).then((result) => {
-                        get_users();
-                    })
+                url: APP_URL + "/admin/delete-user-bydate",
+                success: function (response)
+                {
+                    console.log(response);
+                    // Swal.fire({
+                    //     title: 'Success!',
+                    //     text: response.msg,
+                    //     icon: 'success',
+                    //     showCancelButton: false,
+                    // }).then((result) => {
+                    //     get_users();
+                    // })
                 },
                 error: function (error) {
                     Swal.fire({
@@ -279,8 +293,7 @@ function activateDeactivateAdmin(id, status) {
     });
 }
 
-function resetTrial(id)
-{
+function resetTrial(id) {
     Swal.fire({
         title: 'Are you sure?',
         text: "You want to reset trial period for this user ?",
@@ -315,8 +328,7 @@ function resetTrial(id)
         }
     });
 }
-function subscribe(id)
-{
+function subscribe(id) {
     Swal.fire({
         title: 'Are you sure?',
         text: "You want unlimited subscription for this user ?",
@@ -565,7 +577,8 @@ function updatePlan() {
     });
 }
 
-function get_roles() {
+function get_roles()
+{
 
     $("#role-datatable").DataTable({
         "responsive": true,
@@ -587,7 +600,8 @@ function get_roles() {
     }).buttons().container().appendTo('#role-datatable_wrapper .col-md-6:eq(0)');
 }
 
-function get_plans() {
+function get_plans()
+{
 
     $("#plan-datatable").DataTable({
         "responsive": true,
@@ -618,7 +632,6 @@ function get_plans() {
 
 function get_users()
 {
-
     $("#user-datatable").DataTable({
         // "responsive": false,
         // "dom": 'Bfrtip',
@@ -653,7 +666,79 @@ function get_users()
     }).buttons().container().appendTo('#user-datatable_wrapper .col-md-6:eq(0)');
 }
 
-function get_reports() {
+function get_files()
+{
+
+    $("#file-datatable").DataTable({
+        // "responsive": false,
+        // "dom": 'Bfrtip',
+        "lengthChange": false,
+        "autoWidth": false,
+        "scrollX": true,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "bDestroy": true,
+        "ordering": false,
+        ajax: {
+            url: APP_URL + "/admin/get-all-files",
+            type: "GET",
+        },
+        "columns": [
+            { mData: 'sno' },
+            { mData: 'name' },
+            { mData: 'file_name' },
+            { mData: 'created_at' },
+            { mData: 'duration' },
+            { mData: 'action' }
+        ]
+
+    }).buttons().container().appendTo('#file-datatable_wrapper .col-md-6:eq(0)');
+}
+
+function deleteFiles(id)
+{
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to delete this files, you wont be able to revert this, all related data of this file will be permanently deleted.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "post",
+                data: {
+                    "_token": CSRF_TOKEN,
+                    id: id
+                },
+                url: APP_URL + "/admin/delete-file",
+                success: function (response)
+                {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.msg,
+                        icon: 'success',
+                        showCancelButton: false,
+                    }).then((result) => {
+                        get_files();
+                    })
+                },
+                error: function (error)
+                {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.responseJSON.msg,
+                        icon: "error",
+                    });
+                }
+            });
+        }
+    });
+}
+
+function get_reports()
+{
 
     $("#report-datatable").DataTable({
         // "responsive": false,
@@ -702,7 +787,8 @@ function get_reports() {
     }).buttons().container().appendTo('#report-datatable_wrapper .col-md-6:eq(0)');
 }
 
-function get_user_files() {
+function get_user_files()
+{
     var currentUrl = document.URL.split('/');
     var segment1 = currentUrl[currentUrl.length - 1];
     var segment2 = currentUrl[currentUrl.length - 2];
@@ -732,7 +818,8 @@ function get_user_files() {
 
 var date, fromDate, toDate;
 var total = 0;
-function clear_filter() {
+function clear_filter()
+{
     $('#fromDate').val('');
     $('#filter-by').val('');
     $('#date-filter-by').val('');
@@ -742,7 +829,8 @@ function clear_filter() {
 }
 
 var user_files_dt;
-function view_user_files() {
+function view_user_files()
+{
     var currentUrl = document.URL.split('/');
     var segment1 = currentUrl[currentUrl.length - 1];
     var segment2 = currentUrl[currentUrl.length - 2];
@@ -807,7 +895,8 @@ function view_user_files() {
 }
 
 
-function deleteFile(id) {
+function deleteFile(id)
+{
     Swal.fire({
         title: 'Are you sure?',
         text: "You want to delete this file ?",
@@ -821,7 +910,8 @@ function deleteFile(id) {
             $.ajax({
                 method: "get",
                 url: APP_URL + "/admin/delete-file/" + id,
-                success: function (response) {
+                success: function (response)
+                {
                     Swal.fire({
                         title: 'Success!',
                         text: response.msg,
@@ -829,6 +919,66 @@ function deleteFile(id) {
                         showCancelButton: false,
                     }).then((result) => {
                         get_user_files();
+                    })
+                },
+                error: function (error)
+                {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.responseJSON.msg,
+                        icon: "error",
+                    });
+                }
+            });
+        }
+    });
+}
+
+function deleteFileByDate()
+{
+
+    let deleteDate = deleteUserFromDate[0].value;
+
+    let [startDateStr, endDateStr] = deleteDate.split(' - ');
+
+    function formatDate(dateStr)
+    {
+        let [month, day, year] = dateStr.split('/').map(Number);
+        return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    }
+
+    // Convert start and end dates
+    let startDate = formatDate(startDateStr);
+    let endDate = formatDate(endDateStr);
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to delete this file, you wont be able to revert this, all related data of this file will be permanently deleted.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "post",
+                data: {
+                    "_token": CSRF_TOKEN,
+                    startDate: startDate,
+                    endDate: endDate
+                },
+                url: APP_URL + "/admin/delete-files-bydate",
+                success: function (response)
+                {
+                    console.log(response,"Get Data");
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.msg,
+                        icon: 'success',
+                        showCancelButton: false,
+                    }).then((result) => {
+                        get_files();
                     })
                 },
                 error: function (error) {
@@ -843,7 +993,8 @@ function deleteFile(id) {
     });
 }
 
-function deleteUserFile(id) {
+function deleteUserFile(id)
+{
     Swal.fire({
         title: 'Are you sure?',
         text: "You want to delete this file ?",
@@ -879,7 +1030,8 @@ function deleteUserFile(id) {
     });
 }
 
-$(document).ready(function () {
+$(document).ready(function ()
+{
     // Create date inputs
     minDate = $('#fromDate').daterangepicker({
         startDate: moment().startOf('hour'),
@@ -892,7 +1044,8 @@ $(document).ready(function () {
     $('#fromDate').val('');
 
     // Refilter the table
-    $('#fromDate').on('change', function () {
+    $('#fromDate').on('change', function ()
+    {
         date = minDate[0].value;
         view_user_files()
     });
@@ -905,10 +1058,11 @@ $(document).ready(function () {
         }
     });
 
-    $('#deleteUserFromDate').on('change', function () {
-        deleteDate = deleteUserFromDate[0].value;
-        //view_user_files()
-    });
+    // $('#deleteUserFromDate').on('change', function ()
+    // {
+    //     deleteDate = deleteUserFromDate[0].value;
+    //     console.log(deleteDate,"Get DAte");
+    // });
 
 });
 
@@ -917,7 +1071,8 @@ var total_sec = 0;
 var total_duration = 0;
 var total_cost = 0;
 
-function getDuration1(path, aud_id) {
+function getDuration1(path, aud_id)
+{
     path = APP_URL + '/public/upload/' + path;
     // console.log("duration1 calling");
     // Create a non-dom allocated Audio element
@@ -945,13 +1100,15 @@ function getDuration1(path, aud_id) {
 
 }
 
-function getTotalDuration() {
+function getTotalDuration()
+{
     console.log(total_min + "." + total_sec);
     $("#total-duration-full").html(total_min + "." + total_sec);
 
 }
 
-function htmlToCSV() {
+function htmlToCSV()
+{
     var html = document.querySelector("#user-files-dt").outerHTML;
     var filename = "files.csv";
     var data = [];
@@ -970,7 +1127,8 @@ function htmlToCSV() {
     downloadCSVFile(data.join("\n"), filename);
 }
 
-function downloadCSVFile(csv, filename) {
+function downloadCSVFile(csv, filename)
+{
     var csv_file, download_link;
 
     csv_file = new Blob([csv], { type: "text/csv" });
