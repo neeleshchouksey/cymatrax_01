@@ -63,8 +63,9 @@
             {{ $status == 1 ? 'Payment Success' : ($status == 'cancelled' ? 'Cancel Plan' : 'Something went wrong') }}</h1>
         <div class="dashboard-main">
             @if ($status == 1)
-                <h1>You have successfully purchase {{ $plan_name }} subscription please click below button to go My
-                    Account and start clean files</h1>
+                {{-- <h1>You have successfully purchase {{ $plan_name }} subscription please click below button to go My
+                    Account and start clean files</h1> --}}
+ <h1>You have successfully purchased the {{ $plan_name }} subscription plan, enjoy!</h1>
                 <div>
                     <a href="{{ route('my_account') }}">Go to My Account</a>
                 </div>
@@ -76,11 +77,6 @@
                 </div>
             @elseif ($status == 'cancelled')
                 <h1>You have successfully cancelled your subscription please click below button to go My Account</h1>
-                <div>
-                    <a href="{{ route('my_account') }}">Go to My Account</a>
-                </div>
-            @elseif ($status == 'free')
-                <h1>You have successfully added {{ $plan_name }} subscription please click below button to go My Account</h1>
                 <div>
                     <a href="{{ route('my_account') }}">Go to My Account</a>
                 </div>

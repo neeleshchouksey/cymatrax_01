@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,18 +13,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::get('/', function () {
+//echo "run";exit;
+  // return view('welcome');
+//});
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
+
+/*
+Route::get('/mail', function () {
+    $to ="aakashsingh624@gmail.com";
+    $from =env("MAIL_FROM_ADDRESS");
+    $subject ="Test";
+     $cc = "aakashsingh624@gmail.com";
+    $mail = Mail::send('emails.upgradePlan', [
+        "plan_name" => "test"
+    ], function ($message) use ($to,$from,$subject, $cc) {
+        $message->to($to);
+        $message->cc($cc);
+        $message->from($from);
+        $message->subject($subject);
+    });
+    echo  "runing";
+    dd("runign");
+});
+*/
+
+
+
 Route::get('/', 'Auth\RegisterController@welcomeBlade')->name('welcome');
 
 Auth::routes();
-
-
-Route::group(["middleware"=>["Xss","SJR"]],function(){
-    // code...
-
 Route::post('/home-register', 'Auth\RegisterController@doRegisterviaHome')->name('home-register');
 Route::post('/change-password', 'Auth\RegisterController@Changepassword')->name('change-password');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -43,6 +62,7 @@ Route::get('/profile', 'UserController@profile')->name('userProfile');
 Route::post('/update-profile', 'UserController@update_profile')->name("update-profile");
 Route::post('file/upload', 'UserController@upload')->name('file.upload');
 Route::post('download-file', 'UserController@download');
+  Route::post('delete-file', 'UserController@deleteFiles');
 Route::post('save-duration', 'UserController@save_duration');
 Route::get('account', 'UserController@account')->name('my_account');
 Route::get('send-csv-email', 'UserController@sendCsvEmail');
@@ -97,6 +117,10 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/free-subscription', 'AdminController@free_subscription')->middleware('role:free-subscription');
     Route::get('/time-on-disk', 'AdminController@time_on_disk')->middleware('role:time-on-disk');
     Route::get('/clean-file-limit','AdminController@file_delete_setting');
+    Route::get('/file-list','AdminController@file_list_setting');
+    Route::get('/get-all-files', 'AdminController@get_files');
+    Route::post('/delete-file', 'AdminController@delete_file_setting');
+    Route::post('/delete-files-bydate', 'AdminController@delete_files_bydate');
     Route::get('/users', 'AdminController@users')->name('admin.users')->middleware('role:users');
     Route::get('/user-files/{id}','AdminController@user_files');
     Route::get('/view/{id}','AdminController@view_user_files');
@@ -115,6 +139,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/get-all-reports', 'AdminController@get_reports');
     Route::post('/activate-deactivate-user', 'AdminController@activate_deactivate_user');
     Route::post('/delete-user', 'AdminController@delete_user');
+    Route::post('/delete-user-bydate', 'AdminController@delete_user_bydate');
     Route::post('/make-remove-enterprise-user', 'AdminController@make_remove_enterprise_user');
     Route::get('/reset-trial/{id}', 'AdminController@reset_trial');
     Route::get('/subscription/{id}', 'AdminController@subscription');
@@ -133,15 +158,13 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::post('/update-plan', 'AdminController@update_plan');
     Route::get('/get-plan/{id}', 'AdminController@get_plan');
 
-    // Constat Menu Route 27 Aug 
+    // Constat Menu Route 27 Aug
 
     Route::get('/constant-settings', 'AdminController@constant_settings')->middleware('role:constant-settings');
     Route::get('/get-all-constant', 'AdminController@get_constant_setting');
     Route::get('/get-all-const/{id}', 'AdminController@get_const');
     Route::post('/update-constant-settings', 'AdminController@update_constant_settings');
 
-    
 
-});
 
 });

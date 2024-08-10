@@ -74,7 +74,7 @@ class ResetPassword extends Notification
 
         return (new MailMessage)
             ->markdown('auth.emails.reset-password',['token'=>$this->token])
-            ->from("info@cymatrax.com")
+            ->from("websupport@cymatrax.com")
             ->subject(Lang::get('Reset Password Notification'))
             ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))
             ->action(Lang::get('Reset Password'), $url)

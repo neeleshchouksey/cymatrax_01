@@ -19,7 +19,8 @@ class AdminRole
     public function handle($request, Closure $next, $role)
     {
         $adminHasRole = checkRoleFeature($role);
-        if(!$adminHasRole){
+        if(!$adminHasRole)
+        {
             return redirect(url('/')."/admin/unauthorize-access");
         }
         return $next($request);

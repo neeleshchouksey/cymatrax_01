@@ -21,36 +21,27 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Users List</h3>
+                                <h3 class="card-title">Files List</h3>
                                 <table class="float-right w-50">
                                     <tbody>
                                     <tr>
-                                        <td class="w-25" class="float-left">Delete Users:</td>
+                                        <td class="w-25" class="float-left">Delete Files:</td>
                                         <td class="" class="float-left"><input class="form-control w-90" type="text" id="deleteUserFromDate" name="deleteUserFromDate"></td>
-                                        <td class="float-right"><button class="btn btn-primary" onclick="deleteUsers()">Delete</button></td>
+                                        <td class="float-right"><button class="btn btn-primary" onclick="deleteFileByDate()">Delete</button></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="user-datatable" class="table table-bordered table-striped">
+                                <table id="file-datatable" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>S. No.</th>
                                         <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Address</th>
-                                        <th>City</th>
-                                        <th>State</th>
-                                        <th>Country</th>
-                                        <th>Zip Code</th>
-                                        <th>Trial Expiry</th>
-                                        <th>Total Uploaded File(s)</th>
-                                        <th>Total Cleaned File(s)</th>
-                                        <th>Total Paid File(s)</th>
-                                        <th>Last Login</th>
-                                        <th>Enterprise User</th>
+                                        <th>File Name</th>
+                                        <th>Created At</th>
+                                        <th>Duration</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -61,18 +52,9 @@
                                     <tr>
                                         <th>S. No.</th>
                                         <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Address</th>
-                                        <th>City</th>
-                                        <th>State</th>
-                                        <th>Country</th>
-                                        <th>Zip Code</th>
-                                        <th>Trial Expiry</th>
-                                        <th>Total Uploaded File(s)</th>
-                                        <th>Total Cleaned File(s)</th>
-                                        <th>Total Paid File(s)</th>
-                                        <th>Last Login</th>
-                                        <th>Enterprise User</th>
+                                        <th>File Name</th>
+                                        <th>Created At</th>
+                                        <th>Duration</th>
                                         <th>Action</th>
                                     </tr>
                                     </tfoot>

@@ -13,16 +13,19 @@
         .buttons td {
             padding: 10px 20px 20px 0 !important;
         }
+
         .subs-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: solid 1px #ccc;
         }
-        .update-profile-button{
+
+        .update-profile-button {
             background-color: #44908d !important;
         }
-        .upgrade-plan-button{
+
+        .upgrade-plan-button {
             background-color: #44908d !important;
             color: white !important;
         }
@@ -47,10 +50,10 @@
         <section class="contained">
             <div class="subs-header">
                 <h1>{{ $title }}</h1>
-                @if (Auth::user()->is_cancelled == 1 && !is_null(Auth::user()->plan_end_date)) 
+                @if (isset(currentPlan()->is_cancelled)  &&  currentPlan()->is_cancelled == 1 && !is_null(currentPlan()->plan_end_date))
                     <div>
-                        <p><b>Your {{Auth()->user()->plan_name}} plan is still active</b></p> 
-                        <p style="color: #ea0d0d"><b>Expiry on {{Auth::user()->plan_end_date}}</b></p> 
+                        <p><b>Your {{ Auth()->user()->plan_name }} plan is still active</b></p>
+                        <p style="color: #ea0d0d"><b>Expiry on {{ currentPlan()->plan_end_date }}</b></p>
                     </div>
                 @endif
             </div>
@@ -100,22 +103,12 @@
                                             value="{{ $user->email }}" readonly autocomplete="email" autofocus>
                                     </td>
                                 </tr>
-                                {{-- <tr>
-                            <td>User Type</td>
-                            <td>
-                                <input type="radio" name="user" value="1" @if ($user->user == 1) checked @endif>
-                                Single User
 
-
-                                <input type="radio" name="user" value="2" @if ($user->user == 2) checked @endif>
-                                Company User
-                            </td>
-                        </tr> --}}
                                 <tr>
                                     <td>Subscription :</td>
                                     <td>
                                         <input type="text" disabled name="plan_name"
-                                            value="{{ $user->subscription == 1 ? $user->plan_name : "Community" }}">
+                                            value="{{ $user->subscription == 1 ? $user->plan_name : 'Community' }}">
 
 
                                     </td>
@@ -126,12 +119,10 @@
                                     </td>
                                     @if ($user->subscription == 1 && $user->subscription_id && $user->is_cancelled == 0)
 
-                                        {{-- <td>
-                                            <a href="{{ route('subscription') }}">Upgrade Plan</a>
-                                        </td> --}}
+
                                         <td onclick="cancelPlannn()">
                                             <a href="#">Cancel Plan</a>
-                                            {{-- Cancel Plan --}}
+
                                         </td>
                                     @endif
                                 </tr>
@@ -217,8 +208,9 @@
                                     icon: 'success',
                                     showCancelButton: false,
                                 }).then((result) => {
-                                    location.reload();
+                                    window.location.reload();
                                 })
+
                             },
                             error: function(error) {
                                 Swal.fire({

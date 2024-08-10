@@ -3,28 +3,36 @@ $(function () {
     var uri_segment = document.URL.split('/')[document.URL.split('/').length - 1];
     var uri_segment2 = document.URL.split('/')[document.URL.split('/').length - 2];
 
-    if (uri_segment == 'admins') {
+    if (uri_segment == 'admins')
+    {
         get_admins();
     }
-    if (uri_segment == 'roles') {
+    if (uri_segment == 'roles')
+    {
         get_roles();
     }
-    if (uri_segment == 'plan-and-subscription') {
+    if (uri_segment == 'plan-and-subscription')
+    {
         get_plans();
     }
-    if (uri_segment == 'users') {
+    if (uri_segment == 'users')
+    {
         get_users();
     }
-    if (uri_segment == 'reports') {
+    if (uri_segment == 'reports')
+    {
         get_reports();
     }
-    if (uri_segment2 == 'user-files') {
+    if (uri_segment2 == 'user-files')
+    {
         get_user_files();
     }
-    if (uri_segment2 == 'view') {
+    if (uri_segment2 == 'view')
+    {
         view_user_files();
     }
-    if (uri_segment == 'constant-settings') {
+    if (uri_segment == 'constant-settings')
+    {
         get_constant_setting();
     }
 });
@@ -113,6 +121,49 @@ function deleteUser(id) {
         }
     });
 }
+
+function deleteUsers()
+{
+    alert(deleteDate);
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to delete this user, you wont be able to revert this, all related data of this user will be permanently deleted.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "post",
+                data: {
+                    "_token": CSRF_TOKEN,
+                    id: id
+                },
+                url: APP_URL + "/admin/delete-user",
+                success: function (response) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.msg,
+                        icon: 'success',
+                        showCancelButton: false,
+                    }).then((result) => {
+                        get_users();
+                    })
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.responseJSON.msg,
+                        icon: "error",
+                    });
+                }
+            });
+        }
+    });
+}
+
 function makeRemoveEnterPriseUser(id, status) {
     if (status) {
         st = "Make";
@@ -228,7 +279,8 @@ function activateDeactivateAdmin(id, status) {
     });
 }
 
-function resetTrial(id) {
+function resetTrial(id)
+{
     Swal.fire({
         title: 'Are you sure?',
         text: "You want to reset trial period for this user ?",
@@ -263,7 +315,8 @@ function resetTrial(id) {
         }
     });
 }
-function subscribe(id) {
+function subscribe(id)
+{
     Swal.fire({
         title: 'Are you sure?',
         text: "You want unlimited subscription for this user ?",
@@ -563,7 +616,8 @@ function get_plans() {
     }).buttons().container().appendTo('#plan-datatable_wrapper .col-md-6:eq(0)');
 }
 
-function get_users() {
+function get_users()
+{
 
     $("#user-datatable").DataTable({
         // "responsive": false,
@@ -841,6 +895,19 @@ $(document).ready(function () {
     $('#fromDate').on('change', function () {
         date = minDate[0].value;
         view_user_files()
+    });
+
+    deleteUserFromDate = $('#deleteUserFromDate').daterangepicker({
+        startDate: moment().startOf('hour'),
+        endDate: moment().startOf('hour').add(32, 'hour'),
+        locale: {
+            format: 'MM/DD/YYYY'
+        }
+    });
+
+    $('#deleteUserFromDate').on('change', function () {
+        deleteDate = deleteUserFromDate[0].value;
+        //view_user_files()
     });
 
 });

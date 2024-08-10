@@ -154,6 +154,16 @@
                             </a>
                         </li>
                     @endif
+                    @if(checkRoleFeature('file-delete-setting'))
+                        <li class="nav-item menu-open">
+                        <a href="{{URL::to('/admin/')}}/file-list"
+                               class="nav-link  @if(Request::segment(2) == "file-list") active @endif">
+                                <p>
+                                    File Setting
+                                </p>
+                            </a>
+                        </li>
+                    @endif
                     @if(checkRoleFeature('admins'))
                         <li class="nav-item menu-open">
                             <a href="{{URL::to('/admin/')}}/admins"

@@ -52,14 +52,14 @@
 
         .subs-header button {
             margin-left: 100px;
-    height: 44px;
-    font-size: 16px;
-    padding: 0 35px;
-    border-radius: 8px;
-    font-weight: 600;
-    color: #fff;
-    background: #44908d;
-    border: #fff;
+            height: 44px;
+            font-size: 16px;
+            padding: 0 35px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #fff;
+            background: #44908d;
+            border: #fff;
         }
 
         .subs-content {
@@ -122,8 +122,8 @@
         }
 
         /* .bottom-1 {
-            border: 2px solid;
-        } */
+                    border: 2px solid;
+                } */
 
 
 
@@ -160,11 +160,11 @@
     <section class="contained"><br><br>
         <div class="subs-header">
             <h1>{{ $title }}</h1>
-            {{-- <button>{{ Auth::user()->subscription ? Auth::user()->plan_name : 'Community' }}</button> --}}
-            @if (Auth::user()->is_cancelled == 1 && !is_null(Auth::user()->plan_end_date))
+
+            @if (currentPlan()->is_cancelled == 1 && !is_null(currentPlan()->plan_end_date))
                 <div>
-                    <p><b>Your {{Auth()->user()->plan_name}} plan is still active</b></p>
-                    <p style="color: #ea0d0d"><b>Expiry on {{Auth::user()->plan_end_date}}</b></p>
+                    <p><b>Your {{ currentPlan()->plan_name }} plan is still active</b></p>
+                    <p style="color: #ea0d0d"><b>Expiry on {{ currentPlan()->plan_end_date }}</b></p>
                 </div>
             @endif
         </div>
@@ -174,119 +174,58 @@
 
 
             @foreach ($subscriptions as $key => $data)
+                <?php
+                $selectedClass = currentPlan()->plan_name == $data->name ? 'subs-2' : 'subs-1';
+                $selectedButtonClass = currentPlan()->plan_name == $data->name || currentPlan()->plan_name == null ? '2' : '';
+                ?>
 
-     {{--        <?php
+                <div class="single-subs {{ $selectedClass }}">
 
-$selectedClass = (Auth::user()->plan_name == $data->name) ? 'subs-2' : 'subs-1';
-$selectedButtonClass = (Auth::user()->plan_name == $data->name || Auth::user()->plan_name == NULL) ? '2' : '';
-?> --}}
-{{-- 
-        <div class="single-subs {{ $selectedClass }}">
                     <h3>{{ $data->name }}</h3>
-                    <p class="first-p">{{
-                        $data->charges == 'Free' ? 'Free' : '$' . $data->charges . ' / '.$data->display_text_price_per_month }}
-                    </p>
+                    <p class="first-p">{{ $data->charges == 'Free' ? 'Free' : $data->display_text_price_per_month }}</p>
+
                     @if ($data->charges == 'Free')
                         <p class="mini-para">Always</p>
                     @endif
+
                     @if ($data->text_1)
                         <p>&#9989;{{ $data->text_1 }}</p>
                     @endif
+
                     @if ($data->text_2)
                         <p>&#9989;{{ $data->text_2 }}</p>
                     @endif
+
                     @if ($data->text_3)
                         <p>&#9989;{{ $data->text_3 }}</p>
                     @endif
 
-                    @if(Auth::user()->plan_name == $data->name )
-                    <div class="bottom-btn-main bottom-2">
-                       
-                    </div>
+                    @if (currentPlan()->plan_name == $data->name)
+                        <div class="bottom-btn-main bottom-2">
+
+                        </div>
                     @else
-                    <div class="bottom-btn-main bottom-1">
-                    </div>
+                        <div class="bottom-btn-main bottom-1">
+
+                        </div>
                     @endif
-                    <button class="bottom-btn">
-                        @if (!Auth::user()->subscription && $data->name == 'Community')
-                            Selected
-                        @elseif(Auth::user()->subscription && Auth::user()->plan_name == $data->name)
-                            Selected
-                        @else
-                            <a href="{{ route('paymentCreateView', $data->id) }}">{{$data->name }}</a>
-                        @endif
 
-                    </button>
+                    @if ($data->name == 'Community')
+                        <button class="bottom-btn">
+                            Selected
+                        </button>
+                    @elseif(currentPlan()->plan_name == $data->name)
+                        <button class="bottom-btn">
+                            Selected
+                        </button>
+                    @else
+                        <a href="{{ route('paymentCreateView', $data->id) }}"> <button
+                                class="bottom-btn">{{ $data->name }}</button></a>
+                    @endif
+
                 </div>
- --}}
-
-
-  <?php 
-                    $selectedClass = (Auth::user()->plan_name == $data->name) ? 'subs-2' : 'subs-1';
-                    $selectedButtonClass = (Auth::user()->plan_name == $data->name  || Auth::user()->plan_name == NULL ) ? '2' : '';
-                ?>
-
-        <div class="single-subs {{ $selectedClass }}">
-
-
-
-            <h3>{{ $data->name }}</h3>
-            <p class="first-p">{{ $data->charges == 'Free' ? 'Free' : $data->display_text_price_per_month }}
-            </p>
-            @if ($data->charges == 'Free')
-            <p class="mini-para">Always</p>
-            @endif
-            @if ($data->text_1)
-            <p>&#9989;{{ $data->text_1 }}</p>
-            @endif
-            @if ($data->text_2)
-            <p>&#9989;{{ $data->text_2 }}</p>
-            @endif
-            @if ($data->text_3)
-            <p>&#9989;{{ $data->text_3 }}</p>
-            @endif
-
-            @if(Auth::user()->plan_name == $data->name )
-            <div class="bottom-btn-main bottom-2">
-                {{-- <div> --}}
-
-                {{-- </div> --}}
-            </div>
-            @else
-            <div class="bottom-btn-main bottom-1">
-                {{-- <div> --}}
-
-                {{-- </div> --}}
-            </div>
-            @endif
-
-            <button class="bottom-btn" onclick="window.location.href='{{ route('paymentCreateView', $data->id) }}'">
-                @if (!Auth::user()->subscription && $data->name == 'Community')
-                Selected
-                @elseif(Auth::user()->subscription && Auth::user()->plan_name == $data->name)
-                Selected
-                @else
-                <a href="{{ route('paymentCreateView', $data->id) }}">{{$data->name }}</a>
-                @endif
-
-            </button>
-        </div>
-
-
-
             @endforeach
-            {{-- <div class="single-subs second-subs">
-                <h3>Community</h3>
-                <p>Free</p>
-                <p>Forever</p>
-                {{ $free_clean_files }}
-            </div>
-            <div class="single-subs third-subs">
-                <h3>Community</h3>
-                <p>Free</p>
-                <p>Forever</p>
-                {{ $free_clean_files }}
-            </div> --}}
+
         </div>
 
     </section>

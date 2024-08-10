@@ -45,6 +45,6 @@ class SubScriptionTypeTableSeeder extends Seeder
         ];
         DB::table('subscription_type')->truncate();
         DB::table('subscription_type')->insert($value);
-		
+
     }
 }

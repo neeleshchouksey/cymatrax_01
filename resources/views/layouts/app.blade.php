@@ -1,5 +1,6 @@
-<!doctype html>
-<html>
+
+
+<!doctype html> <html>
 
 <head>
     <meta charset="utf-8" />
@@ -17,7 +18,7 @@
     <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
 
     <link href="{{URL::to('/')}}/assets/css/index.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
     var APP_URL = '{{URL::to("/")}}';
     var CSRF_TOKEN = '{{csrf_token()}}'
@@ -143,11 +144,8 @@
             <ul id="menu">
                 @if(Auth::user())
                 <li><a  href="{{URL::to('/')}}/dashboard">Dashboard</a></li>
-                <!-- onclick="toggleClass(this)" -->
                 <li><a href="{{URL::to('/')}}/upload-audio/">Upload Audio</a></li>
                 <li><a href="{{URL::to('/')}}/account">My Account</a></li>
-                <li><a href="{{URL::to('/')}}/transactions/">Transactions</a></li>
-                <li><a href="{{URL::to('/')}}/services/">Services</a></li>
                 <li>
                     <button class="profileButton" onclick="$('.profileMenu').toggleClass('open');"></button>
                     <ul class="profileMenu">
@@ -168,41 +166,31 @@
                 </li>
                 @else
                 <li><a href="{{URL::to('/')}}">Home</a></li>
-                <li><a href="{{URL::to('/')}}/services/">Services</a></li>
                 <li><a href="{{URL::to('/')}}/login">Login</a></li>
-                <!-- <li><a  href="{{URL::to('/')}}/register"><button class="signup-button">Sign Up Free </button> </a>
-                </li> -->
                 <a  href="{{URL::to('/')}}/register"><button class="signup-button"> Sign Up For Free Today  <img src="{{asset('assets/images/icon.png')}}" alt="Loading" style="height: 12px; width: 20px; filter: brightness(0) invert(1);" /></button> </a>
                 @endif
             </ul>
         </div>
         <div class="inner-header">
-            <?php if (Auth::user()) {
+            <?php if (Auth::user())
+             {
+                           $current_user = \DB::table('users')->where("id", Auth::user()->id)->first();
 	?>
             <div class="plan-container" style="margin-right:20px">
                 <div class="plan-label">Current Plan:</div>
-                <button class="c-btn  mr-2" disabled>{{ Auth::user()->plan_name ?? '' }}</button>
+                <button class="c-btn  mr-2" disabled>{{ $current_user->plan_name ?? '' }}</button>
                 <span></span>
-                <?php
-$current_date = date('Y-m-d');
-	$id = Auth::user()->id;
-	$user_subscription = \DB::table("user_subscription")->where('user_id', $id)->first();
-	?>
-                @if($user_subscription)
-                    @if($user_subscription->end_date > $current_date)
-                        <button class="c-btn"><a class="c-btn-upgrade-plan" href="{{ route('subscription') }}">Upgrade Plan</a></button>
-                    @endif
-                @else
-                <button class="c-btn"><a class="c-btn-upgrade-plan" href="{{ route('subscription') }}">Upgrade Plan</a></button>
-                @endif
-            </div>
+                  @if(currentPlan()->plan_id == '0')
+                             <a class="c-btn-upgrade-plan" href="{{ route('subscription') }}"><button class="c-btn">Upgrade</button></a>
+                     @endif           
+                </div>
             <?php }?>
         </div>
         <br>
          @if(Session::has('error'))
                <div class="alert-msg" style="width: 70%;margin: auto;padding: 19px;background: #dbdbdb;text-align: center;margin-top: 5px;">
                 
-                  {{ Session::get('error') }}
+                  {!! Session::get('error') !!}
                </div>
            @endif
     </header>
@@ -288,7 +276,7 @@ if (exist1) {
 
 
 <script>
-@if(isset($file))
+@if(isset ($file))
 $(document).ready(function() {
     var wavesurfer = WaveSurfer.create({
         container: '#input-waveform',

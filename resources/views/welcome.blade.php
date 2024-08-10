@@ -68,36 +68,7 @@
             </div>
         </div>
         <div class="banner-section-right">
-            <div class="feature">
-                <article>
-                    <div>
-                        <h3>Conversion Service</h3>
-                        <div class="clip-wrapper">
-                            <video autoplay muted loop>
-                                <source src="{{URL::to('/')}}/assets/images/spectrum.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                        <h4>Digital Audio</h4>
-                        <?php
-                                $const_settings = DB::table('constant_settings')->where('id',6)->first();
-                                $perminute = DB::table('constant_settings')->where('id',7)->first();
-                            ?>
-                        <p> {{-- {{ $const_settings->value ?? 0  }} / --}}
-                            {{$perminute->value ?? "per minute"}}</p>
-                        <a href="{{URL::to('/')}}/services/">
-                            <button>LEARN MORE</button>
-                        </a>
-                    </div>
-                </article>
-                <!--
-                    <video controls autoplay muted>
-                    <source src="assets/v9.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                    </video>
-                    -->
-            </div>
-
+       
         </div>
     </section>
 
