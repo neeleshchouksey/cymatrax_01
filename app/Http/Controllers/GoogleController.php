@@ -79,7 +79,7 @@ class GoogleController extends Controller
                 Auth::loginUsingId($save_user->id);
 
             }
-            return redirect(url('/dashboard'))->with('message', 'You have sucessfully login with google!');
+            return redirect(url('/dashboard'))->with('message', 'You have successfully login with google!');
         } catch (Exception $e)
         {
             // dd($e->getMessage());

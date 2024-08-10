@@ -407,13 +407,13 @@
     @if (currentPlan()->plan_name != 'Community')
         <section class="contained">
 
-            @if (session()->has('message'))
+            <!-- @if (session()->has('message'))
                 <div class="alert alert-success">
 
                     {{ session()->get('message') }}
 
                 </div>
-            @endif
+            @endif -->
 
 
 
@@ -442,23 +442,23 @@
 
                 <h2>You have uploaded <span class="high-text">{{ $uploads[0]->count ?? 0 }}</span> files with <span
                         class="high-text"><?php
-                        
+
                         $seconds = $uploads[0]->duration;
-                        
+
                         $minutes = floor($seconds / 60);
-                        
+
                         $secondsleft = $seconds % 60;
-                        
+
                         if ($minutes < 10) {
                             $minutes = '0' . $minutes;
                         }
-                        
+
                         if ($secondsleft < 10) {
                             $secondsleft = '0' . $secondsleft;
                         }
-                        
+
                         echo "$minutes:$secondsleft";
-                        
+
                         ?>
 
                     </span> minutes of content.</h2>
@@ -522,11 +522,11 @@
 
                 @foreach ($subscriptions as $key => $data)
                     <?php
-                    
+
                     $selectedClass = currentPlan()->plan_name == $data->name ? 'subs-2' : 'subs-1';
-                    
+
                     $selectedButtonClass = currentPlan()->plan_name == $data->name || currentPlan()->plan_name == null ? '2' : '';
-                    
+
                     ?>
 
 
