@@ -13,12 +13,15 @@ class CreateConstantSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('constant_settings', function (Blueprint $table) {
-            $table->id();
-            $table->string('key')->nullable();
-            $table->integer('value')->default(0);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('constant_settings'))
+        {
+            Schema::create('constant_settings', function (Blueprint $table) {
+                $table->id();
+                $table->string('key')->nullable();
+                $table->string('value')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
