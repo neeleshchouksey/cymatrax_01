@@ -13,10 +13,14 @@ class AddPlanStartDateAndIsCancelledToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-             $table->date('plan_start_date')->nullable();
-            $table->tinyInteger('is_cancelled')->default(0);
-        });
+        if (!Schema::hasColumn('users', 'plan_start_date'))
+        {
+            Schema::table('users', function (Blueprint $table)
+            {
+                $table->date('plan_start_date')->nullable();
+                $table->tinyInteger('is_cancelled')->default(0);
+            });
+        }
     }
 
     /**

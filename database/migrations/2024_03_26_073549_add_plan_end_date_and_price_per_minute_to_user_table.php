@@ -13,10 +13,14 @@ class AddPlanEndDateAndPricePerMinuteToUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('user', function (Blueprint $table) {
-            $table->dateTime('plan_end_date')->nullable();
-            $table->double('price_per_minute')->default(0)->nullable();
-        });
+        if (!Schema::hasColumn('users', 'plan_end_date'))
+        {
+            Schema::table('user', function (Blueprint $table)
+            {
+                $table->dateTime('plan_end_date')->nullable();
+                $table->double('price_per_minute')->default(0)->nullable();
+            });
+        }
     }
 
     /**

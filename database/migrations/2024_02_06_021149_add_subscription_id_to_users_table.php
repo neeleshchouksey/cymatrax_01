@@ -13,9 +13,13 @@ class AddSubscriptionIdToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-              $table->string('subscription_id')->nullable()->default(null)->after('plan_id');
-        });
+        if (!Schema::hasColumn('users', 'subscription_id'))
+        {
+            Schema::table('users', function (Blueprint $table)
+            {
+                $table->string('subscription_id')->nullable()->default(null)->after('plan_id');
+            });
+        }
     }
 
     /**
