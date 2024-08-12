@@ -6,9 +6,15 @@
                         background-color: #44908d !important;
                     }
             </style>
+
 <div class="content">
     <section class="banner-section">
         <div class="banner-section-left">
+            @if (session()->has('error'))
+                <div class="alert alert-success">
+                    {{ session()->get('error') }}
+                </div>
+            @endif
             <h1 class="banner-section-title"> Take audio from better to best </h1>
             <h3 class="banner-section-subtitle">All digital audio can make you healthier. You are one step away from
                 making
@@ -68,7 +74,7 @@
             </div>
         </div>
         <div class="banner-section-right">
-       
+
         </div>
     </section>
 

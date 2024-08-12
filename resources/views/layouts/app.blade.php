@@ -182,21 +182,16 @@
                 <span></span>
                   @if(currentPlan()->plan_id == '0')
                              <a class="c-btn-upgrade-plan" href="{{ route('subscription') }}"><button class="c-btn">Upgrade</button></a>
-                     @endif           
+                     @endif
                 </div>
             <?php }?>
         </div>
         <br>
-         @if(Session::has('error'))
-               <div class="alert-msg" style="width: 70%;margin: auto;padding: 19px;background: #dbdbdb;text-align: center;margin-top: 5px;">
-                
-                  {!! Session::get('error') !!}
-               </div>
-           @endif
+
     </header>
 
     <div id="app">
-          
+
         <!-- /* loader is temp display:none  -->
         <!-- <div id="overlay" class="d-none">
         <img src="{{asset('assets/images/loader.gif')}}" alt="Loading" style="height:30px;width:30px" />

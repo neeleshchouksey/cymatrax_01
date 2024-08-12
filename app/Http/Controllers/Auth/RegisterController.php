@@ -84,10 +84,6 @@ class RegisterController extends Controller
      */
     protected function doRegister(Request $request)
     {
-
-
-
-
         $email = $request->email;
 
         if (preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $email))
@@ -180,9 +176,6 @@ class RegisterController extends Controller
     }
     protected function doRegisterviaHome(Request $request)
     {
-
-
-
         $email = $request->email;
 
         if (preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $email))
@@ -236,7 +229,8 @@ class RegisterController extends Controller
 
         \DB::table('user_subscription')->insert([
             'subscription' => 1,
-            'user_id' => Auth::user()->id,
+            // 'user_id' => Auth::user()->id,
+            'user_id' => $user->id,
             'plan_id' => $plan->plan_id ?? '',
             'plan_name' => $plan->name ?? '',
             'charges' => $plan->charges ?? '',
